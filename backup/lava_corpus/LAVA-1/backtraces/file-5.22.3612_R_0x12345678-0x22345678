@@ -1,0 +1,74 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+0x00000000004116fc in mprint (ms=0x50e4f785a0, m=0x7ffff6e59788) at softmagic.c:421
+421			v = file_signextend(ms, m, (uint64_t)p->b);
+
+Thread 1 (process 12946):
+#0  0x00000000004116fc in mprint (ms=0x50e4f785a0, m=0x7ffff6e59788) at softmagic.c:421
+        v = 0
+        vf = 9.06380586e-39
+        vd = 3.195640312452183e-317
+        t = 0
+        buf = "\377\377\377\377\377\377\377\377", '\000' <repeats 16 times>, "\001\000\000\000\000\000\000\000\377\377\377\377\000\000\000\000\250\316\377\377\377\177\000\000бb\000\000\000\000\000\000\211\273\367\377\177\000\000\360\223\207\367\377\177\000\000\240\227\207\367\377\177\000\000\360\257b\000\000\000\000\000\300\316\377\377\377\177\000\000\340#@\000\000\000\000\000\240\324\377\377", '\000' <repeats 12 times>, "\247\235\204\367\377\177\000"
+        tbuf = '\000' <repeats 16 times>, "\002\000\000\000\000\000\000\000\250", <incomplete sequence \316>
+        sbuf = "4\262b\000\000\000\000\000 \000\000\000\060\000\000\000\200\316\377\377\377\177\000\000\300\315\377\377\377\177", '\000' <repeats 18 times>, "\240\260b\000\000\000\000\000\300\260b\000\000\000\000\000бb", '\000' <repeats 13 times>, "\b\316\001\000\000\000\000\000\360\257b\000\000\000\000\000\300\316\377\377\377\177\000\000\340#@\000\000\000\000\000\240\324\377\377\377\177", '\000' <repeats 18 times>, "엇\367\377\177\000\000\220\257b\000\000\000\000\000\000\211\273\367\377\177\000\000\360\223\207\367\377\177\000\000\240\227\207\367\377\177\000\000\360\257b\000\000\000\000\000\360\257b\000\000\000\000\000\300\316\377\377\377\177\000\000\340#@"...
+        p = 0x50e4f78610
+#1  0x000000000041147d in match (ms=0x62af20, magic=0x7ffff6e2c0f8, nmagic=10757, s=0x7ffff7f86010 "\177ELF\002\001\001", nbytes=118280, offset=0, mode=32, text=0, flip=0, indir_level=0, name_count=0x7fffffffd0e2, printed_something=0x7fffffffd0e4, need_separator=0x7fffffffd0e8, returnval=0x7fffffffd024) at softmagic.c:340
+        flush = 0
+        m = 0x7ffff6e59788
+        magindex = 750
+        cont_level = 1
+        returnvalv = 0
+        e = 0
+        firstline = 1
+        print = 1
+#2  0x0000000000410be0 in file_softmagic (ms=0x62af20, buf=0x7ffff7f86010 "\177ELF\002\001\001", nbytes=118280, indir_level=0, name_count=0x7fffffffd0e2, mode=32, text=0) at softmagic.c:88
+        ml = 0x62b240
+        rv = 0
+        printed_something = 1
+        need_separator = 0
+        nc = 0
+#3  0x000000000040e22e in file_buffer (ms=0x62af20, fd=3, inname=0x7fffffffd8a6 "file-5.22.3612_R_0x12345678-0x22345678/CRASH_INPUT", buf=0x7ffff7f86010, nb=118280) at funcs.c:230
+        m = 0
+        rv = 0
+        looks_text = 0
+        mime = 0
+        ubuf = 0x7ffff7f86010 "\177ELF\002\001\001"
+        u8buf = 0x7ffff7e9e010
+        ulen = 4
+        code = 0x423025 "unknown"
+        code_mime = 0x42302d "binary"
+        type = 0x423a21 "application/octet-stream"
+        def = 0x423a3a "data"
+        ftype = 0x42302d "binary"
+#4  0x00000000004041d2 in file_or_fd (ms=0x62af20, inname=0x7fffffffd8a6 "file-5.22.3612_R_0x12345678-0x22345678/CRASH_INPUT", fd=3) at magic.c:475
+        rv = -1
+        buf = 0x7ffff7f86010 "\177ELF\002\001\001"
+        sb = {st_dev = 66306, st_ino = 28846644, st_nlink = 1, st_mode = 33204, st_uid = 1000, st_gid = 1000, __pad0 = 0, st_rdev = 0, st_size = 118280, st_blksize = 4096, st_blocks = 232, st_atim = {tv_sec = 1465424836, tv_nsec = 542796139}, st_mtim = {tv_sec = 1465424836, tv_nsec = 542796139}, st_ctim = {tv_sec = 1465424836, tv_nsec = 542796139}, __glibc_reserved = {0, 0, 0}}
+        nbytes = 118280
+        ispipe = 0
+        pos = -1
+#5  0x0000000000403da8 in magic_file (ms=0x62af20, inname=0x7fffffffd8a6 "file-5.22.3612_R_0x12345678-0x22345678/CRASH_INPUT") at magic.c:353
+No locals.
+#6  0x00000000004030aa in process (ms=0x62af20, inname=0x7fffffffd8a6 "file-5.22.3612_R_0x12345678-0x22345678/CRASH_INPUT", wid=50) at file.c:497
+        type = 0x1 <error: Cannot access memory at address 0x1>
+        std_in = 0
+#7  0x0000000000402add in main (argc=2, argv=0x7fffffffd4a8) at file.c:370
+        j = 2
+        wid = 50
+        nw = 50
+        c = -1
+        i = 4320813
+        action = 0
+        didsomefiles = 0
+        errflg = 0
+        flags = 0
+        e = 0
+        magic = 0x62af20
+        longindex = 32767
+        magicfile = 0x0
+A debugging session is active.
+
+	Inferior 1 [process 12946] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

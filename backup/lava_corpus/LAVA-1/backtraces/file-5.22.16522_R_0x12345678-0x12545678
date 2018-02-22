@@ -1,0 +1,26 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000404b6a in file_ms_free (ms=0x44780a8ca0) at apprentice.c:493
+493			mlist_free(ms->mlist[i]);
+
+Thread 1 (process 12782):
+#0  0x0000000000404b6a in file_ms_free (ms=0x44780a8ca0) at apprentice.c:493
+        i = 0
+#1  0x0000000000403bf5 in magic_close (ms=0x44780a8ca0) at magic.c:247
+No locals.
+#2  0x0000000000402b85 in main (argc=2, argv=0x7fffffffd4a8) at file.c:376
+        c = -1
+        i = 0
+        action = 0
+        didsomefiles = 0
+        errflg = 0
+        flags = 0
+        e = 0
+        magic = 0x62bf20
+        longindex = 32767
+        magicfile = 0x0
+A debugging session is active.
+
+	Inferior 1 [process 12782] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

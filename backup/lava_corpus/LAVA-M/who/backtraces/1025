@@ -1,0 +1,117 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+0xb7ebae33 in _IO_vfprintf_internal (s=0xbfffe524, format=0x807ca5c "%-8.*s%s %-12.*s %-*s%s%s %-8s%s", ap=0xbfffe5fc " ") at vfprintf.c:1629
+1629	vfprintf.c: No such file or directory.
+
+Thread 1 (process 14554):
+#0  0xb7ebae33 in _IO_vfprintf_internal (s=0xbfffe524, format=0x807ca5c "%-8.*s%s %-12.*s %-*s%s%s %-8s%s", ap=0xbfffe5fc " ") at vfprintf.c:1629
+        len = <optimized out>
+        string_malloced = <optimized out>
+        step0_jumps = {0, -13709, -13482, -13404, -13321, -13247, -13159, -12935, -12644, -12278, -12051, -11786, -11571, -3374, -3794, -3733, -3404, -3389, -9843, -2600, -2865, -11483, -2226, -3276, -2011, -1950, -3200, -3488, -11571, -13011}
+        space = 0
+        is_short = 0
+        use_outdigits = 0
+        step1_jumps = {0, 0, 0, 0, 0, 0, 0, 0, 0, -12278, -12051, -11786, -11571, -3374, -3794, -3733, -3404, -3389, -9843, -2600, -2865, -11483, -2226, -3276, -2011, -1950, -3200, -3488, -11571, 0}
+        group = 0
+        prec = -1
+        step2_jumps = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -12051, -11786, -11571, -3374, -3794, -3733, -3404, -3389, -9843, -2600, -2865, -11483, -2226, -3276, -2011, -1950, -3200, -3488, -11571, 0}
+        string = 0x74a66e60 <Address 0x74a66e60 out of bounds>
+        left = 1
+        is_long_double = -1073748456
+        width = <optimized out>
+        step3a_jumps = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -11872, 0, 0, 0, -3794, -3733, -3404, -3389, -9843, 0, 0, 0, 0, -3276, 0, 0, 0, 0, 0, 0}
+        alt = 0
+        showsign = 0
+        is_long = 0
+        is_char = 0
+        pad = <optimized out>
+        step3b_jumps = {0 <repeats 11 times>, -11571, 0, 0, -3794, -3733, -3404, -3389, -9843, -2600, -2865, -11483, -2226, -3276, -2011, -1950, -3200, 0, 0, 0}
+        step4_jumps = {0 <repeats 14 times>, -3794, -3733, -3404, -3389, -9843, -2600, -2865, -11483, -2226, -3276, -2011, -1950, -3200, 0, 0, 0}
+        is_negative = -1073748460
+        base = 0
+        the_arg = {pa_wchar = -1209480695 L'\xb7e8ca09', pa_int = -1209480695, pa_long_int = -1209480695, pa_long_long_int = 136229472777, pa_u_int = 3085486601, pa_u_long_int = 3085486601, pa_u_long_long_int = 136229472777, pa_double = 6.7306302450181019e-313, pa_long_double = <invalid float value>, pa_string = 0xb7e8ca09 "GLIBC_2.0", pa_wstring = 0xb7e8ca09 L"\x42494c47\x2e325f43\x4c470030\x5f434249\x312e32\x42494c47\x2e325f43\x312e31\x42494c47\x2e325f43\x322e31\x42494c47\x2e325f43\x332e31\x42494c47\x2e325f43\x4c470032\x5f434249\x2e322e32\x4c470031\x5f434249\x2e322e32\x4c470032\x5f434249\x2e322e32\x4c470033\x5f434249\x2e322e32\x4c470034\x5f434249\x2e322e32\x4c470036\x5f434249\x332e32\x42494c47\x2e325f43\x322e33\x42494c47\x2e325f43\x332e33\x42494c47\x2e325f43\x342e33\x42494c47\x2e325f43\x4c470034\x5f434249\x352e32\x42494c47\x2e325f43\x4c470036\x5f434249\x372e32\x42494c47\x2e325f43\x4c470038\x5f434249\x392e32\x42494c47\x2e325f43\x47003031\x4342494c\x312e325f\x4c470031\x5f434249\x32312e32\x494c4700\x325f4342\x33312e\x42494c47\x52505f43\x54415649\x43470045\x2e335f43\060\x1e001d00ḀḀ\x1e001f00\x4000700\x4001100\x3000200\xe000400\x11000200\x3000200\x2000200\x2000300\x2001b00\x3000200\x2000200\x11000380\xe800200\x3800200\x2000d00\x2000200\x1b000300\xd000400\x3000200\x2000200\x2000400\x2001000\x17000700\x2000200\x7000700\x3000200\x2000200\x2000200\x2000200\x1c000200\x1c000200\x3000200\x15000300\x11001900\x2800380\x3800d80\x2000200\x5000280\x2000200\x2800200\x3800200\xd000400\x2000200\x2000300\x2000200\x2000200\x2000200\x2000200\x2000700\x17000200\x2000300\x2000d00\x3001600\x2000400\x2000200\x2000200\x2001100\x2000200\x4001000\x2000200\x2800200\xe001100\x2000d00\x2000200\x2000200\x2000200\x3800200\x2000500\x7000200\x2000200\x2000a80\x3000f00\x3000200\x2000200\x2000300\x9001700\x2000200\x2000200\xd000200\x2000200\x2000200\x2000d00\x3001800\x1b000200\x7001100\x2000200\x2000200\x2000300\x2000380\x2000200\x2800200\x5000500\x2000200\x4800200\x7000300\x2000200\x2000200\x2000200\x7000300\x2000200\x2000200\x2001100\x2000400\x3000d00\x2000300\x2000200\x4000400\x2000200\x2000400\x2001b00\x5000300\x2000200\x12001180\x15000200\x8000200\x2000200\x11000300\x2000700\x7000200\x4000700\x11001000"..., pa_pointer = 0xb7e8ca09, pa_user = 0xb7e8ca09}
+        spec = <optimized out>
+        _buffer = {__routine = 0xb7e803c0, __arg = 0xb7eebc4e, __canceltype = -1207980552, __prev = 0xbfffe4a0}
+        _avail = 0
+        thousands_sep = 0x0
+        grouping = 0xffffffff <Address 0xffffffff out of bounds>
+        f = <optimized out>
+        lead_str_end = 0x807ca5c "%-8.*s%s %-12.*s %-*s%s%s %-8s%s"
+        work_buffer = '\000' <repeats 468 times>, "\037\357\377\277-\000\000\000\204\342\377\277#}\356\267a\224E\b\037\357\377\277-\000\000\000P\350\377\277\001\000\000\000\344\350\377\277\001\000\000\000\364O\374\267P\350\377\277\220\306\a\b(\350\377\277m\254\353\267P\350\377\277\217\306\a\b\001", '\000' <repeats 35 times>"\217, \306\a\b\001", '\000' <repeats 119 times>, " ", '\000' <repeats 27 times>, "4\351\377\277\000\000\000\000\323\377\377\377\000\000\000\000\000\000\000\000\377\377\377\377\377\377\377\377\000\000\000\000s\000\000\000\220\347\377\277", '\000' <repeats 12 times>"\216, \306\a\b\371\326\353\267\000\000\000\000\002\000\000\000\215\306\a\b\000\000\000\000\060\351\377\277/\000\000\000\214\306\a\b", '\000' <repeats 24 times>, "\021\375\364\267\000\000\000\000\247\r\000\000\000\000\000\000\364O\374\267\364O\374\267\260\224E\b\001\000\000\000\374\343\377\277\065H\356\267\324W\356\267\350\377\377\377\377\377\377\377\001\000\000\000\364O\374\267\250\344\377\277\234Y\224E\b\350\377\377\377\377\377\377\377\001\000\000\000\340g\350\267\030ii\rT\344\377\277\246\255\376\267\335\312跮\207\004\b\000\000\000\000\b\207\004\bX\v\376\267\025\000\377\277\340\n\377\267\b\207"...
+        workstart = 0x0
+        workend = 0xbfffe460 "\367V\372\267\020"
+        ap_save = 0xbfffe5fc " "
+        nspecs_done = 3
+        save_errno = 2
+        readonly_format = 0
+        args_malloced = 0x0
+        specs = <optimized out>
+        specs_malloced = false
+        jump_table = "\001\000\000\004\000\016\000\006\000\000\a\002\000\003\t\000\005\b\b\b\b\b\b\b\b\b\000\000\000\000\000\000\000\032\000\031\000\023\023\023\000\035\000\000\f\000\000\000\000\000\000\025\000\000\000\000\022\000\r\000\000\000\000\000\000\032\000\024\017\023\023\023\n\017\034\000\v\030\027\021\026\f\000\025\033\020\000\000\022\000\r"
+        __PRETTY_FUNCTION__ = "_IO_vfprintf_internal"
+#1  0xb7f64232 in *__GI___vasprintf_chk (result_ptr=0xbfffe8e4, flags=1, format=0x807ca5c "%-8.*s%s %-12.*s %-*s%s%s %-8s%s", args=0xbfffe5fc " ") at vasprintf_chk.c:68
+        sf = {_sbf = {_f = {_flags = -72515584, _IO_read_ptr = 0x8459500 "phulin   `ral0        ", _IO_read_end = 0x8459500 "phulin   `ral0        ", _IO_read_base = 0x8459500 "phulin   `ral0        ", _IO_write_base = 0x8459500 "phulin   `ral0        ", _IO_write_ptr = 0x8459516 "", _IO_write_end = 0x8459564 "\031", _IO_buf_base = 0x8459500 "phulin   `ral0        ", _IO_buf_end = 0x8459564 "\031", _IO_save_base = 0x0, _IO_backup_base = 0x0, _IO_save_end = 0x0, _markers = 0x0, _chain = 0x0, _fileno = 2, _flags2 = 4, _old_offset = 32, _cur_column = 0, _vtable_offset = 0 '\000', _shortbuf = "", _lock = 0x0, _offset = -5189162888186931939, _codecvt = 0xb7e867e0, _wide_data = 0xb7fe0858, _freeres_list = 0x0, _freeres_buf = 0xffffffff, _freeres_size = 3087003636, _mode = -1, _unused2 = "\001\000\000\000\320\345\377\277\026\374\376\267\300\372\377\267X\v\376\267\001\000\000\000\001\000\000\000\000\000\000\000\001\000\000\000܆\004\b"}, vtable = 0xb7fc4b00}, _s = {_allocate_buffer = 0xb7eee280 <*__GI___libc_malloc>, _free_buffer = 0xb7eee1a0 <*__GI___libc_free>}}
+        ret = <optimized out>
+        needed = <optimized out>
+#2  0xb7f64166 in __asprintf_chk (result_ptr=result_ptr@entry=0xbfffe8e4, flags=flags@entry=1, format=format@entry=0x807ca5c "%-8.*s%s %-12.*s %-*s%s%s %-8s%s") at asprintf_chk.c:34
+        done = 0
+#3  0x080497c5 in asprintf (__fmt=0x807ca5c "%-8.*s%s %-12.*s %-*s%s%s %-8s%s", __ptr=0xbfffe8d4) at /usr/include/i386-linux-gnu/bits/stdio2.h:158
+No locals.
+#4  print_line (userlen=32, user=<optimized out>, state=<optimized out>, linelen=32, line=0x84511e0 "`ral0", time_str=0x74a66e60 <Address 0x74a66e60 out of bounds>, idle=0xbfffee83 "  ?", pid=0xbfffee8a "30490", comment=0x8459460 "(northeast-fortyfive-one-seventy-eight.mit.edu)", exitstr=0x807c648 "") at src/who.c:345
+        mesg = " ?"
+        buf = <optimized out>
+        x_idle = "\000\000\000\000\000\060\000"
+        x_pid = "\000\000\000\000\000\000\000\000\000\062d%V"
+        x_exitstr = 0x84594f0 ""
+        err = 0
+#5  0x0805db6d in print_user (utmp_ent=0x84511d8, boottime=0, boottime@entry=1440783722) at src/who.c:2283
+        stats = {st_dev = 577733079456542564, __pad1 = 61272, __st_ino = 3087006308, st_mode = 0, st_nlink = 3086879624, st_uid = 1, st_gid = 0, st_rdev = 13258589640757084161, __pad2 = 60876, st_size = 3086504112, st_blksize = 0, st_blocks = 0, st_atim = {tv_sec = 0, tv_nsec = 0}, st_mtim = {tv_sec = -1073746016, tv_nsec = -1073746088}, st_ctim = {tv_sec = -1073746076, tv_nsec = 0}, st_ino = 3087005960}
+        last_change = <optimized out>
+        idlestr = "  ?\000\000\001"
+        hoststr = 0x8459460 "(northeast-fortyfive-one-seventy-eight.mit.edu)"
+        hostlen = 48
+        line = "/dev/`ral0\000\205\004\b\001\000\000\000\364\357\377\267\240\357\377\277\300\372\377\267t\357\377\277b\266\376\267"
+        p = <optimized out>
+        pidstr = "30490\000\210\v\376\267X\b"
+#6  0x080644a3 in scan_entries (utmp_buf=0x84511d8, n=<optimized out>) at src/who.c:3467
+        lava_3359 = <optimized out>
+        lava_3386 = <optimized out>
+        lava_2570 = <optimized out>
+        lava_3023 = <optimized out>
+        lava_345 = 1440783722
+        lava_624 = 1440783722
+        lava_729 = 1440783722
+        lava_2751 = 1440783722
+        lava_2199 = <optimized out>
+        lava_2085 = <optimized out>
+        lava_2569 = 1440783722
+        lava_3940 = 1440783722
+        lava_4138 = 1440783722
+        lava_4336 = 1440783722
+        lava_3223 = <optimized out>
+        lava_3166 = <optimized out>
+        lava_521 = 1440783722
+        lava_3941 = <optimized out>
+        lava_4139 = <optimized out>
+        lava_4337 = <optimized out>
+        lava_1308 = 1440783722
+        lava_1182 = 1440783722
+        lava_3270 = <optimized out>
+        lava_3528 = <optimized out>
+        lava_1444 = 1440783722
+        lava_1798 = 1440783722
+        lava_1954 = 1440783722
+        lava_3022 = 1440783722
+        ttyname_b = 0xffffffff <Address 0xffffffff out of bounds>
+        boottime = 1440783722
+#7  who (filename=<optimized out>, options=options@entry=0) at src/who.c:4384
+        n_users = 83
+        utmp_buf = 0x8450a58
+#8  0x08065a54 in main (argc=2, argv=0xbffff234) at src/who.c:4633
+        optc = <optimized out>
+        assumptions = true
+A debugging session is active.
+
+	Inferior 1 [process 14554] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

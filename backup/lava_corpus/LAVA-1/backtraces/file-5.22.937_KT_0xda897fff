@@ -1,0 +1,78 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000413266 in mconvert (ms=0xc2ae60, m=0x7ffff6e2c0f8, flip=0) at softmagic.c:950
+950			p->s[sizeof(p->s) - 1] = '\0';
+
+Thread 1 (process 13066):
+#0  0x0000000000413266 in mconvert (ms=0xc2ae60, m=0x7ffff6e2c0f8, flip=0) at softmagic.c:950
+        p = 0xc2aed0
+        type = 5 '\005'
+#1  0x0000000000415139 in mget (ms=0x62af20, s=0x7ffff7f86010 "\377\177\211\332\002\001\001", m=0x7ffff6e2c0f8, nbytes=118280, o=0, cont_level=0, mode=32, text=0, flip=0, indir_level=0, name_count=0x7fffffffd102, printed_something=0x7fffffffd104, need_separator=0x7fffffffd108, returnval=0x7fffffffd044) at softmagic.c:1737
+        offset = 0
+        lhs = 3670080
+        pb = 0x400040
+        rv = 4194313
+        oneed_separator = 1703963
+        in_type = 0
+        rbuf = 0x500000006 <error: Cannot access memory at address 0x500000006>
+        p = 0x62af90
+        ml = {magic = 0x1f8, nmagic = 504, map = 0x8, next = 0x400000003, prev = 0x238}
+#2  0x0000000000410eea in match (ms=0x62af20, magic=0x7ffff6e2c0f8, nmagic=10757, s=0x7ffff7f86010 "\377\177\211\332\002\001\001", nbytes=118280, offset=0, mode=32, text=0, flip=0, indir_level=0, name_count=0x7fffffffd102, printed_something=0x7fffffffd104, need_separator=0x7fffffffd108, returnval=0x7fffffffd044) at softmagic.c:182
+        flush = 0
+        m = 0x7ffff6e2c0f8
+        magindex = 0
+        cont_level = 0
+        returnvalv = 0
+        e = 4
+        firstline = 1
+        print = 1
+#3  0x0000000000410bd2 in file_softmagic (ms=0x62af20, buf=0x7ffff7f86010 "\377\177\211\332\002\001\001", nbytes=118280, indir_level=0, name_count=0x7fffffffd102, mode=32, text=0) at softmagic.c:88
+        ml = 0x62b240
+        rv = 0
+        printed_something = 0
+        need_separator = 0
+        nc = 0
+#4  0x000000000040e22e in file_buffer (ms=0x62af20, fd=3, inname=0x7fffffffd8bc "file-5.22.937_KT_0xda897fff/CRASH_INPUT", buf=0x7ffff7f86010, nb=118280) at funcs.c:230
+        m = 0
+        rv = 0
+        looks_text = 0
+        mime = 0
+        ubuf = 0x7ffff7f86010 "\377\177\211\332\002\001\001"
+        u8buf = 0x7ffff7e9e010
+        ulen = 4
+        code = 0x423025 "unknown"
+        code_mime = 0x42302d "binary"
+        type = 0x423a21 "application/octet-stream"
+        def = 0x423a3a "data"
+        ftype = 0x42302d "binary"
+#5  0x00000000004041d2 in file_or_fd (ms=0x62af20, inname=0x7fffffffd8bc "file-5.22.937_KT_0xda897fff/CRASH_INPUT", fd=3) at magic.c:475
+        rv = -1
+        buf = 0x7ffff7f86010 "\377\177\211\332\002\001\001"
+        sb = {st_dev = 66306, st_ino = 28847779, st_nlink = 1, st_mode = 33204, st_uid = 1000, st_gid = 1000, __pad0 = 0, st_rdev = 0, st_size = 118280, st_blksize = 4096, st_blocks = 232, st_atim = {tv_sec = 1465424838, tv_nsec = 902864474}, st_mtim = {tv_sec = 1465424838, tv_nsec = 906864591}, st_ctim = {tv_sec = 1465424838, tv_nsec = 906864591}, __glibc_reserved = {0, 0, 0}}
+        nbytes = 118280
+        ispipe = 0
+        pos = -1
+#6  0x0000000000403da8 in magic_file (ms=0x62af20, inname=0x7fffffffd8bc "file-5.22.937_KT_0xda897fff/CRASH_INPUT") at magic.c:353
+No locals.
+#7  0x00000000004030aa in process (ms=0x62af20, inname=0x7fffffffd8bc "file-5.22.937_KT_0xda897fff/CRASH_INPUT", wid=39) at file.c:497
+        type = 0x1 <error: Cannot access memory at address 0x1>
+        std_in = 0
+#8  0x0000000000402add in main (argc=2, argv=0x7fffffffd4c8) at file.c:370
+        j = 2
+        wid = 39
+        nw = 39
+        c = -1
+        i = 4320845
+        action = 0
+        didsomefiles = 0
+        errflg = 0
+        flags = 0
+        e = 0
+        magic = 0x62af20
+        longindex = 32767
+        magicfile = 0x0
+A debugging session is active.
+
+	Inferior 1 [process 13066] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

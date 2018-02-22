@@ -1,0 +1,78 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000415122 in file_strncmp (s1=0x80007541f52a <error: Cannot access memory at address 0x80007541f52a>, s2=0x62bf90 "\177ELF\002\001\001", len=34, flags=0) at softmagic.c:1762
+1762				if ((v = *b++ - *a++) != '\0')
+
+Thread 1 (process 12672):
+#0  0x0000000000415122 in file_strncmp (s1=0x80007541f52a <error: Cannot access memory at address 0x80007541f52a>, s2=0x62bf90 "\177ELF\002\001\001", len=34, flags=0) at softmagic.c:1762
+        a = 0x80007541f52b <error: Cannot access memory at address 0x80007541f52b>
+        b = 0x62bf91 "ELF\002\001\001"
+        v = 0
+#1  0x0000000000415857 in magiccheck (ms=0x62bf20, m=0x7ffff6e2c0f8) at softmagic.c:1942
+        l = 0
+        v = 1179385856
+        fl = 4.59163468e-41
+        fv = -nan(0x7fd0e4)
+        dl = 6.9533482529969775e-310
+        dv = 6.9533491519098949e-310
+        matched = -12056
+        p = 0x62bf90
+#2  0x0000000000410f52 in match (ms=0x62bf20, magic=0x7ffff6e2c0f8, nmagic=10757, s=0x7ffff7f86010 "\177ELF\002\001\001", nbytes=118280, offset=0, mode=32, text=0, flip=0, indir_level=0, name_count=0x7fffffffd0e2, printed_something=0x7fffffffd0e4, need_separator=0x7fffffffd0e8, returnval=0x7fffffffd024) at softmagic.c:194
+        flush = 0
+        m = 0x7ffff6e2c0f8
+        magindex = 0
+        cont_level = 0
+        returnvalv = 0
+        e = 4
+        firstline = 1
+        print = 1
+#3  0x0000000000410be0 in file_softmagic (ms=0x62bf20, buf=0x7ffff7f86010 "\177ELF\002\001\001", nbytes=118280, indir_level=0, name_count=0x7fffffffd0e2, mode=32, text=0) at softmagic.c:88
+        ml = 0x62c240
+        rv = 0
+        printed_something = 0
+        need_separator = 0
+        nc = 0
+#4  0x000000000040e22e in file_buffer (ms=0x62bf20, fd=3, inname=0x7fffffffd8a6 "file-5.22.1186_R_0x12345678-0x12349678/CRASH_INPUT", buf=0x7ffff7f86010, nb=118280) at funcs.c:230
+        m = 0
+        rv = 0
+        looks_text = 0
+        mime = 0
+        ubuf = 0x7ffff7f86010 "\177ELF\002\001\001"
+        u8buf = 0x7ffff7e9e010
+        ulen = 4
+        code = 0x423065 "unknown"
+        code_mime = 0x42306d "binary"
+        type = 0x423a61 "application/octet-stream"
+        def = 0x423a7a "data"
+        ftype = 0x42306d "binary"
+#5  0x00000000004041d2 in file_or_fd (ms=0x62bf20, inname=0x7fffffffd8a6 "file-5.22.1186_R_0x12345678-0x12349678/CRASH_INPUT", fd=3) at magic.c:475
+        rv = -1
+        buf = 0x7ffff7f86010 "\177ELF\002\001\001"
+        sb = {st_dev = 66306, st_ino = 28845434, st_nlink = 1, st_mode = 33204, st_uid = 1000, st_gid = 1000, __pad0 = 0, st_rdev = 0, st_size = 118280, st_blksize = 4096, st_blocks = 232, st_atim = {tv_sec = 1465424831, tv_nsec = 542651359}, st_mtim = {tv_sec = 1465424831, tv_nsec = 542651359}, st_ctim = {tv_sec = 1465424831, tv_nsec = 542651359}, __glibc_reserved = {0, 0, 0}}
+        nbytes = 118280
+        ispipe = 0
+        pos = -1
+#6  0x0000000000403da8 in magic_file (ms=0x62bf20, inname=0x7fffffffd8a6 "file-5.22.1186_R_0x12345678-0x12349678/CRASH_INPUT") at magic.c:353
+No locals.
+#7  0x00000000004030aa in process (ms=0x62bf20, inname=0x7fffffffd8a6 "file-5.22.1186_R_0x12345678-0x12349678/CRASH_INPUT", wid=50) at file.c:497
+        type = 0x1 <error: Cannot access memory at address 0x1>
+        std_in = 0
+#8  0x0000000000402add in main (argc=2, argv=0x7fffffffd4a8) at file.c:370
+        j = 2
+        wid = 50
+        nw = 50
+        c = -1
+        i = 4320861
+        action = 0
+        didsomefiles = 0
+        errflg = 0
+        flags = 0
+        e = 0
+        magic = 0x62bf20
+        longindex = 32767
+        magicfile = 0x0
+A debugging session is active.
+
+	Inferior 1 [process 12672] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

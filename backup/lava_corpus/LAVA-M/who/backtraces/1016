@@ -1,0 +1,134 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+__strnlen (str=0x74a68449 <Address 0x74a68449 out of bounds>, maxlen=31) at strnlen.c:47
+47	strnlen.c: No such file or directory.
+
+Thread 1 (process 14548):
+#0  __strnlen (str=0x74a68449 <Address 0x74a68449 out of bounds>, maxlen=31) at strnlen.c:47
+        char_ptr = 0x74a68449 <Address 0x74a68449 out of bounds>
+        end_ptr = 0x74a68468 <Address 0x74a68468 out of bounds>
+#1  0xb7efbb12 in __mbsnrtowcs (dst=0xbfffdee0 L"phu\xb7ee7d23in", src=0xbfffe4d0, nmc=32, len=32, ps=0xbfffe4bc) at mbsnrtowcs.c:66
+        srcend = 0x845120b ""
+        data = {__outbuf = 0xbfffdefc "", __outbufend = 0xbfffdf60 "d\312\a\b\001", __flags = 1, __invocation_counter = 0, __internal_use = 1, __statep = 0xbfffe4bc, __state = {__count = 0, __value = {__wch = 0, __wchb = "\000\000\000"}}, __trans = 0x0}
+        result = <optimized out>
+        status = <optimized out>
+        towc = 0x845a490
+        dummy = 0
+        fcts = <optimized out>
+        fct = <optimized out>
+        __PRETTY_FUNCTION__ = "__mbsnrtowcs"
+#2  0xb7ebae03 in _IO_vfprintf_internal (s=0xbfffe524, format=0x807ca5c "%-8.*s%s %-12.*s %-*s%s%s %-8s%s", ap=0xbfffe5fc " ") at vfprintf.c:1629
+        strend = 0x74a68469 <Address 0x74a68469 out of bounds>
+        ignore_size = 32
+        str2 = 0x74a68449 <Address 0x74a68449 out of bounds>
+        ps = {__count = 0, __value = {__wch = 0, __wchb = "\000\000\000"}}
+        len = <optimized out>
+        string_malloced = <optimized out>
+        step0_jumps = {0, -13709, -13482, -13404, -13321, -13247, -13159, -12935, -12644, -12278, -12051, -11786, -11571, -3374, -3794, -3733, -3404, -3389, -9843, -2600, -2865, -11483, -2226, -3276, -2011, -1950, -3200, -3488, -11571, -13011}
+        space = 0
+        is_short = 0
+        use_outdigits = 0
+        step1_jumps = {0, 0, 0, 0, 0, 0, 0, 0, 0, -12278, -12051, -11786, -11571, -3374, -3794, -3733, -3404, -3389, -9843, -2600, -2865, -11483, -2226, -3276, -2011, -1950, -3200, -3488, -11571, 0}
+        group = 0
+        prec = 1957069929
+        step2_jumps = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -12051, -11786, -11571, -3374, -3794, -3733, -3404, -3389, -9843, -2600, -2865, -11483, -2226, -3276, -2011, -1950, -3200, -3488, -11571, 0}
+        string = <optimized out>
+        left = 1
+        is_long_double = -1073748464
+        width = <optimized out>
+        step3a_jumps = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -11872, 0, 0, 0, -3794, -3733, -3404, -3389, -9843, 0, 0, 0, 0, -3276, 0, 0, 0, 0, 0, 0}
+        alt = 0
+        showsign = 0
+        is_long = 0
+        is_char = 0
+        pad = <optimized out>
+        step3b_jumps = {0 <repeats 11 times>, -11571, 0, 0, -3794, -3733, -3404, -3389, -9843, -2600, -2865, -11483, -2226, -3276, -2011, -1950, -3200, 0, 0, 0}
+        step4_jumps = {0 <repeats 14 times>, -3794, -3733, -3404, -3389, -9843, -2600, -2865, -11483, -2226, -3276, -2011, -1950, -3200, 0, 0, 0}
+        is_negative = 32
+        base = 0
+        the_arg = {pa_wchar = -1209480695 L'\xb7e8ca09', pa_int = -1209480695, pa_long_int = -1209480695, pa_long_long_int = 136229472777, pa_u_int = 3085486601, pa_u_long_int = 3085486601, pa_u_long_long_int = 136229472777, pa_double = 6.7306302450181019e-313, pa_long_double = <invalid float value>, pa_string = 0xb7e8ca09 "GLIBC_2.0", pa_wstring = 0xb7e8ca09 L"\x42494c47\x2e325f43\x4c470030\x5f434249\x312e32\x42494c47\x2e325f43\x312e31\x42494c47\x2e325f43\x322e31\x42494c47\x2e325f43\x332e31\x42494c47\x2e325f43\x4c470032\x5f434249\x2e322e32\x4c470031\x5f434249\x2e322e32\x4c470032\x5f434249\x2e322e32\x4c470033\x5f434249\x2e322e32\x4c470034\x5f434249\x2e322e32\x4c470036\x5f434249\x332e32\x42494c47\x2e325f43\x322e33\x42494c47\x2e325f43\x332e33\x42494c47\x2e325f43\x342e33\x42494c47\x2e325f43\x4c470034\x5f434249\x352e32\x42494c47\x2e325f43\x4c470036\x5f434249\x372e32\x42494c47\x2e325f43\x4c470038\x5f434249\x392e32\x42494c47\x2e325f43\x47003031\x4342494c\x312e325f\x4c470031\x5f434249\x32312e32\x494c4700\x325f4342\x33312e\x42494c47\x52505f43\x54415649\x43470045\x2e335f43\060\x1e001d00ḀḀ\x1e001f00\x4000700\x4001100\x3000200\xe000400\x11000200\x3000200\x2000200\x2000300\x2001b00\x3000200\x2000200\x11000380\xe800200\x3800200\x2000d00\x2000200\x1b000300\xd000400\x3000200\x2000200\x2000400\x2001000\x17000700\x2000200\x7000700\x3000200\x2000200\x2000200\x2000200\x1c000200\x1c000200\x3000200\x15000300\x11001900\x2800380\x3800d80\x2000200\x5000280\x2000200\x2800200\x3800200\xd000400\x2000200\x2000300\x2000200\x2000200\x2000200\x2000200\x2000700\x17000200\x2000300\x2000d00\x3001600\x2000400\x2000200\x2000200\x2001100\x2000200\x4001000\x2000200\x2800200\xe001100\x2000d00\x2000200\x2000200\x2000200\x3800200\x2000500\x7000200\x2000200\x2000a80\x3000f00\x3000200\x2000200\x2000300\x9001700\x2000200\x2000200\xd000200\x2000200\x2000200\x2000d00\x3001800\x1b000200\x7001100\x2000200\x2000200\x2000300\x2000380\x2000200\x2800200\x5000500\x2000200\x4800200\x7000300\x2000200\x2000200\x2000200\x7000300\x2000200\x2000200\x2001100\x2000400\x3000d00\x2000300\x2000200\x4000400\x2000200\x2000400\x2001b00\x5000300\x2000200\x12001180\x15000200\x8000200\x2000200\x11000300\x2000700\x7000200\x4000700\x11001000"..., pa_pointer = 0xb7e8ca09, pa_user = 0xb7e8ca09}
+        spec = <optimized out>
+        _buffer = {__routine = 0xb7e803c0, __arg = 0xb7eebc4e, __canceltype = -1207980552, __prev = 0xbfffe4a0}
+        _avail = 0
+        thousands_sep = 0x0
+        grouping = 0xffffffff <Address 0xffffffff out of bounds>
+        f = <optimized out>
+        lead_str_end = 0x807ca5c "%-8.*s%s %-12.*s %-*s%s%s %-8s%s"
+        work_buffer = "\204\340\377\277\000\000\000\000\020\245E\b\230\342\377\277\364O\374\267\314\340\377\277@\342\377\277̤E\b)=\372\267\310\340\377\277\000\000\000\000\000\000\000\000\004\000\000\000y\306\a\b\200\342\377\277\230\342\377\277\000\000\000\000\177\306\a\b\000\000\000\000X\000E\b\240\340\377\277\000\000\000\000\364O\374\267X\000E\b\000R\351\267\\\342\377\277\261\273\357\267\220\244E\b\034\342\377\277\000\350\377\277\177\306\a\b\000\000\000\000L\342\377\277\000\000\000\000\001", '\000' <repeats 11 times>, "\177\306\a\b\220\244E\b\364O\374\267(\227E\b\030\000\000\000\240\341\377\277\v\200\352\267\020\227E\b@\343\377\277\030", '\000' <repeats 23 times>, "\003", '\000' <repeats 31 times>, "\020\227E\b\000\000\000\000\004\345\377\277@\025\352\267\000\000\000\000\b\000\000\000(\227E\b\000\000\000\000\000\000\000\000e\000\000\000\374\377\377\377\364O\374\267\020\227E\b0\000\000\000 \342\377\277\v\200\352\267\340\226E\b@\343\377\277\060", '\000' <repeats 23 times>, "\006", '\000' <repeats 31 times>"\340, \226E\b\000\000\000\000\004\345\377\277@"...
+        workstart = 0x0
+        workend = 0xbfffe4bc ""
+        ap_save = 0xbfffe5fc " "
+        nspecs_done = 2
+        save_errno = 0
+        readonly_format = 0
+        args_malloced = 0x0
+        specs = <optimized out>
+        specs_malloced = false
+        jump_table = "\001\000\000\004\000\016\000\006\000\000\a\002\000\003\t\000\005\b\b\b\b\b\b\b\b\b\000\000\000\000\000\000\000\032\000\031\000\023\023\023\000\035\000\000\f\000\000\000\000\000\000\025\000\000\000\000\022\000\r\000\000\000\000\000\000\032\000\024\017\023\023\023\n\017\034\000\v\030\027\021\026\f\000\025\033\020\000\000\022\000\r"
+        __PRETTY_FUNCTION__ = "_IO_vfprintf_internal"
+#3  0xb7f64232 in *__GI___vasprintf_chk (result_ptr=0xbfffe8e4, flags=1, format=0x807ca5c "%-8.*s%s %-12.*s %-*s%s%s %-8s%s", args=0xbfffe5fc " ") at vasprintf_chk.c:68
+        sf = {_sbf = {_f = {_flags = -72515584, _IO_read_ptr = 0x845a620 "phulin   \246E\b\377\377\377\377\377\377\377\377", _IO_read_end = 0x845a620 "phulin   \246E\b\377\377\377\377\377\377\377\377", _IO_read_base = 0x845a620 "phulin   \246E\b\377\377\377\377\377\377\377\377", _IO_write_base = 0x845a620 "phulin   \246E\b\377\377\377\377\377\377\377\377", _IO_write_ptr = 0x845a629 "\246E\b\377\377\377\377\377\377\377\377", _IO_write_end = 0x845a684 "\301", _IO_buf_base = 0x845a620 "phulin   \246E\b\377\377\377\377\377\377\377\377", _IO_buf_end = 0x845a684 "\301", _IO_save_base = 0x0, _IO_backup_base = 0x0, _IO_save_end = 0x0, _markers = 0x0, _chain = 0x0, _fileno = 2, _flags2 = 4, _old_offset = 32, _cur_column = 0, _vtable_offset = 0 '\000', _shortbuf = "", _lock = 0x0, _offset = -5189162888186931939, _codecvt = 0xb7e867e0, _wide_data = 0xb7fe0858, _freeres_list = 0x0, _freeres_buf = 0xffffffff, _freeres_size = 3087003636, _mode = -1, _unused2 = "\001\000\000\000\320\345\377\277\026\374\376\267\300\372\377\267X\v\376\267\001\000\000\000\001\000\000\000\000\000\000\000\001\000\000\000܆\004\b"}, vtable = 0xb7fc4b00}, _s = {_allocate_buffer = 0xb7eee280 <*__GI___libc_malloc>, _free_buffer = 0xb7eee1a0 <*__GI___libc_free>}}
+        ret = <optimized out>
+        needed = <optimized out>
+#4  0xb7f64166 in __asprintf_chk (result_ptr=result_ptr@entry=0xbfffe8e4, flags=flags@entry=1, format=format@entry=0x807ca5c "%-8.*s%s %-12.*s %-*s%s%s %-8s%s") at asprintf_chk.c:34
+        done = 1957069897
+#5  0x080497c5 in asprintf (__fmt=0x807ca5c "%-8.*s%s %-12.*s %-*s%s%s %-8s%s", __ptr=0xbfffe8d4) at /usr/include/i386-linux-gnu/bits/stdio2.h:158
+No locals.
+#6  print_line (userlen=32, user=<optimized out>, state=<optimized out>, linelen=32, line=0x74a68449 <Address 0x74a68449 out of bounds>, time_str=0x844fc00 "2015-10-19 17:44", idle=0xbfffee83 " old ", pid=0xbfffee8a "30490", comment=0x845a590 "(northeast-fortyfive-one-seventy-eight.mit.edu)", exitstr=0x807c648 "") at src/who.c:345
+        mesg = " +"
+        buf = <optimized out>
+        x_idle = "\000\000\000\000\000\060\000"
+        x_pid = "\000\000\000\000\000\000\000\000\000\062d%V"
+        x_exitstr = 0x845a610 ""
+        err = 1957069897
+#7  0x0805db6d in print_user (utmp_ent=0x84511d8, boottime=0, boottime@entry=1440783722) at src/who.c:2283
+        stats = {st_dev = 10, __pad1 = 0, __st_ino = 3, st_mode = 8592, st_nlink = 1, st_uid = 1000, st_gid = 5, st_rdev = 34816, __pad2 = 0, st_size = 0, st_blksize = 1024, st_blocks = 0, st_atim = {tv_sec = 1465324472, tv_nsec = 35125283}, st_mtim = {tv_sec = 1465324472, tv_nsec = 35125283}, st_ctim = {tv_sec = 1459901524, tv_nsec = 35125283}, st_ino = 3}
+        last_change = <optimized out>
+        idlestr = " old \000"
+        hoststr = 0x845a590 "(northeast-fortyfive-one-seventy-eight.mit.edu)"
+        hostlen = 48
+        line = "/dev/pts/0\000\205\004\b\001\000\000\000\364\357\377\267\240\357\377\277\300\372\377\267t\357\377\277b\266\376\267"
+        p = <optimized out>
+        pidstr = "30490\000\210\v\376\267X\b"
+#8  0x080644a3 in scan_entries (utmp_buf=0x84511d8, n=<optimized out>) at src/who.c:3467
+        lava_3359 = <optimized out>
+        lava_3386 = <optimized out>
+        lava_2570 = <optimized out>
+        lava_3023 = <optimized out>
+        lava_345 = 1440783722
+        lava_624 = 1440783722
+        lava_729 = 1440783722
+        lava_2751 = 1440783722
+        lava_2199 = <optimized out>
+        lava_2085 = <optimized out>
+        lava_2569 = 1440783722
+        lava_3940 = 1440783722
+        lava_4138 = 1440783722
+        lava_4336 = 1440783722
+        lava_3223 = <optimized out>
+        lava_3166 = <optimized out>
+        lava_521 = 1440783722
+        lava_3941 = <optimized out>
+        lava_4139 = <optimized out>
+        lava_4337 = <optimized out>
+        lava_1308 = 1440783722
+        lava_1182 = 1440783722
+        lava_3270 = <optimized out>
+        lava_3528 = <optimized out>
+        lava_1444 = 1440783722
+        lava_1798 = 1440783722
+        lava_1954 = 1440783722
+        lava_3022 = 1440783722
+        ttyname_b = 0xffffffff <Address 0xffffffff out of bounds>
+        boottime = 1440783722
+#9  who (filename=<optimized out>, options=options@entry=0) at src/who.c:4384
+        n_users = 83
+        utmp_buf = 0x8450a58
+#10 0x08065a54 in main (argc=2, argv=0xbffff234) at src/who.c:4633
+        optc = <optimized out>
+        assumptions = true
+A debugging session is active.
+
+	Inferior 1 [process 14548] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

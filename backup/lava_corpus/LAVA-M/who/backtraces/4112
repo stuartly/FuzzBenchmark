@@ -1,0 +1,35 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+*__GI_fileno (fp=fp@entry=0x604b7b94) at fileno.c:37
+37	fileno.c: No such file or directory.
+
+Thread 1 (process 24747):
+#0  *__GI_fileno (fp=fp@entry=0x604b7b94) at fileno.c:37
+No locals.
+#1  0x08078c59 in rpl_fclose (fp=fp@entry=0xb7fc54c0) at lib/fclose.c:64
+        saved_errno = 0
+        fd = <optimized out>
+        result = 0
+#2  0x08075443 in close_stream (stream=0xb7fc54c0) at lib/close-stream.c:61
+        some_pending = true
+        prev_fail = <optimized out>
+        fclose_fail = <optimized out>
+#3  0x08065b88 in close_stdout () at lib/closeout.c:109
+No locals.
+#4  0xb7ea8f3f in __run_exit_handlers (status=0, listp=0xb7fc5304, run_list_atexit=true) at exit.c:78
+        atfct = <optimized out>
+        onfct = <optimized out>
+        cxafct = 0
+#5  0xb7ea8faf in *__GI_exit (status=0) at exit.c:100
+No locals.
+#6  0xb7e90e1e in __libc_start_main (main=0x80656a0 <main>, argc=2, ubp_av=0xbffff234, init=0x807c580 <__libc_csu_init>, fini=0x807c570 <__libc_csu_fini>, rtld_fini=0xb7ff0590, stack_end=0xbffff22c) at libc-start.c:276
+        result = 1615559572
+        unwind_buf = {cancel_jmp_buf = {{jmp_buf = {-1208201228, 0, 0, -1073745400, 1006911482, 301771242}, mask_was_saved = 0}}, priv = {pad = {0x0, 0x0, 0x2, 0x8049560}, data = {prev = 0x0, cleanup = 0x0, canceltype = 2}}}
+        not_first_call = <optimized out>
+#7  0x08049581 in _start ()
+No symbol table info available.
+A debugging session is active.
+
+	Inferior 1 [process 24747] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

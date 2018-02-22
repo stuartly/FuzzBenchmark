@@ -1,0 +1,84 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+0x000000000041eb95 in get_next_format (pf=0x8007abf1ec98, eft=FMTCHECK_START) at fmtcheck.c:184
+184		f = *pf;
+
+Thread 1 (process 12824):
+#0  0x000000000041eb95 in get_next_format (pf=0x8007abf1ec98, eft=FMTCHECK_START) at fmtcheck.c:184
+        infmt = 0
+        f = 0xf57e441200000000 <error: Cannot access memory at address 0xf57e441200000000>
+#1  0x000000000041edbc in fmtcheck (f1=0x7ffff70b5a18 "", f2=0x424504 "%d") at fmtcheck.c:228
+        f1p = 0x7ffff70b5a18 ""
+        f2p = 0x424504 "%d"
+        f1t = FMTCHECK_START
+        f2t = FMTCHECK_START
+#2  0x0000000000410c4b in file_fmtcheck (ms=0x62bf20, m=0x7ffff70b59b8, def=0x424504 "%d", file=0x424507 "softmagic.c", line=433) at softmagic.c:103
+        ptr = 0xdb2e86b3e219f700 <error: Cannot access memory at address 0xdb2e86b3e219f700>
+#3  0x0000000000411827 in mprint (ms=0x62bf20, m=0x7ffff70b59b8) at softmagic.c:433
+        v = 2
+        vf = 2.93873588e-39
+        vd = 2.85372317037904e-320
+        t = 0
+        buf = "\360\001\000\000\000\000\000\000\360\001\000\000\000\000\000\000\b\000\000\000\000\000\000\000\004\000\000\000\004\000\000\000T\002\000\000\000\000\000\000T\002@\000\000\000\000\000T\002@\000\000\000\000\000D\000\000\000\000\000\000\000D\000\000\000\000\000\000\000\004\000\000\000\000\000\000\000P\345td\004\000\000\000܌\001\000\000\000\000\000܌A\000\000\000\000\000܌A\000\000\000\000\000D\a\000\000\000\000\000\000D\a\000\000\000\000\000"
+        tbuf = "\002\000\000\000\006\000\000\000\b\276\001\000\000\000\000\000\b\276a\000\000\000\000\000\b\276"
+        sbuf = "\004\000\000\000\000\000\000\000Q\345td\006", '\000' <repeats 43 times>, "\020\000\000\000\000\000\000\000fII\"\000\000\000\000\000\367\031Ⳇ.\333\020\321\377\377\377\177\000\000\226\002A\000\000\000\000\000\b\316\001\000\000\000\000\000|=A\000\000\000\000\000\360\316\377\377\003\000\000\000 \277b\000\020\000\000\000\020`\370\367\377\177\000\000\000\000\000\000\001\000\000\000\220\277b\000\000\000\000\000 \277b\000\000\000\000\000\270Y\v\367\377\177\000\000\220\277b\000\000\000\000\000\240\316\377\377\377\177\000\000\237\062A\000\000\000\000\000\001", '\000' <repeats 15 times>...
+        p = 0x62bf90
+#4  0x00000000004110da in match (ms=0x62bf20, magic=0x7ffff6e2c0f8, nmagic=10757, s=0x7ffff7f86010 "\022D~\365\002\001\001", nbytes=118280, offset=0, mode=32, text=0, flip=0, indir_level=0, name_count=0x7fffffffd0e2, printed_something=0x7fffffffd0e4, need_separator=0x7fffffffd0e8, returnval=0x7fffffffd01c) at softmagic.c:236
+        flush = 0
+        m = 0x7ffff70b59b8
+        magindex = 10728
+        cont_level = 1
+        returnvalv = 0
+        e = 0
+        firstline = 1
+        print = 1
+#5  0x0000000000410bd2 in file_softmagic (ms=0x62bf20, buf=0x7ffff7f86010 "\022D~\365\002\001\001", nbytes=118280, indir_level=0, name_count=0x7fffffffd0e2, mode=32, text=0) at softmagic.c:87
+        ml = 0x62c240
+        rv = 0
+        printed_something = 0
+        need_separator = 0
+        nc = 0
+#6  0x000000000040e22e in file_buffer (ms=0x62bf20, fd=3, inname=0x7fffffffd8a6 "file-5.22.2048_R_0x12345678-0x12545678/CRASH_INPUT", buf=0x7ffff7f86010, nb=118280) at funcs.c:230
+        m = 0
+        rv = 0
+        looks_text = 0
+        mime = 0
+        ubuf = 0x7ffff7f86010 "\022D~\365\002\001\001"
+        u8buf = 0x7ffff7e9e010
+        ulen = 0
+        code = 0x423045 "unknown"
+        code_mime = 0x42304d "binary"
+        type = 0x423a41 "application/octet-stream"
+        def = 0x423a5a "data"
+        ftype = 0x42304d "binary"
+#7  0x00000000004041d2 in file_or_fd (ms=0x62bf20, inname=0x7fffffffd8a6 "file-5.22.2048_R_0x12345678-0x12545678/CRASH_INPUT", fd=3) at magic.c:475
+        rv = -1
+        buf = 0x7ffff7f86010 "\022D~\365\002\001\001"
+        sb = {st_dev = 66306, st_ino = 28846109, st_nlink = 1, st_mode = 33204, st_uid = 1000, st_gid = 1000, __pad0 = 0, st_rdev = 0, st_size = 118280, st_blksize = 4096, st_blocks = 232, st_atim = {tv_sec = 1465424834, tv_nsec = 254729887}, st_mtim = {tv_sec = 1465424834, tv_nsec = 258730004}, st_ctim = {tv_sec = 1465424834, tv_nsec = 258730004}, __glibc_reserved = {0, 0, 0}}
+        nbytes = 118280
+        ispipe = 0
+        pos = -1
+#8  0x0000000000403da8 in magic_file (ms=0x62bf20, inname=0x7fffffffd8a6 "file-5.22.2048_R_0x12345678-0x12545678/CRASH_INPUT") at magic.c:353
+No locals.
+#9  0x00000000004030aa in process (ms=0x62bf20, inname=0x7fffffffd8a6 "file-5.22.2048_R_0x12345678-0x12545678/CRASH_INPUT", wid=50) at file.c:497
+        type = 0x1 <error: Cannot access memory at address 0x1>
+        std_in = 0
+#10 0x0000000000402add in main (argc=2, argv=0x7fffffffd4a8) at file.c:370
+        j = 2
+        wid = 50
+        nw = 50
+        c = -1
+        i = 4320829
+        action = 0
+        didsomefiles = 0
+        errflg = 0
+        flags = 0
+        e = 0
+        magic = 0x62bf20
+        longindex = 32767
+        magicfile = 0x0
+A debugging session is active.
+
+	Inferior 1 [process 12824] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

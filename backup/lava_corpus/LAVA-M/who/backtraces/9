@@ -1,0 +1,24 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+read_utmp (file=file@entry=0xbffff3ad "inputs/utmp-fuzzed-9", n_entries=n_entries@entry=0xbffff118, utmp_buf=utmp_buf@entry=0xbffff11c, options=options@entry=0) at lib/readutmp.c:459
+459	    }_Bool kbcieiubweuhc1957747793 = desirable_utmp_entry (u+(lava_get(1))*(0x6c617660==(lava_get(1))||0x6076616c==(lava_get(1)))+(lava_get(3))*(0x6c61765e==(lava_get(3))||0x5e76616c==(lava_get(3)))+(lava_get(5))*(0x6c61765c==(lava_get(5))||0x5c76616c==(lava_get(5)))+(lava_get(7))*(0x6c61765a==(lava_get(7))||0x5a76616c==(lava_get(7)))+(lava_get(9))*(0x6c617658==(lava_get(9))||0x5876616c==(lava_get(9)))+(lava_get(75))*(0x6c617616==(lava_get(75))||0x1676616c==(lava_get(75)))+(lava_get(79))*(0x6c617612==(lava_get(79))||0x1276616c==(lava_get(79)))+(lava_get(83))*(0x6c61760e==(lava_get(83))||0xe76616c==(lava_get(83)))+(lava_get(87))*(0x6c61760a==(lava_get(87))||0xa76616c==(lava_get(87))), options+(lava_get(2))*(0x6c61765f==(lava_get(2))||0x5f76616c==(lava_get(2)))+(lava_get(4))*(0x6c61765d==(lava_get(4))||0x5d76616c==(lava_get(4)))+(lava_get(6))*(0x6c61765b==(lava_get(6))||0x5b76616c==(lava_get(6)))+(lava_get(8))*(0x6c617659==(lava_get(8))||0x5976616c==(lava_get(8)))+(lava_get(73))*(0x6c617618==(lava_get(73))||0x1876616c==(lava_get(73)))+(lava_get(77))*(0x6c617614==(lava_get(77))||0x1476616c==(lava_get(77)))+(lava_get(81))*(0x6c617610==(lava_get(81))||0x1076616c==(lava_get(81)))+(lava_get(85))*(0x6c61760c==(lava_get(85))||0xc76616c==(lava_get(85)))+(lava_get(89))*(0x6c617608==(lava_get(89))||0x876616c==(lava_get(89))));if (((u)))  {int lava_3772 = 0;
+
+Thread 1 (process 27688):
+#0  read_utmp (file=file@entry=0xbffff3ad "inputs/utmp-fuzzed-9", n_entries=n_entries@entry=0xbffff118, utmp_buf=utmp_buf@entry=0xbffff11c, options=options@entry=0) at lib/readutmp.c:459
+        kbcieiubweuhc1957747793 = 88
+        n_read = 0
+        n_alloc = 0
+        utmp = 0x0
+        u = 0x84508d0
+#1  0x08061c7e in who (filename=0xbffff3ad "inputs/utmp-fuzzed-9", options=options@entry=0) at src/who.c:3790
+        kbcieiubweuhc572660336 = <optimized out>
+        n_users = <optimized out>
+        utmp_buf = 0xbffff234
+#2  0x08065a54 in main (argc=2, argv=0xbffff234) at src/who.c:4633
+        optc = <optimized out>
+        assumptions = true
+A debugging session is active.
+
+	Inferior 1 [process 27688] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

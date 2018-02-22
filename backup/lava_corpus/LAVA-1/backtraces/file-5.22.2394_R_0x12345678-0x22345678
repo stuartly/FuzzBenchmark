@@ -1,0 +1,88 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+_IO_vasprintf (result_ptr=0x8004959dfc28, format=<optimized out>, args=0x7fffffffcbc0) at vasprintf.c:76
+76	vasprintf.c: No such file or directory.
+
+Thread 1 (process 12849):
+#0  _IO_vasprintf (result_ptr=0x8004959dfc28, format=<optimized out>, args=0x7fffffffcbc0) at vasprintf.c:76
+        string = <optimized out>
+        sf = {_sbf = {_f = {_flags = -72515584, _IO_read_ptr = 0x62b1d0 "\270\234\273\367\377\177", _IO_read_end = 0x62b1d0 "\270\234\273\367\377\177", _IO_read_base = 0x62b1d0 "\270\234\273\367\377\177", _IO_write_base = 0x62b1d0 "\270\234\273\367\377\177", _IO_write_ptr = 0x62b1d0 "\270\234\273\367\377\177", _IO_write_end = 0x62b234 "", _IO_buf_base = 0x62b1d0 "\270\234\273\367\377\177", _IO_buf_end = 0x62b234 "", _IO_save_base = 0x0, _IO_backup_base = 0x0, _IO_save_end = 0x0, _markers = 0x0, _chain = 0x0, _fileno = -1833712104, _flags2 = 0, _old_offset = 140737488341904, _cur_column = 0, _vtable_offset = 64 '@', _shortbuf = "", _lock = 0x0, _offset = 1, _codecvt = 0x7ffff7de8a92 <_dl_fixup+466>, _wide_data = 0xffffffffffffffff, _freeres_list = 0x0, _freeres_buf = 0x0, _freeres_size = 140737488341936, _mode = -1, _unused2 = "\000\000\000\000\060\377\336\367\377\177\000\000\000\000\000\000\000\000\000"}, vtable = 0x7ffff7bb8900 <_IO_str_jumps>}, _s = {_allocate_buffer = 0x7ffff78793f0 <__GI___libc_malloc>, _free_buffer = 0x7ffff78797a0 <__GI___libc_free>}}
+        ret = 0
+        needed = 1
+        allocated = <optimized out>
+#1  0x000000000040db73 in file_vprintf (ms=0x62af20, fmt=0x7ffff701ac08 "", ap=0x7fffffffcbc0) at funcs.c:67
+        len = 0
+        buf = 0x7ffff7ffe188 ""
+        newstr = 0x3c <error: Cannot access memory at address 0x3c>
+#2  0x000000000040dce6 in file_printf (ms=0x62af20, fmt=0x7ffff701ac08 "") at funcs.c:93
+        rv = 0
+        ap = {{gp_offset = 16, fp_offset = 48, overflow_arg_area = 0x7fffffffcca0, reg_save_area = 0x7fffffffcbe0}}
+#3  0x000000000041188e in mprint (ms=0x62af20, m=0x7ffff701aba8) at softmagic.c:430
+        v = 24
+        vf = 1.59972233e-40
+        vd = 1.2731974746779765e-313
+        t = 0
+        buf = "\b\000\000\000\000\000\000\000\004\000\000\000\004\000\000\000T\002\000\000\000\000\000\000T\002@\000\000\000\000\000T\002@\000\000\000\000\000D\000\000\000\000\000\000\000D\000\000\000\000\000\000\000\004\000\000\000\000\000\000\000P\345td\004\000\000\000܌\001\000\000\000\000\000܌A\000\000\000\000\000܌A\000\000\000\000\000D\a\000\000\000\000\000\000D\a\000\000\000\000\000\000\004\000\000\000\000\000\000\000Q\345td\006\000\000"
+        tbuf = "\b\276a\000\000\000\000\000\b\276a\000\000\000\000\000\360\001\000\000\000\000\000\000\360\001"
+        sbuf = '\000' <repeats 40 times>, "\020\000\000\000\000\000\000\000fII\"\000\000\000\000\000\354\a}\333q\210M\020\321\377\377\377\177\000\000\177\003A\000\000\000\000\000\b\316\001\000\000\000\000\000\020`\370\367\377\177\000\000\360\316\377\377\003\000\000\000\307=A", '\000' <repeats 13 times>, "\004\000\000\000\000\000\000\000\020`\370\367\377\177\000\000\000\000\000\000\001\000\000\000\220\257b\000\000\000\000\000 \257b\000\000\000\000\000\250\253\001\367\377\177\000\000\220\257b\000\000\000\000\000\260\316\377\377\377\177\000\000\352\062A\000\000\000\000\000\270\317\377\377\377\177\000\000"...
+        p = 0x62af90
+#4  0x000000000041113a in match (ms=0x62af20, magic=0x7ffff6e2c0f8, nmagic=10757, s=0x7ffff7f86010 "\030Ƴ\222\002\001\001", nbytes=118280, offset=0, mode=32, text=0, flip=0, indir_level=0, name_count=0x7fffffffd0e2, printed_something=0x7fffffffd0e4, need_separator=0x7fffffffd0e8, returnval=0x7fffffffd024) at softmagic.c:233
+        flush = 0
+        m = 0x7ffff701aba8
+        magindex = 8170
+        cont_level = 0
+        returnvalv = 0
+        e = 0
+        firstline = 1
+        print = 1
+#5  0x0000000000410cbb in file_softmagic (ms=0x62af20, buf=0x7ffff7f86010 "\030Ƴ\222\002\001\001", nbytes=118280, indir_level=0, name_count=0x7fffffffd0e2, mode=32, text=0) at softmagic.c:86
+        ml = 0x62b240
+        rv = 0
+        printed_something = 0
+        need_separator = 0
+        nc = 0
+#6  0x000000000040e311 in file_buffer (ms=0x62af20, fd=3, inname=0x7fffffffd8a6 "file-5.22.2394_R_0x12345678-0x22345678/CRASH_INPUT", buf=0x7ffff7f86010, nb=118280) at funcs.c:235
+        kbcieiubweuhc35005211 = 4
+        m = 0
+        rv = 0
+        looks_text = 0
+        mime = 0
+        ubuf = 0x7ffff7f86010 "\030Ƴ\222\002\001\001"
+        u8buf = 0x7ffff7e9e010
+        ulen = 0
+        code = 0x423005 "unknown"
+        code_mime = 0x42300d "binary"
+        type = 0x423a01 "application/octet-stream"
+        def = 0x423a1a "data"
+        ftype = 0x42300d "binary"
+#7  0x00000000004041d2 in file_or_fd (ms=0x62af20, inname=0x7fffffffd8a6 "file-5.22.2394_R_0x12345678-0x22345678/CRASH_INPUT", fd=3) at magic.c:475
+        rv = -1
+        buf = 0x7ffff7f86010 "\030Ƴ\222\002\001\001"
+        sb = {st_dev = 66306, st_ino = 28846213, st_nlink = 1, st_mode = 33204, st_uid = 1000, st_gid = 1000, __pad0 = 0, st_rdev = 0, st_size = 118280, st_blksize = 4096, st_blocks = 232, st_atim = {tv_sec = 1465424834, tv_nsec = 698742744}, st_mtim = {tv_sec = 1465424834, tv_nsec = 698742744}, st_ctim = {tv_sec = 1465424834, tv_nsec = 698742744}, __glibc_reserved = {0, 0, 0}}
+        nbytes = 118280
+        ispipe = 0
+        pos = -1
+#8  0x0000000000403da8 in magic_file (ms=0x62af20, inname=0x7fffffffd8a6 "file-5.22.2394_R_0x12345678-0x22345678/CRASH_INPUT") at magic.c:353
+No locals.
+#9  0x00000000004030aa in process (ms=0x62af20, inname=0x7fffffffd8a6 "file-5.22.2394_R_0x12345678-0x22345678/CRASH_INPUT", wid=50) at file.c:497
+        type = 0x1 <error: Cannot access memory at address 0x1>
+        std_in = 0
+#10 0x0000000000402add in main (argc=2, argv=0x7fffffffd4a8) at file.c:370
+        j = 2
+        wid = 50
+        nw = 50
+        c = -1
+        i = 4320781
+        action = 0
+        didsomefiles = 0
+        errflg = 0
+        flags = 0
+        e = 0
+        magic = 0x62af20
+        longindex = 32767
+        magicfile = 0x0
+A debugging session is active.
+
+	Inferior 1 [process 12849] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]
