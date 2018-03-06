@@ -1,0 +1,75 @@
+(*
+ * Copyright (c) 2012--2014 MSR-INRIA Joint Center. All rights reserved.
+ * 
+ * This code is distributed under the terms for the CeCILL-B (version 1)
+ * license.
+ * 
+ * You should have received a copy of the CeCILL-B (version 1) license
+ * along with this program.  If not, see:
+ * 
+ *   http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+ *)
+
+module StatefulLHAE
+
+open Error
+open TLSError
+open Bytes
+open TLSInfo
+open Range
+open StatefulPlain
+
+(* This module is parameterized by StatefulPlain, providing
+   abstract types 'plain' for plaintext and 'history' for sequences of plaintexts
+
+   The functionality is indexed by succEpochs, also treated abstractly. *)
+
+private type (;ki:id,rw:rw) state = {
+  key    : (;ki,rw) LHAE.LHAEKey;  // possibly stateful
+  history: (;ki) history           // ghost state, except for the sequence number
+}
+type (;ki:id) reader = r:(;ki,Reader) state
+type (;ki:id) writer = w:(;ki,Writer) state
+
+function val History: e:id * rw:rw * (;e,rw)state -> 'a //(;e)history
+private definition !e,rw,s. History(e,rw,s) = s.history
+
+val GEN:    ki:id               -> r:(;ki)reader * w:(;ki)writer{History (ki, TLSInfo.Reader, r) = EmptyHistory (ki) /\
+                                                                 History (ki, TLSInfo.Writer, w) = EmptyHistory (ki)}
+val COERCE: ki:id{not AuthId(ki)} -> rw:rw -> b:bytes{Length(b)=LHAE.KeySize(ki.aeAlg)} -> s:(;ki,rw)state{History(ki,rw,s) = EmptyHistory(ki)}
+val LEAK:   ki:id{not AuthId(ki)} -> rw:rw -> (;ki,rw)state -> b:bytes
+
+val history: ki:id -> rw:rw -> s:(;ki,rw) state -> h:(;ki)history{h=History(ki,rw,s)}
+
+// Ideally,
+// the writer maintains a table (i, h, ad, range, fragment, cipher) {...} [details?]
+// when SafeId(i), the writer uses 0s instead of the actual fragment
+// when AuthId(i), the reader decrypts by table lookup
+// turning forgeries into errors; retrieving the "right" history index; returning the concrete decrypted range
+
+type cipher = LHAE.cipher
+
+predicate ENCrypted of e:id * h:(;e)history * ad:(;e)adata * cipher
+private definition !e,h,ad,c.
+  ENCrypted(e,h,ad,c) <=>
+  (?ad'. B(ad') = LHAEPlain.MakeAD(e,h,B(ad)) /\
+         LHAE.ENCrypted(e,ad',c))
+
+val encrypt:
+  ki:id -> wr:(;ki) writer ->
+  ad:(;ki) adata ->
+  rg:range ->
+  f: (;ki,ad,History(ki,Writer,wr),rg) plain ->
+  (wr':(;ki) writer * c:cipher)
+  {   History(ki,Writer,wr') = ExtendHistory(ki,ad,History(ki,Writer,wr),rg,f)
+  /\  (SafeId(ki) => ENCrypted(ki,History(ki,Writer,wr),ad,c)) }
+
+val decrypt:
+  ki:id -> rd:(;ki) reader ->
+  ad:(;ki) adata ->
+  c:cipher ->
+  ((rd':(;ki)reader * rg:range * p:(;ki,ad,History(ki,Reader,rd),rg) plain){
+	History(ki,Reader,rd') = ExtendHistory(ki,ad,History(ki,Reader,rd),rg,p) /\
+	rg = CipherRangeClass(ki,Length(c)) /\
+	(SafeId(ki) => ENCrypted(ki,History(ki,Reader,rd),ad,c))
+  }) Result
