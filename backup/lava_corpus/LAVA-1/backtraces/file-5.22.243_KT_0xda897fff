@@ -1,0 +1,63 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000410357 in file_trycdf (ms=0xc2ae60, fd=3, buf=0x7ffff7f86010 "\377\177\211\332\002\001\001", nbytes=118280) at readcdf.c:363
+363	        if (ms->flags & MAGIC_APPLE)
+
+Thread 1 (process 12855):
+#0  0x0000000000410357 in file_trycdf (ms=0xc2ae60, fd=3, buf=0x7ffff7f86010 "\377\177\211\332\002\001\001", nbytes=118280) at readcdf.c:363
+        info = {i_fd = 3, i_buf = 0x7ffff7f86010 "\377\177\211\332\002\001\001", i_len = 118280}
+        h = {h_magic = 4198431, h_uuid = {575228262, 4294967295}, h_revision = 53144, h_version = 65535, h_byte_order = 32767, h_sec_size_p2 = 0, h_short_sec_size_p2 = 1656, h_unused0 = "\200\367\377\177\000\000\210z\377", <incomplete sequence \367>, h_num_sectors_in_sat = 32767, h_secid_first_directory = 4160715400, h_unused1 = "\377\177\000", h_min_size_standard_stream = 4198600, h_secid_first_sector_in_short_sat = 0, h_num_sectors_in_short_sat = 4196232, h_secid_first_sector_in_master_sat = 0, h_num_sectors_in_master_sat = 4294954904, h_master_sat = {32767, 2090683713, 0, 32666933, 0, 1, 32767, -12176, 32767, -142582240, 32767, -12396, 32767, -12192, 32767, 6460240, 0, 4203488, 0, -11072, 32767, 0, 0, 0, 0, 0, 0, -136410707, 32767, 1, 0, 0, 0, 118281, 0, -142604680, 32767, 0, 0, -12128, 32767, 4203488, 0, -136380624, 32767, 1848, 0, 7394, 1896, 231, 0, 1, 0, 322, 138, 3, 0, 0, 0, 122, 124, -134717276, 32767, -134717424, 32767, 118280, 0, -134717276, 32767, 8, 0, 118280, 0, 1, 0, -134225528, 32767, 103, 0, 4288943, 0, -134717276, 32767, -135667696, 8, 118280, 0, 0, 0, -12064, 32767, 4288695, 0, 118280, 0, -134717424, 32767, -11896, -1, 10174, 0, -134716912, 32767, -134717424, 32767, -12000, 32767, 4288533, 0}}
+        sat = {sat_tab = 0x1, sat_len = 0}
+        ssat = {sat_tab = 0x7fffffffcfc8, sat_len = 140737351924753}
+        sst = {sst_tab = 0x7ffff7805e20, sst_len = 140737351921564, sst_dirlen = 0}
+        scn = {sst_tab = 0x7fffffffcf10, sst_len = 8447298880, sst_dirlen = 140737354129800}
+        dir = {dir_tab = 0x2, dir_len = 140737353912416}
+        i = 0
+        expn = 0x424298 ""
+        corrupt = 0x424299 "corrupt: "
+        root_storage = 0x4
+#1  0x000000000040e29a in file_buffer (ms=0x62af20, fd=3, inname=0x7fffffffd8bc "file-5.22.243_KT_0xda897fff/CRASH_INPUT", buf=0x7ffff7f86010, nb=118280) at funcs.c:224
+        m = 0
+        rv = 0
+        looks_text = 0
+        mime = 0
+        ubuf = 0x7ffff7f86010 "\377\177\211\332\002\001\001"
+        u8buf = 0x7ffff7e9e010
+        ulen = 4
+        code = 0x422fe5 "unknown"
+        code_mime = 0x422fed "binary"
+        type = 0x4239e1 "application/octet-stream"
+        def = 0x4239fa "data"
+        ftype = 0x422fed "binary"
+#2  0x0000000000404269 in file_or_fd (ms=0x62af20, inname=0x7fffffffd8bc "file-5.22.243_KT_0xda897fff/CRASH_INPUT", fd=3) at magic.c:478
+        kbcieiubweuhc859484421 = 0
+        rv = -1
+        buf = 0x7ffff7f86010 "\377\177\211\332\002\001\001"
+        sb = {st_dev = 66306, st_ino = 28846244, st_nlink = 1, st_mode = 33204, st_uid = 1000, st_gid = 1000, __pad0 = 0, st_rdev = 0, st_size = 118280, st_blksize = 4096, st_blocks = 232, st_atim = {tv_sec = 1465424834, tv_nsec = 806745871}, st_mtim = {tv_sec = 1465424834, tv_nsec = 810745987}, st_ctim = {tv_sec = 1465424834, tv_nsec = 810745987}, __glibc_reserved = {0, 0, 0}}
+        nbytes = 118280
+        ispipe = 0
+        pos = -1
+#3  0x0000000000403da8 in magic_file (ms=0x62af20, inname=0x7fffffffd8bc "file-5.22.243_KT_0xda897fff/CRASH_INPUT") at magic.c:354
+No locals.
+#4  0x00000000004030aa in process (ms=0x62af20, inname=0x7fffffffd8bc "file-5.22.243_KT_0xda897fff/CRASH_INPUT", wid=39) at file.c:497
+        type = 0x1 <error: Cannot access memory at address 0x1>
+        std_in = 0
+#5  0x0000000000402add in main (argc=2, argv=0x7fffffffd4c8) at file.c:370
+        j = 2
+        wid = 39
+        nw = 39
+        c = -1
+        i = 4320781
+        action = 0
+        didsomefiles = 0
+        errflg = 0
+        flags = 0
+        e = 0
+        magic = 0x62af20
+        longindex = 32767
+        magicfile = 0x0
+A debugging session is active.
+
+	Inferior 1 [process 12855] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

@@ -1,0 +1,68 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+strlen () at ../sysdeps/i386/i486/strlen.S:40
+40	../sysdeps/i386/i486/strlen.S: No such file or directory.
+
+Thread 1 (process 17206):
+#0  strlen () at ../sysdeps/i386/i486/strlen.S:40
+No locals.
+#1  0x0804b591 in print_line (userlen=<optimized out>, user=<optimized out>, state=<optimized out>, linelen=32, line=0x84511e0 "pts/0", time_str=0x844fc00 "2015-10-19 17:44", idle=0xbfffee83 " old ", pid=0xbfffee8a "30490", comment=0x845a590 "(northeast-fortyfive-one-seventy-eight.mit.edu)", exitstr=0x807c648 "") at src/who.c:402
+        kbcieiubweuhc596516649 = <optimized out>
+        p = <optimized out>
+        mesg = " +"
+        buf = 0x845a620 "phulin   pts/0        2015-10-19 17:44 (northeast-fortyfive-one-seventy-eight.mit.edu)"
+        x_idle = "\000\000\000\000\000\060\000"
+        x_pid = "\000\000\000\000\000\000\000\000\000\062d%V"
+        x_exitstr = 0x845a610 ""
+        err = 1957107119
+#2  0x0805db6d in print_user (utmp_ent=0x84511d8, boottime=0, boottime@entry=1440783722) at src/who.c:2283
+        stats = {st_dev = 10, __pad1 = 0, __st_ino = 3, st_mode = 8592, st_nlink = 1, st_uid = 1000, st_gid = 5, st_rdev = 34816, __pad2 = 0, st_size = 0, st_blksize = 1024, st_blocks = 0, st_atim = {tv_sec = 1465324472, tv_nsec = 35125283}, st_mtim = {tv_sec = 1465324472, tv_nsec = 35125283}, st_ctim = {tv_sec = 1459901524, tv_nsec = 35125283}, st_ino = 3}
+        last_change = <optimized out>
+        idlestr = " old \000"
+        hoststr = 0x845a590 "(northeast-fortyfive-one-seventy-eight.mit.edu)"
+        hostlen = 48
+        line = "/dev/pts/0\000\205\004\b\001\000\000\000\364\357\377\267\240\357\377\277\300\372\377\267t\357\377\277b\266\376\267"
+        p = <optimized out>
+        pidstr = "30490\000\210\v\376\267X\b"
+#3  0x080644a3 in scan_entries (utmp_buf=0x84511d8, n=<optimized out>) at src/who.c:3467
+        lava_3359 = <optimized out>
+        lava_3386 = <optimized out>
+        lava_2570 = <optimized out>
+        lava_3023 = <optimized out>
+        lava_345 = 1440783722
+        lava_624 = 1440783722
+        lava_729 = 1440783722
+        lava_2751 = 1440783722
+        lava_2199 = <optimized out>
+        lava_2085 = <optimized out>
+        lava_2569 = 1440783722
+        lava_3940 = 1440783722
+        lava_4138 = 1440783722
+        lava_4336 = 1440783722
+        lava_3223 = <optimized out>
+        lava_3166 = <optimized out>
+        lava_521 = 1440783722
+        lava_3941 = <optimized out>
+        lava_4139 = <optimized out>
+        lava_4337 = <optimized out>
+        lava_1308 = 1440783722
+        lava_1182 = 1440783722
+        lava_3270 = <optimized out>
+        lava_3528 = <optimized out>
+        lava_1444 = 1440783722
+        lava_1798 = 1440783722
+        lava_1954 = 1440783722
+        lava_3022 = 1440783722
+        ttyname_b = 0xffffffff <Address 0xffffffff out of bounds>
+        boottime = 1440783722
+#4  who (filename=<optimized out>, options=options@entry=0) at src/who.c:4384
+        n_users = 83
+        utmp_buf = 0x8450a58
+#5  0x08065a54 in main (argc=2, argv=0xbffff234) at src/who.c:4633
+        optc = <optimized out>
+        assumptions = true
+A debugging session is active.
+
+	Inferior 1 [process 17206] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

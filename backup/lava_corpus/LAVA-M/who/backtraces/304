@@ -1,0 +1,60 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+0x08052722 in stzncpy (len=32, src=0x84511e0 "pts/0", dest=0x2c6163cc <Address 0x2c6163cc out of bounds>) at src/system.h:674
+674	    *dest++ = *src++;
+
+Thread 1 (process 21431):
+#0  0x08052722 in stzncpy (len=32, src=0x84511e0 "pts/0", dest=0x2c6163cc <Address 0x2c6163cc out of bounds>) at src/system.h:674
+        src_end = 0x8451200 "ts/0phulin"
+#1  print_user (utmp_ent=0x84511d8, boottime=boottime@entry=1440783722) at src/who.c:923
+        kbcieiubweuhc1350490027 = 0x2c6163cc <Address 0x2c6163cc out of bounds>
+        stats = {st_dev = 577733079456542564, __pad1 = 61272, __st_ino = 3087006308, st_mode = 0, st_nlink = 3086879624, st_uid = 1, st_gid = 0, st_rdev = 13258589640757084161, __pad2 = 60876, st_size = 3086504112, st_blksize = 0, st_blocks = 0, st_atim = {tv_sec = 0, tv_nsec = 0}, st_mtim = {tv_sec = -1073746016, tv_nsec = -1073746088}, st_ctim = {tv_sec = -1073746076, tv_nsec = 0}, st_ino = 3087005960}
+        last_change = <optimized out>
+        idlestr = "\000\000\000\000\000\001"
+        hoststr = 0x0
+        hostlen = 0
+        line = "/dev/\000@p\350\267,\205\004\b\001\000\000\000\364\357\377\267\240\357\377\277\300\372\377\267t\357\377\277b\266\376\267"
+        p = <optimized out>
+        pidstr = "30490\000\210\v\376\267X\b"
+#2  0x080644a3 in scan_entries (utmp_buf=0x84511d8, n=<optimized out>) at src/who.c:3467
+        lava_3359 = <optimized out>
+        lava_3386 = <optimized out>
+        lava_2570 = <optimized out>
+        lava_3023 = <optimized out>
+        lava_345 = 1440783722
+        lava_624 = 1440783722
+        lava_729 = 1440783722
+        lava_2751 = 1440783722
+        lava_2199 = <optimized out>
+        lava_2085 = <optimized out>
+        lava_2569 = 1440783722
+        lava_3940 = 1440783722
+        lava_4138 = 1440783722
+        lava_4336 = 1440783722
+        lava_3223 = <optimized out>
+        lava_3166 = <optimized out>
+        lava_521 = 1440783722
+        lava_3941 = <optimized out>
+        lava_4139 = <optimized out>
+        lava_4337 = <optimized out>
+        lava_1308 = 1440783722
+        lava_1182 = 1440783722
+        lava_3270 = <optimized out>
+        lava_3528 = <optimized out>
+        lava_1444 = 1440783722
+        lava_1798 = 1440783722
+        lava_1954 = 1440783722
+        lava_3022 = 1440783722
+        ttyname_b = 0xffffffff <Address 0xffffffff out of bounds>
+        boottime = 1440783722
+#3  who (filename=<optimized out>, options=options@entry=0) at src/who.c:4384
+        n_users = 83
+        utmp_buf = 0x8450a58
+#4  0x08065a54 in main (argc=2, argv=0xbffff234) at src/who.c:4633
+        optc = <optimized out>
+        assumptions = true
+A debugging session is active.
+
+	Inferior 1 [process 21431] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

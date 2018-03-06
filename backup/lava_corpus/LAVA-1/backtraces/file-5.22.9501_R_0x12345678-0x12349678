@@ -1,0 +1,81 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+0x000000000040dad2 in file_vprintf (ms=0x88c289cca0, fmt=0x4261ff ", %s linked", ap=0x7fffffff8dc0) at funcs.c:62
+62		if (ms->event_flags & EVENT_HAD_ERR)
+
+Thread 1 (process 13072):
+#0  0x000000000040dad2 in file_vprintf (ms=0x88c289cca0, fmt=0x4261ff ", %s linked", ap=0x7fffffff8dc0) at funcs.c:62
+        len = 0
+        buf = 0x0
+        newstr = 0x0
+#1  0x000000000040dc6b in file_printf (ms=0x88c289cca0, fmt=0x4261ff ", %s linked") at funcs.c:90
+        rv = 0
+        ap = {{gp_offset = 16, fp_offset = 48, overflow_arg_area = 0x7fffffff8ea0, reg_save_area = 0x7fffffff8de0}}
+#2  0x000000000041a3b2 in dophn_exec (ms=0x62bf20, clazz=2, swap=0, fd=3, off=568, num=0, size=56, fsize=118280, sh_num=27, flags=0x7fffffffcfec, notecount=0x7fffffffcfe4) at readelf.c:1328
+        ph32 = {p_type = 0, p_offset = 0, p_vaddr = 0, p_paddr = 0, p_filesz = 0, p_memsz = 0, p_flags = 0, p_align = 0}
+        ph64 = {p_type = 1685382482, p_flags = 4, p_offset = 114160, p_vaddr = 6405616, p_paddr = 6405616, p_filesz = 528, p_memsz = 528, p_align = 1}
+        linking_style = 0x4261cb "dynamically"
+        interp = 0x7fffffff8f60 "/lib64/ld-linux-x86-64.so.2"
+        nbuf = "/lib64/ld-linux-x86-64.so.2", '\000' <repeats 1061 times>...
+        ibuf = '\000' <repeats 4584 times>...
+        bufsize = 0
+        offset = 0
+        align = 4
+        len = 28
+#3  0x000000000041ada2 in file_tryelf (ms=0x62bf20, fd=3, buf=0x7ffff7f86010 "\177ELF\002\001\001", nbytes=118280) at elfclass.h:58
+        u = {l = 1, c = "\001\000\000"}
+        clazz = 2
+        swap = 0
+        st = {st_dev = 66306, st_ino = 28847805, st_nlink = 1, st_mode = 33204, st_uid = 1000, st_gid = 1000, __pad0 = 0, st_rdev = 0, st_size = 118280, st_blksize = 4096, st_blocks = 232, st_atim = {tv_sec = 1465424959, tv_nsec = 982390990}, st_mtim = {tv_sec = 1465424839, tv_nsec = 18867834}, st_ctim = {tv_sec = 1465424839, tv_nsec = 18867834}, __glibc_reserved = {0, 0, 0}}
+        fsize = 118280
+        flags = 0
+        elf32hdr = {e_ident = "\177ELF\002\001\001\000\000\000\000\000\000\000\000", e_type = 2, e_machine = 13330, e_version = 46680, e_entry = 4212933, e_phoff = 0, e_shoff = 64, e_flags = 0, e_ehsize = 51016, e_phentsize = 1, e_phnum = 0, e_shentsize = 0, e_shnum = 0, e_shstrndx = 0}
+        elf64hdr = {e_ident = "\177ELF\002\001\001\000\000\000\000\000\000\000\000", e_type = 2, e_machine = 13330, e_version = 46680, e_entry = 4212933, e_phoff = 64, e_shoff = 116552, e_flags = 0, e_ehsize = 64, e_phentsize = 56, e_phnum = 9, e_shentsize = 64, e_shnum = 27, e_shstrndx = 26}
+        type = 2
+        phnum = 9
+        shnum = 27
+        notecount = 256
+#4  0x000000000040e2b9 in file_buffer (ms=0x62bf20, fd=3, inname=0x7fffffffd8a6 "file-5.22.9501_R_0x12345678-0x12349678/CRASH_INPUT", buf=0x7ffff7f86010, nb=118280) at funcs.c:246
+        m = 1
+        rv = 0
+        looks_text = 0
+        mime = 0
+        ubuf = 0x7ffff7f86010 "\177ELF\002\001\001"
+        u8buf = 0x7ffff7e9e010
+        ulen = 4
+        code = 0x423045 "unknown"
+        code_mime = 0x42304d "binary"
+        type = 0x423a41 "application/octet-stream"
+        def = 0x423a5a "data"
+        ftype = 0x42304d "binary"
+#5  0x00000000004041d2 in file_or_fd (ms=0x62bf20, inname=0x7fffffffd8a6 "file-5.22.9501_R_0x12345678-0x12349678/CRASH_INPUT", fd=3) at magic.c:475
+        rv = -1
+        buf = 0x7ffff7f86010 "\177ELF\002\001\001"
+        sb = {st_dev = 66306, st_ino = 28847805, st_nlink = 1, st_mode = 33204, st_uid = 1000, st_gid = 1000, __pad0 = 0, st_rdev = 0, st_size = 118280, st_blksize = 4096, st_blocks = 232, st_atim = {tv_sec = 1465424839, tv_nsec = 14867718}, st_mtim = {tv_sec = 1465424839, tv_nsec = 18867834}, st_ctim = {tv_sec = 1465424839, tv_nsec = 18867834}, __glibc_reserved = {0, 0, 0}}
+        nbytes = 118280
+        ispipe = 0
+        pos = -1
+#6  0x0000000000403da8 in magic_file (ms=0x62bf20, inname=0x7fffffffd8a6 "file-5.22.9501_R_0x12345678-0x12349678/CRASH_INPUT") at magic.c:353
+No locals.
+#7  0x00000000004030aa in process (ms=0x62bf20, inname=0x7fffffffd8a6 "file-5.22.9501_R_0x12345678-0x12349678/CRASH_INPUT", wid=50) at file.c:497
+        type = 0x1 <error: Cannot access memory at address 0x1>
+        std_in = 0
+#8  0x0000000000402add in main (argc=2, argv=0x7fffffffd4a8) at file.c:370
+        j = 2
+        wid = 50
+        nw = 50
+        c = -1
+        i = 4320829
+        action = 0
+        didsomefiles = 0
+        errflg = 0
+        flags = 0
+        e = 0
+        magic = 0x62bf20
+        longindex = 32767
+        magicfile = 0x0
+A debugging session is active.
+
+	Inferior 1 [process 13072] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

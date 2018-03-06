@@ -1,0 +1,77 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000413a36 in mcopy (ms=0x5a4109cca0, p=0x62bf90, type=20, indir=0, s=0x7ffff7f86010 "\022\064Vx\002\001\001", offset=6, nbytes=118280, m=0x7ffff70a3148) at softmagic.c:1097
+1097				ms->search.s = RCAST(const char *, s) + offset;
+
+Thread 1 (process 12903):
+#0  0x0000000000413a36 in mcopy (ms=0x5a4109cca0, p=0x62bf90, type=20, indir=0, s=0x7ffff7f86010 "\022\064Vx\002\001\001", offset=6, nbytes=118280, m=0x7ffff70a3148) at softmagic.c:1097
+No locals.
+#1  0x0000000000413fc9 in mget (ms=0x62bf20, s=0x7ffff7f86010 "\022\064Vx\002\001\001", m=0x7ffff70a3148, nbytes=118280, o=0, cont_level=3, mode=32, text=0, flip=0, indir_level=0, name_count=0x7fffffffd0e2, printed_something=0x7fffffffd0e4, need_separator=0x7fffffffd0e8, returnval=0x7fffffffd01c) at softmagic.c:1233
+        offset = 6
+        lhs = 65794
+        pb = 0x4
+        rv = 0
+        oneed_separator = 0
+        in_type = 2018915346
+        rbuf = 0x1003e0002 <error: Cannot access memory at address 0x1003e0002>
+        p = 0x62bf90
+        ml = {magic = 0x62bf90, nmagic = 4194313, map = 0x500000006, next = 0x6, prev = 0x400040}
+#2  0x0000000000410f04 in match (ms=0x62bf20, magic=0x7ffff6e2c0f8, nmagic=10757, s=0x7ffff7f86010 "\022\064Vx\002\001\001", nbytes=118280, offset=0, mode=32, text=0, flip=0, indir_level=0, name_count=0x7fffffffd0e2, printed_something=0x7fffffffd0e4, need_separator=0x7fffffffd0e8, returnval=0x7fffffffd01c) at softmagic.c:183
+        flush = 0
+        m = 0x7ffff70a3148
+        magindex = 10422
+        cont_level = 3
+        returnvalv = 0
+        e = 0
+        firstline = 1
+        print = 1
+#3  0x0000000000410be0 in file_softmagic (ms=0x62bf20, buf=0x7ffff7f86010 "\022\064Vx\002\001\001", nbytes=118280, indir_level=0, name_count=0x7fffffffd0e2, mode=32, text=0) at softmagic.c:89
+        ml = 0x62c240
+        rv = 0
+        printed_something = 0
+        need_separator = 0
+        nc = 0
+#4  0x000000000040e22e in file_buffer (ms=0x62bf20, fd=3, inname=0x7fffffffd8a6 "file-5.22.3089_R_0x12345678-0x12345678/CRASH_INPUT", buf=0x7ffff7f86010, nb=118280) at funcs.c:230
+        m = 0
+        rv = 0
+        looks_text = 0
+        mime = 0
+        ubuf = 0x7ffff7f86010 "\022\064Vx\002\001\001"
+        u8buf = 0x7ffff7e9e010
+        ulen = 0
+        code = 0x423425 "unknown"
+        code_mime = 0x42342d "binary"
+        type = 0x423e21 "application/octet-stream"
+        def = 0x423e3a "data"
+        ftype = 0x42342d "binary"
+#5  0x00000000004041d2 in file_or_fd (ms=0x62bf20, inname=0x7fffffffd8a6 "file-5.22.3089_R_0x12345678-0x12345678/CRASH_INPUT", fd=3) at magic.c:475
+        rv = -1
+        buf = 0x7ffff7f86010 "\022\064Vx\002\001\001"
+        sb = {st_dev = 66306, st_ino = 28846457, st_nlink = 1, st_mode = 33204, st_uid = 1000, st_gid = 1000, __pad0 = 0, st_rdev = 0, st_size = 118280, st_blksize = 4096, st_blocks = 232, st_atim = {tv_sec = 1465424835, tv_nsec = 774773901}, st_mtim = {tv_sec = 1465424835, tv_nsec = 774773901}, st_ctim = {tv_sec = 1465424835, tv_nsec = 774773901}, __glibc_reserved = {0, 0, 0}}
+        nbytes = 118280
+        ispipe = 0
+        pos = -1
+#6  0x0000000000403da8 in magic_file (ms=0x62bf20, inname=0x7fffffffd8a6 "file-5.22.3089_R_0x12345678-0x12345678/CRASH_INPUT") at magic.c:353
+No locals.
+#7  0x00000000004030aa in process (ms=0x62bf20, inname=0x7fffffffd8a6 "file-5.22.3089_R_0x12345678-0x12345678/CRASH_INPUT", wid=50) at file.c:497
+        type = 0x1 <error: Cannot access memory at address 0x1>
+        std_in = 0
+#8  0x0000000000402add in main (argc=2, argv=0x7fffffffd4a8) at file.c:370
+        j = 2
+        wid = 50
+        nw = 50
+        c = -1
+        i = 4321837
+        action = 0
+        didsomefiles = 0
+        errflg = 0
+        flags = 0
+        e = 0
+        magic = 0x62bf20
+        longindex = 32767
+        magicfile = 0x0
+A debugging session is active.
+
+	Inferior 1 [process 12903] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

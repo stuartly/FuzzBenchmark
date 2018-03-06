@@ -1,0 +1,67 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+0x000000000041608d in handle_annotation (ms=0x1224e60, m=0x7ffff701aba8) at softmagic.c:2151
+2151		if (ms->flags & MAGIC_APPLE) {
+
+Thread 1 (process 12762):
+#0  0x000000000041608d in handle_annotation (ms=0x1224e60, m=0x7ffff701aba8) at softmagic.c:2151
+No locals.
+#1  0x0000000000410ff3 in match (ms=0x62af20, magic=0x7ffff6e2c0f8, nmagic=10757, s=0x7ffff7f86010 "\377\177\211\332\002\001\001", nbytes=118280, offset=0, mode=32, text=0, flip=0, indir_level=0, name_count=0x7fffffffd102, printed_something=0x7fffffffd104, need_separator=0x7fffffffd108, returnval=0x7fffffffd044) at softmagic.c:218
+        flush = 0
+        m = 0x7ffff701aba8
+        magindex = 8170
+        cont_level = 0
+        returnvalv = 0
+        e = 4
+        firstline = 1
+        print = 1
+#2  0x0000000000410bd2 in file_softmagic (ms=0x62af20, buf=0x7ffff7f86010 "\377\177\211\332\002\001\001", nbytes=118280, indir_level=0, name_count=0x7fffffffd102, mode=32, text=0) at softmagic.c:89
+        ml = 0x62b240
+        rv = 0
+        printed_something = 0
+        need_separator = 0
+        nc = 0
+#3  0x000000000040e22e in file_buffer (ms=0x62af20, fd=3, inname=0x7fffffffd8ba "file-5.22.1460_KT_0xda897fff/CRASH_INPUT", buf=0x7ffff7f86010, nb=118280) at funcs.c:230
+        m = 0
+        rv = 0
+        looks_text = 0
+        mime = 0
+        ubuf = 0x7ffff7f86010 "\377\177\211\332\002\001\001"
+        u8buf = 0x7ffff7e9e010
+        ulen = 4
+        code = 0x422fa5 "unknown"
+        code_mime = 0x422fad "binary"
+        type = 0x4239a1 "application/octet-stream"
+        def = 0x4239ba "data"
+        ftype = 0x422fad "binary"
+#4  0x00000000004041d2 in file_or_fd (ms=0x62af20, inname=0x7fffffffd8ba "file-5.22.1460_KT_0xda897fff/CRASH_INPUT", fd=3) at magic.c:475
+        rv = -1
+        buf = 0x7ffff7f86010 "\377\177\211\332\002\001\001"
+        sb = {st_dev = 66306, st_ino = 28845839, st_nlink = 1, st_mode = 33204, st_uid = 1000, st_gid = 1000, __pad0 = 0, st_rdev = 0, st_size = 118280, st_blksize = 4096, st_blocks = 232, st_atim = {tv_sec = 1465424833, tv_nsec = 142697688}, st_mtim = {tv_sec = 1465424833, tv_nsec = 142697688}, st_ctim = {tv_sec = 1465424833, tv_nsec = 142697688}, __glibc_reserved = {0, 0, 0}}
+        nbytes = 118280
+        ispipe = 0
+        pos = -1
+#5  0x0000000000403da8 in magic_file (ms=0x62af20, inname=0x7fffffffd8ba "file-5.22.1460_KT_0xda897fff/CRASH_INPUT") at magic.c:353
+No locals.
+#6  0x00000000004030aa in process (ms=0x62af20, inname=0x7fffffffd8ba "file-5.22.1460_KT_0xda897fff/CRASH_INPUT", wid=40) at file.c:497
+        type = 0x1 <error: Cannot access memory at address 0x1>
+        std_in = 0
+#7  0x0000000000402add in main (argc=2, argv=0x7fffffffd4c8) at file.c:370
+        j = 2
+        wid = 40
+        nw = 40
+        c = -1
+        i = 4320701
+        action = 0
+        didsomefiles = 0
+        errflg = 0
+        flags = 0
+        e = 0
+        magic = 0x62af20
+        longindex = 32767
+        magicfile = 0x0
+A debugging session is active.
+
+	Inferior 1 [process 12762] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

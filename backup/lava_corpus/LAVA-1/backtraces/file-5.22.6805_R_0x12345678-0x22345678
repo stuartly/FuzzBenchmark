@@ -1,0 +1,100 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+0x000000000040dad2 in file_vprintf (ms=0x4926c08ca0, fmt=0x424513 "%s", ap=0x7fffffffc9b0) at funcs.c:62
+62		if (ms->event_flags & EVENT_HAD_ERR)
+
+Thread 1 (process 13036):
+#0  0x000000000040dad2 in file_vprintf (ms=0x4926c08ca0, fmt=0x424513 "%s", ap=0x7fffffffc9b0) at funcs.c:62
+        len = 26
+        buf = 0x62c100 "ELF 64-bit LSB executable,"
+        newstr = 0x62c100 "ELF 64-bit LSB executable,"
+#1  0x000000000040dc6b in file_printf (ms=0x4926c08ca0, fmt=0x424513 "%s") at funcs.c:90
+        rv = 0
+        ap = {{gp_offset = 16, fp_offset = 48, overflow_arg_area = 0x7fffffffca90, reg_save_area = 0x7fffffffc9d0}}
+#2  0x0000000000412758 in mprint (ms=0x62bf20, m=0x7ffff70c16a0) at softmagic.c:672
+        v = 2
+        vf = 9.06954558e-39
+        vd = 3.1976640053375488e-317
+        t = 0
+        buf = "\377\377\377\377\377\377\377\377", '\000' <repeats 16 times>, "\001\000\000\000\000\000\000\000\377\377\377\377\000\000\000\000\230\314\377\377\377\177\000\000\320\301b\000\000\000\000\000\000\211\273\367\377\177\000\000\360\223\207\367\377\177\000\000\240\227\207\367\377\177\000\000\360\277b\000\000\000\000\000\260\314\377\377\377\177\000\000\340#@\000\000\000\000\000\240\324\377\377", '\000' <repeats 12 times>, "\247\235\204\367\377\177\000"
+        tbuf = '\000' <repeats 16 times>, "\002\000\000\000\000\000\000\000\230", <incomplete sequence \314>
+        sbuf = "4\302b\000\000\000\000\000 \000\000\000\060\000\000\000p\314\377\377\377\177\000\000\260\313\377\377\377\177", '\000' <repeats 18 times>, "\300\300b\000\000\000\000\000\340\300b\000\000\000\000\000\320\301b", '\000' <repeats 13 times>, "\360\313\377\377\377\177\000\000\360\277b\000\000\000\000\000\260\314\377\377\377\177\000\000\374=A\000\000\000\000\000\240\324\377\377\377\177\000\000\000\000\000\000\022\000\000\000\020`\370\367\377\177\000\000\000\000\000\000/\000\000\000\220\277b\000\000\000\000\000 \277b\000\000\000\000\000\250\025\f\367\377\177\000\000\000\000\000\000/\000\000\000\240\314\377\377\377\177\000\000\360\062A\000\000\000\000\000\260\314\377\377\377\177\000\000"...
+        p = 0x62bf90
+#3  0x00000000004114a8 in match (ms=0x62bf20, magic=0x7ffff70c0fd8, nmagic=259, s=0x7ffff7f86010 "\177ELF\002\001\001", nbytes=118280, offset=0, mode=32, text=0, flip=0, indir_level=0, name_count=0x7fffffffd0e2, printed_something=0x7fffffffd0e4, need_separator=0x7fffffffd0e8, returnval=0x7fffffffd01c) at softmagic.c:343
+        flush = 0
+        m = 0x7ffff70c16a0
+        magindex = 7
+        cont_level = 1
+        returnvalv = 0
+        e = 0
+        firstline = 1
+        print = 1
+#4  0x0000000000415135 in mget (ms=0x62bf20, s=0x7ffff7f86010 "\177ELF\002\001\001", m=0x7ffff6e59a70, nbytes=118280, o=0, cont_level=2, mode=32, text=0, flip=0, indir_level=0, name_count=0x7fffffffd0e2, printed_something=0x7fffffffd0e4, need_separator=0x7fffffffd0e8, returnval=0x7fffffffd01c) at softmagic.c:1724
+        offset = 0
+        lhs = 32767
+        pb = 0x400040
+        rv = -152725128
+        oneed_separator = 1
+        in_type = -152725128
+        rbuf = 0x7ffff6e59a90 "elf-le"
+        p = 0x62bf90
+        ml = {magic = 0x7ffff70c0fd8, nmagic = 259, map = 0x8, next = 0x400000003, prev = 0x238}
+#5  0x00000000004111fa in match (ms=0x62bf20, magic=0x7ffff6e2c0f8, nmagic=10757, s=0x7ffff7f86010 "\177ELF\002\001\001", nbytes=118280, offset=0, mode=32, text=0, flip=0, indir_level=0, name_count=0x7fffffffd0e2, printed_something=0x7fffffffd0e4, need_separator=0x7fffffffd0e8, returnval=0x7fffffffd01c) at softmagic.c:272
+        flush = 0
+        m = 0x7ffff6e59a70
+        magindex = 753
+        cont_level = 2
+        returnvalv = 0
+        e = 0
+        firstline = 1
+        print = 1
+#6  0x0000000000410be0 in file_softmagic (ms=0x62bf20, buf=0x7ffff7f86010 "\177ELF\002\001\001", nbytes=118280, indir_level=0, name_count=0x7fffffffd0e2, mode=32, text=0) at softmagic.c:89
+        ml = 0x62c240
+        rv = 0
+        printed_something = 1
+        need_separator = 1
+        nc = 1
+#7  0x000000000040e22e in file_buffer (ms=0x62bf20, fd=3, inname=0x7fffffffd8a6 "file-5.22.6805_R_0x12345678-0x22345678/CRASH_INPUT", buf=0x7ffff7f86010, nb=118280) at funcs.c:230
+        m = 0
+        rv = 0
+        looks_text = 0
+        mime = 0
+        ubuf = 0x7ffff7f86010 "\177ELF\002\001\001"
+        u8buf = 0x7ffff7e9e010
+        ulen = 4
+        code = 0x423045 "unknown"
+        code_mime = 0x42304d "binary"
+        type = 0x423a41 "application/octet-stream"
+        def = 0x423a5a "data"
+        ftype = 0x42304d "binary"
+#8  0x00000000004041d2 in file_or_fd (ms=0x62bf20, inname=0x7fffffffd8a6 "file-5.22.6805_R_0x12345678-0x22345678/CRASH_INPUT", fd=3) at magic.c:475
+        rv = -1
+        buf = 0x7ffff7f86010 "\177ELF\002\001\001"
+        sb = {st_dev = 66306, st_ino = 28847049, st_nlink = 1, st_mode = 33204, st_uid = 1000, st_gid = 1000, __pad0 = 0, st_rdev = 0, st_size = 118280, st_blksize = 4096, st_blocks = 232, st_atim = {tv_sec = 1465424838, tv_nsec = 350848491}, st_mtim = {tv_sec = 1465424838, tv_nsec = 354848607}, st_ctim = {tv_sec = 1465424838, tv_nsec = 354848607}, __glibc_reserved = {0, 0, 0}}
+        nbytes = 118280
+        ispipe = 0
+        pos = -1
+#9  0x0000000000403da8 in magic_file (ms=0x62bf20, inname=0x7fffffffd8a6 "file-5.22.6805_R_0x12345678-0x22345678/CRASH_INPUT") at magic.c:353
+No locals.
+#10 0x00000000004030aa in process (ms=0x62bf20, inname=0x7fffffffd8a6 "file-5.22.6805_R_0x12345678-0x22345678/CRASH_INPUT", wid=50) at file.c:497
+        type = 0x1 <error: Cannot access memory at address 0x1>
+        std_in = 0
+#11 0x0000000000402add in main (argc=2, argv=0x7fffffffd4a8) at file.c:370
+        j = 2
+        wid = 50
+        nw = 50
+        c = -1
+        i = 4320829
+        action = 0
+        didsomefiles = 0
+        errflg = 0
+        flags = 0
+        e = 0
+        magic = 0x62bf20
+        longindex = 32767
+        magicfile = 0x0
+A debugging session is active.
+
+	Inferior 1 [process 13036] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

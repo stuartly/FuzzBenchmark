@@ -1,0 +1,20 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+0x08062f84 in scan_entries (utmp_buf=0x9a75c0d8, n=<optimized out>) at src/who.c:3204
+3204	          if (need_users && IS_USER_PROCESS (utmp_buf))
+
+Thread 1 (process 16708):
+#0  0x08062f84 in scan_entries (utmp_buf=0x9a75c0d8, n=<optimized out>) at src/who.c:3204
+        ttyname_b = 0xffffffff <Address 0xffffffff out of bounds>
+        boottime = -2147483648
+#1  who (filename=<optimized out>, options=options@entry=0) at src/who.c:4384
+        n_users = 83
+        utmp_buf = 0x8450a58
+#2  0x08065a54 in main (argc=2, argv=0xbffff234) at src/who.c:4633
+        optc = <optimized out>
+        assumptions = true
+A debugging session is active.
+
+	Inferior 1 [process 16708] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

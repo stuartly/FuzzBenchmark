@@ -1,0 +1,80 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+0x000000000040a88b in file_magicfind (ms=0x1e1a87ce20, name=0x7ffff6e59a90 "elf-le", v=0x7fffffffcf40) at apprentice.c:3222
+3222		mlist = ms->mlist[1];
+
+Thread 1 (process 13000):
+#0  0x000000000040a88b in file_magicfind (ms=0x1e1a87ce20, name=0x7ffff6e59a90 "elf-le", v=0x7fffffffcf40) at apprentice.c:3222
+        i = 0
+        j = 3
+        mlist = 0x7fffffffcf80
+        ml = 0x7fffffffcef0
+#1  0x000000000041501f in mget (ms=0x62bf20, s=0x7ffff7f86010 "\177ELF\002\001\001", m=0x7ffff6e59a70, nbytes=118280, o=0, cont_level=2, mode=32, text=0, flip=0, indir_level=0, name_count=0x7fffffffd0e2, printed_something=0x7fffffffd0e4, need_separator=0x7fffffffd0e8, returnval=0x7fffffffd024) at softmagic.c:1713
+        offset = 0
+        lhs = 0
+        pb = 0x5
+        rv = 4194313
+        oneed_separator = 1703963
+        in_type = 1
+        rbuf = 0x7ffff6e59a90 "elf-le"
+        p = 0x62bf90
+        ml = {magic = 0x1f8, nmagic = 504, map = 0x8, next = 0x400000003, prev = 0x238}
+#2  0x00000000004111e2 in match (ms=0x62bf20, magic=0x7ffff6e2c0f8, nmagic=10757, s=0x7ffff7f86010 "\177ELF\002\001\001", nbytes=118280, offset=0, mode=32, text=0, flip=0, indir_level=0, name_count=0x7fffffffd0e2, printed_something=0x7fffffffd0e4, need_separator=0x7fffffffd0e8, returnval=0x7fffffffd024) at softmagic.c:271
+        flush = 0
+        m = 0x7ffff6e59a70
+        magindex = 753
+        cont_level = 2
+        returnvalv = 0
+        e = 0
+        firstline = 1
+        print = 1
+#3  0x0000000000410be0 in file_softmagic (ms=0x62bf20, buf=0x7ffff7f86010 "\177ELF\002\001\001", nbytes=118280, indir_level=0, name_count=0x7fffffffd0e2, mode=32, text=0) at softmagic.c:88
+        ml = 0x62c240
+        rv = 0
+        printed_something = 1
+        need_separator = 1
+        nc = 0
+#4  0x000000000040e22e in file_buffer (ms=0x62bf20, fd=3, inname=0x7fffffffd8a6 "file-5.22.4961_R_0x12345678-0x22345678/CRASH_INPUT", buf=0x7ffff7f86010, nb=118280) at funcs.c:230
+        m = 0
+        rv = 0
+        looks_text = 0
+        mime = 0
+        ubuf = 0x7ffff7f86010 "\177ELF\002\001\001"
+        u8buf = 0x7ffff7e9e010
+        ulen = 4
+        code = 0x4230a5 "unknown"
+        code_mime = 0x4230ad "binary"
+        type = 0x423aa1 "application/octet-stream"
+        def = 0x423aba "data"
+        ftype = 0x4230ad "binary"
+#5  0x00000000004041d2 in file_or_fd (ms=0x62bf20, inname=0x7fffffffd8a6 "file-5.22.4961_R_0x12345678-0x22345678/CRASH_INPUT", fd=3) at magic.c:475
+        rv = -1
+        buf = 0x7ffff7f86010 "\177ELF\002\001\001"
+        sb = {st_dev = 66306, st_ino = 28846888, st_nlink = 1, st_mode = 33204, st_uid = 1000, st_gid = 1000, __pad0 = 0, st_rdev = 0, st_size = 118280, st_blksize = 4096, st_blocks = 232, st_atim = {tv_sec = 1465424837, tv_nsec = 530824747}, st_mtim = {tv_sec = 1465424837, tv_nsec = 530824747}, st_ctim = {tv_sec = 1465424837, tv_nsec = 530824747}, __glibc_reserved = {0, 0, 0}}
+        nbytes = 118280
+        ispipe = 0
+        pos = -1
+#6  0x0000000000403da8 in magic_file (ms=0x62bf20, inname=0x7fffffffd8a6 "file-5.22.4961_R_0x12345678-0x22345678/CRASH_INPUT") at magic.c:353
+No locals.
+#7  0x00000000004030aa in process (ms=0x62bf20, inname=0x7fffffffd8a6 "file-5.22.4961_R_0x12345678-0x22345678/CRASH_INPUT", wid=50) at file.c:497
+        type = 0x1 <error: Cannot access memory at address 0x1>
+        std_in = 0
+#8  0x0000000000402add in main (argc=2, argv=0x7fffffffd4a8) at file.c:370
+        j = 2
+        wid = 50
+        nw = 50
+        c = -1
+        i = 4320925
+        action = 0
+        didsomefiles = 0
+        errflg = 0
+        flags = 0
+        e = 0
+        magic = 0x62bf20
+        longindex = 32767
+        magicfile = 0x0
+A debugging session is active.
+
+	Inferior 1 [process 13000] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

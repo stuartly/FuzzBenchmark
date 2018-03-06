@@ -1,0 +1,39 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000403ce7 in close_and_restore (ms=0xb76989bca0, name=0x7fffffffd8a4 "file-5.22.14331_R_0x12345678-0x12349678/CRASH_INPUT", fd=3, sb=0x7fffffffd220) at magic.c:309
+309		if ((ms->flags & MAGIC_PRESERVE_ATIME) != 0) {
+
+Thread 1 (process 12750):
+#0  0x0000000000403ce7 in close_and_restore (ms=0xb76989bca0, name=0x7fffffffd8a4 "file-5.22.14331_R_0x12345678-0x12349678/CRASH_INPUT", fd=3, sb=0x7fffffffd220) at magic.c:309
+No locals.
+#1  0x00000000004042bd in file_or_fd (ms=0x62af20, inname=0x7fffffffd8a4 "file-5.22.14331_R_0x12345678-0x12349678/CRASH_INPUT", fd=3) at magic.c:484
+        rv = 0
+        buf = 0x7ffff7f86010 <error: Cannot access memory at address 0x7ffff7f86010>
+        sb = {st_dev = 66306, st_ino = 28845782, st_nlink = 1, st_mode = 33204, st_uid = 1000, st_gid = 1000, __pad0 = 0, st_rdev = 0, st_size = 118280, st_blksize = 4096, st_blocks = 232, st_atim = {tv_sec = 1465424832, tv_nsec = 942691898}, st_mtim = {tv_sec = 1465424832, tv_nsec = 942691898}, st_ctim = {tv_sec = 1465424832, tv_nsec = 942691898}, __glibc_reserved = {0, 0, 0}}
+        nbytes = 118280
+        ispipe = 0
+        pos = -1
+#2  0x0000000000403db6 in magic_file (ms=0x62af20, inname=0x7fffffffd8a4 "file-5.22.14331_R_0x12345678-0x12349678/CRASH_INPUT") at magic.c:355
+No locals.
+#3  0x00000000004030aa in process (ms=0x62af20, inname=0x7fffffffd8a4 "file-5.22.14331_R_0x12345678-0x12349678/CRASH_INPUT", wid=51) at file.c:497
+        type = 0x1 <error: Cannot access memory at address 0x1>
+        std_in = 0
+#4  0x0000000000402add in main (argc=2, argv=0x7fffffffd4a8) at file.c:370
+        j = 2
+        wid = 51
+        nw = 51
+        c = -1
+        i = 4320781
+        action = 0
+        didsomefiles = 0
+        errflg = 0
+        flags = 0
+        e = 0
+        magic = 0x62af20
+        longindex = 32767
+        magicfile = 0x0
+A debugging session is active.
+
+	Inferior 1 [process 12750] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]
