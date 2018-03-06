@@ -1,0 +1,62 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Tigase Test Suite</title><link rel="stylesheet" type="text/css" href="css/docbook-xsl.css"><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"><link rel="home" href="index.html" title="Tigase Development Guide"><link rel="up" href="tests.html" title="Chapter&nbsp;7.&nbsp;Tests"><link rel="prev" href="tests.html" title="Chapter&nbsp;7.&nbsp;Tests"><link rel="next" href="testSuideScripts.html" title="Test Suite Scripting Language"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Tigase Test Suite</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="tests.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;7.&nbsp;Tests</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="testSuideScripts.html">Next</a></td></tr></table><hr></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="testSuite"></a>Tigase Test Suite</h2></div></div></div><p>Tigase Test Suite is an engine which allows you to run tests. Essentially it just executes <span class="strong"><strong>TestCase</strong></span> implementations. The tests may depend on other tests which means they are executed in specific order. For example authentication test is executed after the stream open test which in turn is executed after network socket connection test.</p><p>Each <span class="strong"><strong>TestCase</strong></span> implementation may have it&#8217;s own set of specific parameters. There is a set of common parameters which may be applied to any <span class="strong"><strong>TestCase</strong></span>. As an example of the common parameter you can take <span class="strong"><strong>-loop = 10</strong></span> which specified that the <span class="strong"><strong>TestCase</strong></span> must be executed 10 times. The test specific parameter might be <span class="strong"><strong>-user-name = tester</strong></span> which may set the user name for authentication test.</p><p>The engine is very generic and allows you to write any kind of tests but for the Tigase projects the current TestCase implementations mimic an XMPP client and are designed to test XMPP servers.</p><p>The suite contains a kind of scripting language which allows you to combine test cases into a test scenarios. The test scenario may contain full set of functional tests for example, another test scenario may contain performance tests and so on.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_running_tigase_test_suite_tts"></a>Running Tigase Test Suite (TTS)</h3></div></div></div><p>To obtain TTS, you will first need to clone the repository</p><pre class="screen">git clone https://repository.tigase.org/git/tigase-testsuite.git</pre><p>Once cloning is finished, navigate to the TTS root directory and compile with maven:</p><pre class="screen">mvn clean install</pre><p>Maven will compile TTS and place jars in the necessary locations.  From the same directory, you can begin running TTS using the following command:</p><pre class="screen">./scripts/all-tests-runner.sh</pre><p>You should see the following, which outlines the possible options to customize your test run</p><pre class="programlisting">Run selected or all tests for Tigase server
+----
+Author: Artur Hefczyc &lt;artur_hefczyc@vnu.co.uk&gt;
+Version: 2.0.0
+----
+  --help|-h	This help message
+  --func [mysql|pgsql|derby|mssql|mongodb]
+              Run all functional tests for a single database configuration
+  --lmem [mysql|pgsql|derby|mssql|mongodb]
+              Run low memory tests for a single database configuration
+  --perf [mysql|pgsql|derby|mssql|mongodb]
+              Run all performance tests for a single database configuration
+  --stab [mysql|pgsql|derby|mssql|mongodb]
+              Run all stability tests for a single database
+              configuration
+  --func-all  Run all functional tests for all database
+              configurations
+  --lmem-all  Run low memory tests for all database
+              configurations
+  --perf-all  Run all performance tests for all database
+              configurations
+  --stab-all  Run all stability tests for all database
+              configurations
+  --all-tests Run all functionality and performance tests for
+              database configurations
+  --single test_file.cot
+  --other script_file.xmpt
+----
+  Special parameters only at the beginning of the parameters list
+  --debug|-d                 Turns on debug mode
+  --skip-db-relad|-no-db     Turns off reloading database
+  --skip-server|-no-serv     Turns off Tigase server start
+  --small-mem|-sm            Run in small memory mode
+-----------
+  Other possible parameters are in following order:
+  [server-dir] [server-ip]</pre><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_customizing_tigase_test_suite"></a>Customizing Tigase Test Suite</h4></div></div></div><p>You may run the tests from a command line like above, however you may create and edit the /scripts/tests-runner-settings.sh file to fit your Tigase installation and avoid having to have long complex commands as this template shows:</p><pre class="programlisting">#!/bin/bash
+
+func_rep="func-rep.html"
+perf_rep="perf-rep.html"
+db_name="tigasetest"
+db_user="tigase"
+db_pass="tigase"
+root_user="root"
+root_pass="root"
+
+TESTS=("derby" "mysql" "pgsql" "mssql")
+IPS=("127.0.0.1" "127.0.0.1" "127.0.0.1" "127.0.0.1")
+
+server_timeout=10
+
+server_dir="/home/tigase/tigase-server"
+database="derby"
+#database="mysql"
+server_ip="127.0.0.1"
+
+MS_MEM=100
+MX_MEM=1000
+
+SMALL_MS_MEM=10
+SMALL_MX_MEM=50</pre><p>This will allow you to maintain identical settings through multiple runs of TTS.  See the next section for learning how the scripting language works and how you can create and run your own custom tests.</p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="tests.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="tests.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="testSuideScripts.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;7.&nbsp;Tests&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Test Suite Scripting Language</td></tr></table></div></body></html>

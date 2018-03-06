@@ -1,0 +1,30 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Presence Forwarding</title><link rel="stylesheet" type="text/css" href="css/docbook-xsl.css"><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"><link rel="home" href="index.html" title="Tigase Administration Guide"><link rel="up" href="_using_tigase_applies_to_all_tigase_server_versions.html" title="Chapter&nbsp;9.&nbsp;Using Tigase - Applies to All Tigase Server Versions"><link rel="prev" href="addManageDomain.html" title="Add and Manage Domains"><link rel="next" href="registerXMPP.html" title="Register Your Own XMPP Domain"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Presence Forwarding</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="addManageDomain.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;9.&nbsp;Using Tigase - Applies to All Tigase Server Versions</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="registerXMPP.html">Next</a></td></tr></table><hr></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="presenceForwarding"></a>Presence Forwarding</h2></div></div></div><p>Have you ever thought of displaying your users presence status on the website? Or, maybe, you wanted to integrate XMPP service with your own system and share not only users' accounts but also presence status?</p><p>Not only is it possible but also very simple. You have a new option in the domain control form.</p><p>Actually there are 2 new options:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">Presence forward address</li><li class="listitem">Message forward address - not fully implemented yet</li></ol></div><p>Presence forward address can be any XMPP address. Usually you want it to be a bot address which can collect your users' presence information. Once this option is set to a valid XMPP address Tigase forwards user&#8217;s presence, every time the user changes his status. The presence is processed normally, of course, and distributed to all people from the contact list (roster), plus to this special address. It can be a component or a bot. If this is a bot connecting to a regular XMPP account, <span class="strong"><strong>Make sure the presence forward address contains resource part and the bot is connecting with this resource.</strong></span> Otherwise the presence won&#8217;t be delivered to the bot.</p><p><span class="inlinemediaobject"><img src="./images/vhost-presence-forward.png" alt="vhost-presence-forward"></span></p><p>As the screenshot shows, there are new input lines with option for presence forwarding address and message forwarding address. As you can see this option can be specified separately for each domain, so you can have a different forward address for each domain.</p><p>If you have your own Tigase installation, the forwarding address can be also set globally and can be the same for all domains. However, for this website, we offer this feature to all our users who have own domains and this can be set on per-domain basis.</p><p>Now, the big question. How this can be used? I am attaching below an example code. With just a few lines of code you can connect a command line bot to the server as a client which would collect all presences from users. Code below is a simple Groovy script which receives presence packet and displays them on the console. However, it should be easy enough to store users' presence information in a database and then load it from a web application.</p><p>The bot/client uses our <a class="link" href="https://projects.tigase.org/projects/jaxmpp2" target="_top">JaXMPP2</a> library which is available form our project management system.</p><p>You should be able to find a few more code examples on the wiki page.</p><pre class="programlisting">package jaxmppexample
+import tigase.jaxmpp.core.client.BareJID
+import tigase.jaxmpp.core.client.SessionObject
+import tigase.jaxmpp.core.client.exceptions.JaxmppException
+import tigase.jaxmpp.core.client.observer.Listener
+import tigase.jaxmpp.core.client.xmpp.modules.presence.PresenceModule
+import tigase.jaxmpp.core.client.xmpp.modules.presence.PresenceModule.PresenceEvent
+import tigase.jaxmpp.j2se.Jaxmpp
+
+final Jaxmpp jaxmpp = new Jaxmpp()
+jaxmpp.getProperties().setUserProperty( SessionObject.USER_BARE_JID,
+  BareJID.bareJIDInstance( "test4@test.tigase.org" ) )
+jaxmpp.getProperties().setUserProperty(SessionObject.RESOURCE, "presence-collector")
+jaxmpp.getProperties().setUserProperty( SessionObject.PASSWORD, "pass" )
+jaxmpp.getModulesManager().getModule( PresenceModule.class ).addListener(
+  PresenceModule.ContactChangedPresence,  new Listener() {
+    public void handleEvent( PresenceEvent be ) {
+      def msg = (be.getStatus() != null) ? be.getStatus() : "none"
+      println( "Presence received:\t" + be.getJid() + " is now " + be.getShow() +
+        " (" + msg + ")" )
+    }
+  }
+)
+println( "Loging in..." )
+jaxmpp.login()
+println( "Waiting for the presence for 10 minutes" )
+Thread.sleep( 10 * 60 * 1000 )
+disconnect()</pre></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="addManageDomain.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="_using_tigase_applies_to_all_tigase_server_versions.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="registerXMPP.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Add and Manage Domains&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Register Your Own XMPP Domain</td></tr></table></div></body></html>

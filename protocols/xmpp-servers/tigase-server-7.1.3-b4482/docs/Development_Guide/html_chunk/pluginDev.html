@@ -1,0 +1,113 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;5.&nbsp;Plugin Development</title><link rel="stylesheet" type="text/css" href="css/docbook-xsl.css"><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"><link rel="home" href="index.html" title="Tigase Development Guide"><link rel="up" href="index.html" title="Tigase Development Guide"><link rel="prev" href="clusterMapInterface.html" title="Cluster Map Interface"><link rel="next" href="pluginconf.html" title="Plugin Configuration"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Chapter&nbsp;5.&nbsp;Plugin Development</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="clusterMapInterface.html">Prev</a>&nbsp;</td><th width="60%" align="center">&nbsp;</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="pluginconf.html">Next</a></td></tr></table><hr></div><div class="chapter"><div class="titlepage"><div><div><h1 class="title"><a name="pluginDev"></a>Chapter&nbsp;5.&nbsp;Plugin Development</h1></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="section"><a href="pluginDev.html#writePluginCode">Writing Plugin Code</a></span></dt><dd><dl><dt><span class="section"><a href="pluginDev.html#_using_annotation_support">Using annotation support</a></span></dt><dt><span class="section"><a href="pluginDev.html#_using_older_non_annotation_based_implementation">Using older non-annotation based implementation</a></span></dt><dt><span class="section"><a href="pluginDev.html#_implementation_of_processing_method">Implementation of processing method</a></span></dt></dl></dd><dt><span class="section"><a href="pluginconf.html">Plugin Configuration</a></span></dt><dt><span class="section"><a href="packetProcess.html">How Packets are Processed by the SM and Plugins</a></span></dt><dd><dl><dt><span class="section"><a href="packetProcess.html#_introduction_2">Introduction</a></span></dt></dl></dd><dt><span class="section"><a href="saslcmac.html">SASL Custom Mechanisms and Configuration</a></span></dt><dd><dl><dt><span class="section"><a href="saslcmac.html#_basic_sasl_configuration">Basic SASL Configuration</a></span></dt><dt><span class="section"><a href="saslcmac.html#_logging_authentication">Logging/Authentication</a></span></dt><dt><span class="section"><a href="saslcmac.html#_built_in_mechanisms">Built-in Mechanisms</a></span></dt><dt><span class="section"><a href="saslcmac.html#cmd">Custom Mechanisms Development</a></span></dt></dl></dd></dl></div><p>This is a set of documents explaining details what is a plugin, how they are designed and how they work inside the Tigase server. The last part of the documentation explains step by step creating the code for a new plugin.</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><a class="link" href="pluginDev.html#writePluginCode" title="Writing Plugin Code">Writing Plugin Code</a></li><li class="listitem"><a class="link" href="">Plugin Configuration</a></li><li class="listitem"><a class="link" href="">How Packets are Processed by the SM and Plugins</a></li><li class="listitem"><a class="link" href="saslcmac.html" title="SASL Custom Mechanisms and Configuration">SASL Custom Mechanisms and Configuration</a></li></ul></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="writePluginCode"></a>Writing Plugin Code</h2></div></div></div><p>Stanza processing takes place in 4 steps. A different kind of plugin is responsible for each step of processing:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><a class="link" href="https://projects.tigase.org/projects/tigase-server/repository/changes/src/main/java/tigase/xmpp/XMPPPreprocessorIfc.java" target="_top">XMPPPreprocessorIfc</a> - is the interface for packets pre-processing plugins.</li><li class="listitem"><a class="link" href="https://projects.tigase.org/projects/tigase-server/repository/changes/src/main/java/tigase/xmpp/XMPPProcessor.java" target="_top">XMPPProcessorIfc</a> - is the interface for packets processing plugins.</li><li class="listitem"><a class="link" href="https://projects.tigase.org/projects/tigase-server/repository/changes/src/main/java/tigase/xmpp/XMPPPostprocessorIfc.java" target="_top">XMPPPostprocessorIfc</a> - is the interface for packets post-processing plugins.</li><li class="listitem"><a class="link" href="https://projects.tigase.org/projects/tigase-server/repository/changes/src/main/java/tigase/xmpp/XMPPPacketFilterIfc.java" target="_top">XMPPPacketFilterIfc</a> - is the interface for processing results filtering.</li></ol></div><p>If you look inside any of these interfaces you will only find a single method. This is where all the packet processing takes place. All of them take a similar set of parameters and below is a description for all of them:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><span class="strong"><strong>Packet packet</strong></span> - packet is which being processed. This parameter may never be null. Even though this is not an immutable object it mustn&#8217;t be altered. None of it&#8217;s fields or attributes can be changed during processing.</li><li class="listitem"><span class="strong"><strong>XMPPResourceConnection session</strong></span> - user session which keeps all the user session data and also gives access to the user&#8217;s data repository. It allows for the storing of information in permanent storage or in memory only during the life of the session. This parameter can be null if there is no online user session at the time of the packet processing.</li><li class="listitem"><span class="strong"><strong>NonAuthUserRepository repo</strong></span> - this is a user data storage which is normally used when the user session (parameter above) is null. This repository allows for a very restricted access only. It allows for storing some user private data (but doesn&#8217;t allow overwriting existing data) like messages for offline users and it also allows for reading user public data like VCards.</li><li class="listitem"><span class="strong"><strong>Queue&lt;Packet&gt; results</strong></span> - this a collection with packets which have been generated as input packet processing results. Regardless a response to a user request is sent or the packet is forwarded to it&#8217;s destination it is always required that a copy of the input packet is created and stored in the <span class="strong"><strong>results</strong></span> queue.</li><li class="listitem"><span class="strong"><strong>Map&lt;String, Object&gt; settings</strong></span> - this map keeps plugin specific settings loaded from the Tigase server configuration. In most cases it is unused, however if the plugin needs to access an external database that this is a way to pass the database connection string to the plugin.</li></ul></div><p>After a closer look in some of the interfaces you can see that they extend another interface: <a class="link" href="https://projects.tigase.org/projects/tigase-server/repository/changes/src/main/java/tigase/xmpp/XMPPImplIfc.java" target="_top">XMPPImplIfc</a> which provides a basic meta information about the plugin implementation. Please refer to <a class="link" href="http://docs.tigase.org/tigase-server/snapshot/javadoc/tigase/xmpp/impl/package-summary.html" target="_top">JavaDoc</a> documentation for all details.</p><p>For purpose of this guide we are implementing a simple plugin for handling all <span class="strong"><strong>&lt;message/&gt;</strong></span> packets that is forwarding packets to the destination address. Incoming packets are forwarded to the user connection and outgoing packets are forwarded to the external destination address. This <a class="link" href="https://projects.tigase.org/projects/tigase-server/repository/changes/src/main/java/tigase/xmpp/impl/Message.java" target="_top">message plugin</a> is actually implemented already and it is available in our Git repository. The code has some comments inside already but this guide goes deeper into the implementation details.</p><p>First of all you have to choose what kind of plugin you want to implement. If this is going to be a packet processor you have to implement the <span class="strong"><strong>XMPPProcessorIfc</strong></span> interface, if this is going to be a pre-processor then you have to implement the <span class="strong"><strong>XMPPPreprocessorIfc</strong></span> interface. Of course your implementation can implement more than one interface, even all of them. There are also two abstract helper classes, one of which you should use as a base for all you plugins <span class="strong"><strong>XMPPProcessor</strong></span> or use <span class="strong"><strong>AnnotatedXMPPProcessor</strong></span> for annotation support.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_using_annotation_support"></a>Using annotation support</h3></div></div></div><p>The class declaration should look like this (assuming you are implementing just the packet processor):</p><pre class="programlisting">public class Message extends AnnotatedXMPPProcessor
+   implements XMPPProcessorIfc</pre><p>The first thing to create is the plugin <span class="strong"><strong>ID</strong></span>. This is a unique string which you put in the configuration file to tell the server to load and use the plugin. In most cases you can use XMLNS if the plugin wants packets with elements with a very specific name space. Of course there is no guarantee there is no other packet for this specific XML element too. As we want to process all messages and don&#8217;t want to spend whole day on thinking about a cool ID, let&#8217;s say our ID is: <span class="emphasis"><em>message</em></span>.</p><p>A plugin informs about it&#8217;s presence using a static <span class="strong"><strong>ID</strong></span> field and <span class="strong"><strong>@Id</strong></span> annotation placed on class:</p><pre class="programlisting">@Id(ID)
+public class Message extends AnnotatedXMPPProcessor
+   implements XMPPProcessorIfc {
+  protected static final String ID = "message";
+}</pre><p>As mentioned before, this plugin receives only this kind of packets for processing which it is interested in. In this example, the plugin is interested only in packets with <span class="strong"><strong>&lt;message/&gt;</strong></span> elements and only if they are in the "<span class="strong"><strong>jabber:client</strong></span>" namespace. To indicate all supported elements and namespaces we have to add 2 more annotations:</p><pre class="programlisting">@Id(ID)
+@Handles({
+  @Handle(path={ "message" },xmlns="jabber:client")
+})
+public class Message extends AnnotatedXMPPProcessor
+   implements XMPPProcessorIfc {
+  private static final String ID = "message";
+}</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_using_older_non_annotation_based_implementation"></a>Using older non-annotation based implementation</h3></div></div></div><p>The class declaration should look like this (assuming you are implementing just the packet processor):</p><pre class="programlisting">public class Message extends XMPPProcessor
+   implements XMPPProcessorIfc</pre><p>The first thing to create is the plugin <span class="strong"><strong>ID</strong></span> like above.</p><p>A plugin informs about it&#8217;s ID using following code:</p><pre class="programlisting">private static final String ID = "message";
+public String id() { return ID; }</pre><p>As mentioned before this plugin receives only this kind of packets for processing which it is interested in. In this example, the plugin is interested only in packets with <span class="strong"><strong>&lt;message/&gt;</strong></span> elements and only if they are in "<span class="strong"><strong>jabber:client</strong></span>" namespace. To indicate all supported elements and namespaces we have to add 2 more methods:</p><pre class="programlisting">public String[] supElements() {
+  return new String[] {"message"};
+}
+
+public String[] supNamespaces()	{
+  return new String[] {"jabber:client"};
+}</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_implementation_of_processing_method"></a>Implementation of processing method</h3></div></div></div><p>Now we have our plugin prepared for loading in Tigase. The next step is the actual packet processing method. For the complete code, please refer to the plugin in the Git. I will only comment here on elements which might be confusing or add a few more lines of code which might be helpful in your case.</p><pre class="programlisting">@Override
+public void process(Packet packet, XMPPResourceConnection session,
+	NonAuthUserRepository repo, Queue&lt;Packet&gt; results, Map&lt;String, Object&gt; settings)
+	throws XMPPException {
+
+	// For performance reasons it is better to do the check
+	// before calling logging method.
+	if (log.isLoggable(Level.FINEST)) {
+		log.log(Level.FINEST, "Processing packet: {0}", packet);
+	}
+
+	// You may want to skip processing completely if the user is offline.
+	if (session == null) {
+		return;
+	}    // end of if (session == null)
+
+	try {
+
+		// Remember to cut the resource part off before comparing JIDs
+		BareJID id = (packet.getStanzaTo() != null) ? packet.getStanzaTo().getBareJID() : null;
+
+		// Checking if this is a packet TO the owner of the session
+		if (session.isUserId(id)) {
+
+			// Yes this is message to 'this' client
+			Packet result = packet.copyElementOnly();
+
+			// This is where and how we set the address of the component
+			// which should receive the result packet for the final delivery
+			// to the end-user. In most cases this is a c2s or Bosh component
+			// which keep the user connection.
+			result.setPacketTo(session.getConnectionId(packet.getStanzaTo()));
+
+			// In most cases this might be skipped, however if there is a
+			// problem during packet delivery an error might be sent back
+			result.setPacketFrom(packet.getTo());
+
+			// Don't forget to add the packet to the results queue or it
+			// will be lost.
+			results.offer(result);
+
+			return;
+		}    // end of else
+
+		// Remember to cut the resource part off before comparing JIDs
+		id = (packet.getStanzaFrom() != null) ? packet.getStanzaFrom().getBareJID() : null;
+
+		// Checking if this is maybe packet FROM the client
+		if (session.isUserId(id)) {
+
+			// This is a packet FROM this client, the simplest action is
+			// to forward it to its destination:
+			// Simple clone the XML element and....
+			// ... putting it to results queue is enough
+			results.offer(packet.copyElementOnly());
+
+			return;
+		}
+
+		// Can we really reach this place here?
+		// Yes, some packets don't even have from or to address.
+		// The best example is IQ packet which is usually a request to
+		// the server for some data. Such packets may not have any addresses
+		// And they usually require more complex processing
+		// This is how you check whether this is a packet FROM the user
+		// who is owner of the session:
+		JID jid = packet.getFrom();
+
+		// This test is in most cases equal to checking getElemFrom()
+		if (session.getConnectionId().equals(jid)) {
+
+			// Do some packet specific processing here, but we are dealing
+			// with messages here which normally need just forwarding
+			Element el_result = packet.getElement().clone();
+
+			// If we are here it means FROM address was missing from the
+			// packet, it is a place to set it here:
+			el_result.setAttribute("from", session.getJID().toString());
+
+			Packet result = Packet.packetInstance(el_result, session.getJID(),
+				packet.getStanzaTo());
+
+			// ... putting it to results queue is enough
+			results.offer(result);
+		}
+	} catch (NotAuthorizedException e) {
+		log.warning("NotAuthorizedException for packet: " + packet);
+		results.offer(Authorization.NOT_AUTHORIZED.getResponseMessage(packet,
+				"You must authorize session first.", true));
+	}    // end of try-catch
+}</pre></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="clusterMapInterface.html">Prev</a>&nbsp;</td><td width="20%" align="center">&nbsp;</td><td width="40%" align="right">&nbsp;<a accesskey="n" href="pluginconf.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Cluster Map Interface&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Plugin Configuration</td></tr></table></div></body></html>

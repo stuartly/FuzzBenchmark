@@ -1,0 +1,59 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Tigase Server and Multiple Databases</title><link rel="stylesheet" type="text/css" href="css/docbook-xsl.css"><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"><link rel="home" href="index.html" title="Tigase Administration Guide"><link rel="up" href="databasemgnt.html" title="Chapter&nbsp;7.&nbsp;Database Management"><link rel="prev" href="hashedPasswords.html" title="Hashed User Passwords in Database"><link rel="next" href="dbImportingData.html" title="Importing User Data"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Tigase Server and Multiple Databases</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="hashedPasswords.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;7.&nbsp;Database Management</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="dbImportingData.html">Next</a></td></tr></table><hr></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="multidb"></a>Tigase Server and Multiple Databases</h2></div></div></div><p>Splitting user authentication data from all other XMPP information such as roster, vcards, etc&#8230;&#8203; was almost always possible in Tigase XMPP Server. Possible and quite simple thing to configure. Also it has been always possible and easy to assign a different database for each Tigase component (MUC, PubSub, AMP), for recording the server statistics. Almost every data type or component can store information in a different location, simple and easy to setup through the configuration file.</p><p>However it is much less known that it is also possible to have a different database for each virtual domain. This applies to both the user repository and authentication repository. This allows for very interesting configuration such as user database sharding where each shard keeps users for a specific domain, or physically split data based on virtual domain if each domain refers to a different customer or group of people.</p><p>How can we do that then?</p><p>This is very easy to do through the Tigase&#8217;s configuration file.</p><p>Typically the well known lines:</p><pre class="programlisting">--auth-db=tigase-custom
+--auth-db-uri=jdbc:mysql://db1.tigase/dbname?user&amp;password
+--user-db=mysql
+--user-db-uri=jdbc:mysql://db2.tigase/dbname?user&amp;password</pre><p>Define just a default databases for both user repository and authentication repository. Default means it is used when there is no repository specified for a particular virtual domain. However, you can have a separate, both user and authentication repository for each virtual domain.</p><p>Here is, how it works:</p><pre class="programlisting"># First, let's define our default database for all VHosts
+--auth-db=tigase-custom
+--auth-db-uri=jdbc:mysql://db1.tigase/dbname?user&amp;password
+--user-db=mysql
+--user-db-uri=jdbc:mysql://db2.tigase/dbname?user&amp;password
+
+# Now, we have VHost: domain1.com
+# User authentication data for this VHost is stored in Drupal database
+--auth-db[domain1.com]=drupal
+--auth-db-uri[domain1.com]=jdbc:mysql://db7.tigase/dbname?user&amp;password
+# All other user data is stored in Tigase's standard database in MySQL
+--user-db[domain1.com]=mysql
+--user-db-uri[domain1.com]=jdbc:mysql://db4.tigase/dbname?user&amp;password
+
+# Next VHost: domain2.com
+# User authentication is in LDAP server
+--auth-db[domain2.com]=tigase.db.ldap.LdapAuthProvider
+# Pretty standard Tigase's definition for the database (repository)
+#  connection string
+--auth-db-uri[domain2.com]=ldap://ldap.domain2.com:389
+# Now is something new, we have a custom authentication repository
+# settings for a single domain.
+# Please note how we define the VHost for which we set custom parameters
+basic-conf/auth-repo-params/domain2.com/user-dn-pattern=cn=,ou=,dc=,dc=
+# All other user data is stored in the same as default repository
+--user-db[domain2.com]=mysql
+--user-db-uri[domain2.com]=jdbc:mysql://db2.tigase/dbname?user&amp;password
+
+# Next VHost: domain3.com
+# Again user authentication is in LDAP server but pointing to
+# a different LDAP server with different access credentials
+--auth-db[domain3.com]=tigase.db.ldap.LdapAuthProvider
+# Pretty standard Tigase's definition for the database
+# (repository) connection string
+--auth-db-uri[domain3.com]=ldap://ldap.domain3.com:389
+# Now is something new, we have a custom authentication
+# repository settings for a single domain
+# Please note how we define the VHost for which we set custom parameters
+basic-conf/auth-repo-params/domain3.com/user-dn-pattern=cn=,ou=,dc=,dc=
+# All other user data is stored on the domain3 server in PostgreSQL database
+--user-db[domain3.com]=pgsql
+--user-db-uri[domain3.com]=jdbc:pgsql://db.domain3.com/dbname?user&amp;password
+
+# For VHost: domain4.com all the data, both authentication and
+# user XMPP data are stored on a separate
+# MySQL server with custom stored procedures for both user
+# login and user logout processing.
+--auth-db[domain4.com]=tigase-custom
+--auth-db-uri[domain4.com]=jdbc:mysql://db14.domain4.com/dbname?user&amp;password
+basic-conf/auth-repo-params/domain4.com/user-login-query={ call UserLogin(?, ?) }
+basic-conf/auth-repo-params/domain4.com/user-logout-query={ call UserLogout(?) }
+basic-conf/auth-repo-params/domain4.com/sasl-mechs=PLAIN,DIGEST-MD5
+--user-db[domain4.com]=mysql
+--user-db-uri[domain4.com]=jdbc:mysql://db14.domain4.com/dbname?user&amp;password</pre><p>As you can see, it requires some writing but flexibility is very extensive and you can setup as many separate databases as you need or want. If one database (recognized by the database connection string) is shared among different VHosts, Tigase still uses a single connection pool, so it won&#8217;t create an excessive number of connections to the database.</p><p>I hope this helps with more complex setups and configuration cases.</p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="hashedPasswords.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="databasemgnt.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="dbImportingData.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Hashed User Passwords in Database&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Importing User Data</td></tr></table></div></body></html>

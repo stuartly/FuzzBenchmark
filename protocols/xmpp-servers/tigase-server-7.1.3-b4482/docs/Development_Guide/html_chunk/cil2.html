@@ -1,0 +1,85 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Component Implementation - Lesson 2 - Configuration</title><link rel="stylesheet" type="text/css" href="css/docbook-xsl.css"><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"><link rel="home" href="index.html" title="Tigase Development Guide"><link rel="up" href="componentdevelpoment.html" title="Chapter&nbsp;4.&nbsp;Component Development"><link rel="prev" href="componentdevelpoment.html" title="Chapter&nbsp;4.&nbsp;Component Development"><link rel="next" href="cil3.html" title="Component Implementation - Lesson 3 - Multi-Threading"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Component Implementation - Lesson 2 - Configuration</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="componentdevelpoment.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;4.&nbsp;Component Development</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="cil3.html">Next</a></td></tr></table><hr></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="cil2"></a>Component Implementation - Lesson 2 - Configuration</h2></div></div></div><p>It might be hard to tell what the first important thing you should do with your new component implementation. Different developers may have a different view on this. It seems to me however that it is always a good idea to give to your component a way to configure it and provide some runtime settings.</p><p>This guide describes how to add configuration handling to your component.  There is detailed Configuration API description available so again I am not getting deep into all details just the necessary code.</p><p>To demonstrate how to implement component configuration let&#8217;s say we want to configure which types of packets will be logged by the component. There are three possible packet types: <span class="strong"><strong>message</strong></span>, <span class="strong"><strong>presence</strong></span> and <span class="strong"><strong>iq</strong></span> and we want to be able to configure logging of any combination of the three. Furthermore we also want to be able to configure the text which is prepended to the logged message and to optionally switch secure login. (Secure logging replaces all packet CData with text: <span class="emphasis"><em>CData size: NN</em></span> to protect user privacy.)</p><p>Let&#8217;s create the following private variables in our component:</p><pre class="programlisting">private String[] packetTypes = {"message", "presence", "iq"};
+private String prependText = "My packet: ";
+private boolean secureLogging = false;</pre><p>As the component configuration is maintained in a form of a <span class="emphasis"><em>(key, value)</em></span> map, we have to invent keys for each of our configuration entry:</p><pre class="programlisting">private static final String PACKET_TYPES_KEY = "packet-types";
+private static final String PREPEND_TEXT_KEY = "log-prepend";
+private static final String SECURE_LOGGING_KEY = "secure-logging";</pre><p>There are two methods used to maintain the component configuration: <code class="literal">getDefaults(&#8230;&#8203;)</code> where the component provides some configuration defaults and <code class="literal">setProperties(&#8230;&#8203;)</code> which sets a working configuration for the component:</p><pre class="programlisting">@Override
+public Map&lt;String, Object&gt; getDefaults(Map&lt;String, Object&gt; params) {
+  Map&lt;String, Object&gt; defs = super.getDefaults(params);
+  defs.put(PACKET_TYPES_KEY, packetTypes);
+  defs.put(PREPEND_TEXT_KEY, prependText);
+  defs.put(SECURE_LOGGING_KEY, secureLogging);
+  return defs;
+}
+
+@Override
+public void setProperties(Map&lt;String, Object&gt; props) {
+  super.setProperties(props);
+  if (props.get( PACKET_TYPES_KEY ) != null ) {
+    packetTypes = (String[]) props.get( PACKET_TYPES_KEY );
+  }
+  if (props.get( PREPEND_TEXT_KEY ) != null ) {
+    prependText = (String) props.get( PREPEND_TEXT_KEY );
+  }
+  if (props.get( SECURE_LOGGING_KEY ) != null ) {
+    secureLogging = (Boolean) props.get( SECURE_LOGGING_KEY );
+  }
+}</pre><p>You do not have to implement the <code class="literal">getDefaults(&#8230;&#8203;)</code> method and provide default settings for your configuration, but doing so gives you a few benefits.</p><p>The first from a developer point of view, you don&#8217;t have to check in the <code class="literal">setProperties(&#8230;&#8203;)</code> whether the value is of a correct type or convert it from String to the correct type as it always be either the default or user provided. It will be of a correct type as the configuration framework takes care of the types comparing between the user provided settings and default values. So this just makes your <code class="literal">setProperties(&#8230;&#8203;)</code> code much simpler and clearer.</p><p>Please note that currently Tigase allows changing properties automatically. Hence you should check each time if a given property was updated at the given call of <code class="literal">setProperties()</code>.</p><p><span class="inlinemediaobject"><img src="./images/test-comp-config-list-smaller.png" alt="test-comp-config-list-smaller"></span></p><p>Secondly this also makes the administrator&#8217;s life easier. As you can see on the screenshot, configuration parameters provided with default values can be changed via configuration ad-hoc commands. So the administrator can maintain your component durinmg run-time from his XMPP client.</p><p>Regardless, if you implemented the <code class="literal">getDefaults(&#8230;&#8203;)</code> method or not you can always manually add parameters to the <code class="literal">init.properties</code> file.</p><p>The syntax in <code class="literal">init.properties</code> file is very simple and is described in details in the <span class="emphasis"><em>Admin Guide</em></span>. As it shows on the screenshot the configuration parameter name consists of: <span class="emphasis"><em>component name, property key</em></span>. To set the configuration for your component in <code class="literal">init.properties</code> file you have to append following lines to the file:</p><pre class="programlisting">test/log-prepend="My packet: "
+test/packet-types[s]=message,presence,iq
+test/secure-logging[B]=true</pre><p>The square brackets denote the property type, have a look at the <span class="emphasis"><em>Admin Guide</em></span> documentation for more details.</p><p>And this is the complete code of the new component with a modified <code class="literal">processPacket(&#8230;&#8203;)</code> method taking advantage of configuration settings:</p><pre class="programlisting">import java.util.Map;
+import java.util.logging.Logger;
+import tigase.server.AbstractMessageReceiver;
+import tigase.server.Packet;
+
+public class TestComponent extends AbstractMessageReceiver {
+
+  private static final Logger log =
+    Logger.getLogger(TestComponent.class.getName());
+
+  private static final String PACKET_TYPES_KEY = "packet-types";
+  private static final String PREPEND_TEXT_KEY = "log-prepend";
+  private static final String SECURE_LOGGING_KEY = "secure-logging";
+
+  private String[] packetTypes = {"message", "presence", "iq"};
+  private String prependText = "My packet: ";
+  private boolean secureLogging = false;
+
+  @Override
+  public void processPacket(Packet packet) {
+    for (String pType : packetTypes) {
+      if (pType == packet.getElemName()) {
+        log.finest(prependText + packet.toString(secureLogging));
+      }
+    }
+  }
+
+  @Override
+  public Map&lt;String, Object&gt; getDefaults(Map&lt;String, Object&gt; params) {
+    Map&lt;String, Object&gt; defs = super.getDefaults(params);
+    defs.put(PACKET_TYPES_KEY, packetTypes);
+    defs.put(PREPEND_TEXT_KEY, prependText);
+    defs.put(SECURE_LOGGING_KEY, secureLogging);
+    return defs;
+  }
+
+  @Override
+  public void setProperties(Map&lt;String, Object&gt; props) {
+    super.setProperties(props);
+    if (props.get( PACKET_TYPES_KEY ) != null ) {
+      packetTypes = (String[]) props.get( PACKET_TYPES_KEY );
+    }
+    // Make sure we can compare element names by reference
+    // instead of String content
+    for (int i = 0; i &lt; packetTypes.length; i++) {
+      packetTypes[i] = packetTypes[i].intern();
+    }
+    if (props.get( PREPEND_TEXT_KEY ) != null ) {
+      prependText = (String) props.get( PREPEND_TEXT_KEY );
+    }
+    if (props.get( SECURE_LOGGING_KEY ) != null ) {
+      secureLogging = (Boolean) props.get( SECURE_LOGGING_KEY );
+    }
+  }
+
+}</pre><p>Of course we can do much more useful packet processing in the <code class="literal">processPacket(&#8230;&#8203;)</code> method. This is just an example code. Please note: comparing packet element name with our packet type by reference is intentional and allowed in this context. All <span class="strong"><strong>Element</strong></span> names are processed with <code class="literal">String.intern()</code> function to preserve memory and improve performance of string comparison.</p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="componentdevelpoment.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="componentdevelpoment.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="cil3.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;4.&nbsp;Component Development&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Component Implementation - Lesson 3 - Multi-Threading</td></tr></table></div></body></html>

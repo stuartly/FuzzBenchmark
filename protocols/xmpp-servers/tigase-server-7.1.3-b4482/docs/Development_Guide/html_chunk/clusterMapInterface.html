@@ -1,0 +1,38 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Cluster Map Interface</title><link rel="stylesheet" type="text/css" href="css/docbook-xsl.css"><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"><link rel="home" href="index.html" title="Tigase Development Guide"><link rel="up" href="componentdevelpoment.html" title="Chapter&nbsp;4.&nbsp;Component Development"><link rel="prev" href="eventBus.html" title="EventBus API in Tigase"><link rel="next" href="pluginDev.html" title="Chapter&nbsp;5.&nbsp;Plugin Development"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Cluster Map Interface</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="eventBus.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;4.&nbsp;Component Development</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="pluginDev.html">Next</a></td></tr></table><hr></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="clusterMapInterface"></a>Cluster Map Interface</h2></div></div></div><p>Starting with v7.1.0, a cluster map interface has been implemented.  The cluster map is aided by use of the distributed event bus system to communicate between all clusters.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_requirements_2"></a>Requirements</h3></div></div></div><p>Any full distribution of Tigase will support the Cluster Map API so long as the eventbus component is not disabled.  JDK v1.8 is required for this feature, however since Tigase v1.7.0 requires this, you should already have it installed.</p><p>The cluster map is stored in memory and follows the map.util.interface java standards can be used to improve cluster connections, and help clustered servers keep track of each other.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_map_creation"></a>Map creation</h3></div></div></div><p>Map must be created with the following command:</p><pre class="programlisting">java.util.Map&lt;String, String&gt; map = ClusterMapFactory.get().createMap("type",String.class,String.class,"1","2","3" )</pre><p>Where "type" is the map ID.  This creates the map locally and then fires an event to all clustered servers.  Each cluster server has an event handler waiting for, in this case, <code class="literal">NewMapCreate</code> event.
+Map Key class and Map Value class are used to type conversion.
+Arrays of strings are parameters, for example ID of user session.</p><p>Once received, the distributed eventbus will create a local map.</p><pre class="programlisting">eventBus.addHandler(MapCreatedEventHandler.MapCreatedEvent.class, new MapCreatedEventHandler() {
+    @Override
+    public void onMapCreated(Map map, String type, String... parameters) {
+    }
+});</pre><p>A brief example of a map creation is shown here:</p><pre class="programlisting">java.util.Map&lt;String, String&gt; map = ClusterMapFactory.get().createMap("Very_Important_Map_In_User_Session",JID.class,Boolean.class,"user-session-identifier-123");</pre><p>This will fire event MapCreatedEvent on all other cluster nodes. Strings "Very_Important_Map_In_User_Session" and "user-session-identifier-123" are given as parameters in onMapCreated() method.
+The event consumer code must know what to do with map with type "Very_Important_Map_In_User_Session". It may retrieve user session "user-session-identifier-123" and put this map in this session.
+It should be used to tell other nodes how to treat the event with a newly created map, and it should be stored in user session.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_map_changes"></a>Map Changes</h3></div></div></div><p>Changes to the map on one cluster will trigger <code class="literal">AddValue</code> or <code class="literal">RemoveValue</code> events in eventbus.  Stanzas sent betweeen clusters will look something like this:</p><pre class="programlisting">&lt;ElementAdd xmlns="tigase:clustered:map"&gt;
+  &lt;uid&gt;1-2-3&lt;/uid&gt;
+  &lt;item&gt;
+    &lt;key&gt;xKEY&lt;/key&gt;
+    &lt;value&gt;xVALUE&lt;/value&gt;
+  &lt;/item&gt;
+  &lt;item&gt;
+    &lt;key&gt;yKEY&lt;/key&gt;
+    &lt;value&gt;yVALUE&lt;/value&gt;
+  &lt;/item&gt;
+&lt;/ElementAdd&gt;</pre><p>Code to handle adding an item:</p><pre class="programlisting">eventBus.addHandler(ElementAdd, tigase:clustered:map, new EventHandler() {
+  @Override
+  public void onEvent(String name, String xmlns, Element event) {
+  });</pre><p>Where the element <span class="emphasis"><em>event</em></span> is the UID, and the name string is the name of the map key/value pair.</p><p>This example removes an element from the cluster map.  Removal of items look similar:</p><pre class="programlisting">&lt;ElementRemove xmlns="tigase:clustered:map"&gt;
+  &lt;uid&gt;1-2-3&lt;/uid&gt;
+  &lt;item&gt;
+    &lt;key&gt;xKEY&lt;/key&gt;
+    &lt;value&gt;xVALUE&lt;/value&gt;
+  &lt;/item&gt;
+&lt;/ElementRemove&gt;</pre><p>with the code also being similar:</p><pre class="programlisting">eventBus.addHandler(ElementRemove, tigase:clustered:map, new EventHandler() {
+  @Override
+  public void onEvent(String name, String xmlns, Element name) {
+  });</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_map_destruction"></a>Map Destruction</h3></div></div></div><p>Java Garbage Collector will normally remove a local map if it is no longer used.  Clustered maps however are not removed in this manner.
+These maps must be destroyed manually if they are no longer used:</p><pre class="programlisting">ClusterMapFactory.get().destroyMap(clmap);</pre><p>Calling this, the map named clmap will be destroyed on each cluster node.</p><p>The event handler will catch event when map is destroyed on another cluster node:</p><pre class="programlisting">eventBus.addHandler(MapDestroyedEventHandler.MapDestroyedEvent.class, new MapDestroyedEventHandler() {
+    @Override
+    public void onMapDestroyed(Map mapX, String type) {
+    }
+});</pre></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="eventBus.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="componentdevelpoment.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="pluginDev.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">EventBus API in Tigase&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;5.&nbsp;Plugin Development</td></tr></table></div></body></html>

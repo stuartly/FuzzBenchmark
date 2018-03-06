@@ -1,0 +1,48 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Linux Settings for High Load Systems</title><link rel="stylesheet" type="text/css" href="css/docbook-xsl.css"><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"><link rel="home" href="index.html" title="Tigase Administration Guide"><link rel="up" href="configuration.html" title="Chapter&nbsp;5.&nbsp;Configuration"><link rel="prev" href="manualconfig.html" title="Startup File for tigase.sh - tigase.conf"><link rel="next" href="confChanges5x.html" title="Configuration Storage Options in Tigase"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Linux Settings for High Load Systems</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="manualconfig.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;5.&nbsp;Configuration</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="confChanges5x.html">Next</a></td></tr></table><hr></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="linuxhighload"></a>Linux Settings for High Load Systems</h2></div></div></div><p>There are a few basic settings you have to adjust for high load systems to make sure the server has enough resources to handle a big number of network connections.</p><p>The main parameter is a maximum number of opened files allowed for the process to keep at the same time. Each network connection uses a file handler, therefore if the limit is too low you can quickly run out of handlers and the server can not accept any more connections.</p><p>This limit is set on 2 levels - on the kernel level (<span class="strong"><strong>fs.file-max</strong></span>) and on the system level (<span class="strong"><strong>nofile</strong></span>).</p><p>Another kernel property which can be important in certain configurations (like transports installations or when you use proxy for Bosh connections) is: <span class="strong"><strong>net.ipv4.ip_local_port_range</strong></span>. This parameter can be set the same way as the fs.file-max property.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_fs_file_max"></a>fs.file-max</h3></div></div></div><p>The <span class="strong"><strong>fs.file-max</strong></span> kernel property is set via sysctl command. You can see current settings by executing the command:</p><pre class="programlisting"># sysctl fs.file-max
+fs.file-max = 358920</pre><p>If you plan to run high load service with large number of server connections, then this parameter should be at least as twice big as the number of network connections you expect to support. You can change this setting by executing the command:</p><pre class="programlisting"># sysctl -w fs.file-max=360000
+fs.file-max = 360000</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_net_ipv4_ip_local_port_range"></a>net.ipv4.ip_local_port_range</h3></div></div></div><p>You can see current settings by executing the command:</p><pre class="programlisting"># sysctl net.ipv4.ip_local_port_range
+net.ipv4.ip_local_port_range = 32768	61000</pre><p>You can change this setting by executing the command:</p><pre class="programlisting"># sysctl -w net.ipv4.ip_local_port_range="1024 65000"
+net.ipv4.ip_local_port_range = 1024 65000</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_tcp_keepalive"></a>TCP_keepalive</h3></div></div></div><p>According to <a class="link" href="http://blog.kolargol.eu/2006/06/tcpkeepalive.html" target="_top">blog.kolargol.eu</a> or <a class="link" href="http://www.gnugk.org/keepalive.html" target="_top">www.gnugk.org/</a> some keepalive settings should be changed to improve reliability.</p><pre class="programlisting"># sysctl -w net.ipv4.tcp_keepalive_time="60"
+net.ipv4.tcp_keepalive_time = 60
+# sysctl -w net.ipv4.tcp_keepalive_probes="3"
+net.ipv4.tcp_keepalive_probes = 3
+# sysctl -w net.ipv4.tcp_keepalive_intvl="90"
+net.ipv4.tcp_keepalive_intvl = 90</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="__etc_sysctl_conf"></a>/etc/sysctl.conf</h3></div></div></div><p>The above commands let the system remember new settings until the next system restart. If you want to make the change permanent you have to edit the file: <span class="strong"><strong>/etc/sysctl.conf</strong></span> and add the property at the end of the file:</p><pre class="programlisting">fs.file-max=360000
+net.ipv4.ip_local_port_range=1024 65000net.ipv4.tcp_keepalive_time=60
+net.ipv4.tcp_keepalive_probes=3
+net.ipv4.tcp_keepalive_intvl=90</pre><p>It will be automatically loaded next time you start the server.</p><p>Command:</p><pre class="programlisting"># sysctl -p</pre><p>Causes the /etc/systcl.conf to be reloaded which is useful when you have added more parameters to the file and don&#8217;t want to restart the server.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_nofile"></a>nofile</h3></div></div></div><p>This is the property used by the system limits. For example running the command ulimit -a shows you all limits set for the current user:</p><pre class="programlisting"># ulimit -a
+core file size          (blocks, -c) 0
+data seg size           (kbytes, -d) unlimited
+file size               (blocks, -f) unlimited
+pending signals                 (-i) 38912
+max locked memory       (kbytes, -l) 32
+max memory size         (kbytes, -m) unlimited
+open files                      (-n) 40960
+pipe size            (512 bytes, -p) 8
+POSIX message queues     (bytes, -q) 819200
+stack size              (kbytes, -s) 8192
+cpu time               (seconds, -t) unlimited
+max user processes              (-u) 38912
+virtual memory          (kbytes, -v) unlimited
+file locks                      (-x) unlimited</pre><p>To make it even more interesting and more complex, there are 2 types of system limits:
+<span class="strong"><strong>soft limit</strong></span> which can be temporarily exceeded by the user and
+<span class="strong"><strong>hard limit</strong></span> which can not be exceeded.
+To see your <span class="strong"><strong>hard limit</strong></span> execute command:</p><pre class="programlisting"># ulimit -a -H
+core file size          (blocks, -c) unlimited
+data seg size           (kbytes, -d) unlimited
+file size               (blocks, -f) unlimited
+pending signals                 (-i) 38912
+max locked memory       (kbytes, -l) 32
+max memory size         (kbytes, -m) unlimited
+open files                      (-n) 40960
+pipe size            (512 bytes, -p) 8
+POSIX message queues     (bytes, -q) 819200
+stack size              (kbytes, -s) unlimited
+cpu time               (seconds, -t) unlimited
+max user processes              (-u) 38912
+virtual memory          (kbytes, -v) unlimited
+file locks                      (-x) unlimited</pre><p>The hard limits are usually bigger then the soft limits or sometimes the same.</p><p>For us the most important parameter is: <span class="strong"><strong>open files</strong></span>. You can change the property in file: /etc/security/limits.conf. You have to append 2 following lines to the end of the file:</p><pre class="programlisting">jabber               soft    nofile         350000
+jabber               hard    nofile         350000</pre><p>Where the <span class="strong"><strong>jabber</strong></span> is the user name of the account running you IM service. You can also set the limits for all users on the machine in a following way:</p><pre class="programlisting">*               soft    nofile         350000
+*               hard    nofile         350000</pre><p>For those changes to make an effect you have to logout from the modified account and login again. New limits should be applied.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_su_and_init_script"></a>su and init script</h3></div></div></div><p>If one intends to use init scripts for startup purposes (or simply wants to be able to start the server utilizing su command) it&#8217;s necessary to adjust PAM configuration by modifying /etc/pam.d/su file and uncomment following line:</p><pre class="programlisting">session    required   pam_limits.so</pre><p>Afterwards the init scripts will respect configured limits.</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="manualconfig.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="configuration.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="confChanges5x.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Startup File for tigase.sh - tigase.conf&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Configuration Storage Options in Tigase</td></tr></table></div></body></html>

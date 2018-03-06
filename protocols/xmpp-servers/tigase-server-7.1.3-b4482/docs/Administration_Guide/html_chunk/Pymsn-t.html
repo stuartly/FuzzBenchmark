@@ -1,0 +1,95 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Tigase and PyMSN-t Transport</title><link rel="stylesheet" type="text/css" href="css/docbook-xsl.css"><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"><link rel="home" href="index.html" title="Tigase Administration Guide"><link rel="up" href="_using_tigase_applies_to_all_tigase_server_versions.html" title="Chapter&nbsp;9.&nbsp;Using Tigase - Applies to All Tigase Server Versions"><link rel="prev" href="registerXMPP.html" title="Register Your Own XMPP Domain"><link rel="next" href="multiplesessionmanagers.html" title="Two or More SessionManagers"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Tigase and PyMSN-t Transport</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="registerXMPP.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;9.&nbsp;Using Tigase - Applies to All Tigase Server Versions</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="multiplesessionmanagers.html">Next</a></td></tr></table><hr></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="Pymsn-t"></a>Tigase and PyMSN-t Transport</h2></div></div></div><p>Any XMPP server and any transport can connect with each other through an external component protocol (<a class="link" href="http://www.xmpp.org/extensions/xep-0114.html" target="_top">XEP-0114</a>). So all you need to do is to correctly prepare configuration for this protocol on both sides.</p><p><span class="emphasis"><em>Continue reading to learn how to setup Tigase and PyMSN for working together&#8230;&#8203;</em></span></p><p>There are a few basic parameters to set for this protocol:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><span class="strong"><strong>PORT number</strong></span> - this is a standard thing for any TCP/IP connection. Usually the port number should be above 1024 and for PyMSN-t transport it is usually <span class="strong"><strong>5347</strong></span>.</li><li class="listitem"><span class="strong"><strong>IP address</strong></span> - again, a standard thing for any TCP/IP connection. If both applications - XMPP server and transport run on the same machine the IP address should be <span class="strong"><strong>127.0.0.1</strong></span>.</li><li class="listitem"><span class="strong"><strong>SECRET</strong></span> - this is kind of connection password. Transport connects to the XMPP server and authenticates itself using this password. So no other unauthorized transport can connect to the XMPP server. For now lets use the password <span class="strong"><strong>secret</strong></span>.</li><li class="listitem"><span class="strong"><strong>Transport ID</strong></span> - is an ID in XMPP network. Let&#8217;s say we want to setup transport for <span class="strong"><strong>MSN</strong></span> for the server <span class="strong"><strong>tigase.org</strong></span>. Transport ID can be: msn.tigase.org. It could be also: <span class="strong"><strong>anything.tigase.org</strong></span> but this name while still valid would be confusing for users and my suggestion is to avoid confusing names. <span class="strong"><strong>Note!</strong></span> Transport ID should resolve to correct IP address. For your tests you can add the ID to /etc/hosts file.</li></ul></div><p>Here is side by side configuration for both applications: PyMSN-t and Tigase to make them work together. Both services are setup with the hostname <span class="strong"><strong>test-d</strong></span>. To make sure both <span class="strong"><strong>test-d</strong></span> and <span class="strong"><strong>msn.test-d</strong></span> resolve to correct IP address an entry to the /etc/hosts file is added:</p><pre class="programlisting">## In your case the IP address should be probably different.
+192.168.0.13    test-d            msn.test-d</pre><p>Tigase server connects to MySQL database (or built-in XMLBD for simpler configuration variant).</p><p>I am not going to setup <span class="strong"><strong>PyMSN-t</strong></span> to run in background as a system service. This is specific to the system you use and is covered in transport documentation and your operating system. Most systems have their own scripts to start services so I would recommend to use them. Here howeevr, it is run in the foreground with full logging switched on to the console to make it easier track what happens.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_pymsn_t_etc_jabber_pymsn_t_xml_file"></a>PyMSN-t - /etc/jabber/pymsn-t.xml file</h3></div></div></div><pre class="programlisting">&lt;pymsnt&gt;
+  &lt;!-- The JabberID of the transport --&gt;
+  &lt;jid&gt;msn.test-d&lt;/jid&gt;
+  &lt;!-- The public IP or DNS name of the machine
+    the transport is running on --&gt;
+  &lt;host&gt;test-d&lt;/host&gt;
+  &lt;!-- The location of the PID file, relative
+    to the PyMSNt directory --&gt;
+  &lt;pid&gt;/var/run/jabber/pymsn-t.pid&lt;/pid&gt;
+  &lt;!-- If set, the transport will background
+    itself when run, we don't want to do this right
+    now. --&gt;
+  &lt;!-- &lt;background/&gt; --&gt;
+  &lt;!-- The IP address of the main XMPP server
+    to connect to --&gt;
+  &lt;mainServer&gt;127.0.0.1&lt;/mainServer&gt;
+  &lt;!-- The TCP port to connect to the XMPP
+    server on (this is the default for Jabberd2) --&gt;
+  &lt;port&gt;5347&lt;/port&gt;
+  &lt;!-- The authentication token to use when
+    connecting to the XMPP server --&gt;
+  &lt;secret&gt;secret&lt;/secret&gt;
+  &lt;lang&gt;en&lt;/lang&gt;
+  &lt;website&gt;http://test-d/&lt;/website&gt;
+  &lt;allowRegister/&gt;
+  &lt;getAllAvatars/&gt;
+  &lt;!-- Please give the port to listen for XMPP
+    socks5 transfers on. Note the standard port number
+    set here is &lt;strong&gt;8010&lt;/strong&gt;. This port
+    however is in use on my machine so this is why
+    I had to set it to different value.--&gt;
+  &lt;ftJabberPort&gt;8014&lt;/ftJabberPort&gt;
+  &lt;admins&gt;
+    &lt;jid&gt;tus@test-d&lt;/jid&gt;
+  &lt;/admins&gt;
+  &lt;!-- The logging level
+    0 -&gt; No logging
+    1 -&gt; Log tracebacks
+    2 -&gt; Log tracebacks, warnings and errors
+    3 -&gt; Log everything --&gt;
+  &lt;debugLevel&gt;3&lt;/debugLevel&gt;
+  &lt;!-- The file to log to. Leave this disabled
+    for stdout --&gt;
+  &lt;!-- &lt;debugFile&gt;debug.log&lt;/debugFile&gt; --&gt;
+&lt;/pymsnt&gt;</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_pymsn_t_run_command"></a>PyMSN-t - run command</h3></div></div></div><pre class="programlisting">python /usr/lib/python2.4/site-packages/pymsn-t/pymsn-t.py \
+  -c /etc/jabber/pymsn-t.xml</pre><p><span class="strong"><strong>Note!</strong></span> the full path to PyMSN-t config file is important.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_pymsn_t_expected_output"></a>PyMSN-t - expected output</h3></div></div></div><pre class="programlisting">A few last lines should look like:
+[2007-05-07 13:00:39] Starting factory
+  &lt;twisted.xish.xmlstream.XmlStreamFactory
+  instance at 0xb7ce80ac&gt;
+[2007-05-07 13:00:39] &lt;twisted.internet.tcp.Connector
+  instance at 0xb7ceb24c&gt; will retry in 2 seconds
+[2007-05-07 13:00:39] Stopping factory
+  &lt;twisted.xish.xmlstream.XmlStreamFactory
+  instance at 0xb7ce80ac&gt;
+[2007-05-07 13:00:41] Starting factory
+  &lt;twisted.xish.xmlstream.XmlStreamFactory
+  instance at 0xb7ce80ac&gt;
+[2007-05-07 13:00:41] &lt;twisted.internet.tcp.Connector
+  instance at 0xb7ceb24c&gt; will retry in 5 seconds
+[2007-05-07 13:00:41] Stopping factory
+  &lt;twisted.xish.xmlstream.XmlStreamFactory
+  instance at 0xb7ce80ac&gt;
+[2007-05-07 13:00:46] Starting factory
+  &lt;twisted.xish.xmlstream.XmlStreamFactory
+  instance at 0xb7ce80ac&gt;
+[2007-05-07 13:00:46] &lt;twisted.internet.tcp.Connector
+  instance at 0xb7ceb24c&gt; will retry in 15 seconds
+[2007-05-07 13:00:46] Stopping factory
+  &lt;twisted.xish.xmlstream.XmlStreamFactory
+  instance at 0xb7ce80ac&gt;</pre><p>And PyMSN should continue to print lines until it successfully connects to the Tigase server. When that happens, the following lines should be printed:</p><pre class="programlisting">[2007-05-07 13:29:04] Starting factory
+  &lt;twisted.xish.xmlstream.XmlStreamFactory instance at 0xb7cf00ac&gt;
+[2007-05-07 13:29:04] INFO ::  ::  :: componentConnected
+  :: PyTransport :: {'xmlstream': &lt;twisted.xish.xmlstream.XmlStream
+  instance at 0xb7d0feac&gt;, 'self': 'instance'}</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_tigase_etc_tigase_conf_file"></a>Tigase - etc/tigase.conf file</h3></div></div></div><p>You may consider removing the last 2 lines from TIGASE_OPTIONS variable to avoid using MySQL for now. Tigase will then use internal XMLDB which doesn&#8217;t need any special setup. (Just remember to leave closing double quotes&#8230;&#8203;)</p><pre class="programlisting">ENC="-Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8"
+DRV="-Djdbc.drivers=com.mysql.jdbc.Driver"
+CLASSPATH="${CLASSPATH}:libs/jdbc-mysql.jar"
+JAVA_OPTIONS="${ENC} ${DRV} -server -Xms100M -Xmx100M "
+TIGASE_CONFIG="etc/tigase-mysql.xml"
+## All TIGASE_OPTIONS settings must be in single line
+## They are split to make them more readable
+TIGASE_OPTIONS="--gen-config-all --admins \"tus@test-d\"
+ --virt-hosts test-d,localhost --debug server
+ --ext-comp \"test-d,msn.test-d,5347,secret,plain,accept\"
+ --user-db mysql --user-db-uri
+ \"jdbc:mysql://localhost/tigase?user=tigase&amp;password=mypass\" "</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_tigase_run_command"></a>Tigase - run command</h3></div></div></div><pre class="programlisting">./bin/tigase.sh start etc/tigase.conf</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_tigase_expected_output"></a>Tigase - expected output</h3></div></div></div><p>To see the log output from Tigase server execute following command:</p><pre class="programlisting">tail -f logs/tigase-console.log</pre><p>After transport connects to Tigase server you should see lines like:</p><pre class="programlisting">2007-05-07 12:29:05
+  ComponentConnectionManager.processHandshake() FINE:
+  Connected to: msn.test-d
+2007-05-07 12:29:05
+  ComponentConnectionManager.updateServiceDiscovery()
+  FINEST: Modifing service-discovery info:
+  &lt;item name="XEP-0114 connected"
+  jid="msn.test-d"/&gt;</pre><p><span class="strong"><strong>Note!</strong></span> There was a bug in the <span class="strong"><strong>jabber:iq:register</strong></span> plugin which caused problems when registering account in transport. Please use build 432 or later.</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="registerXMPP.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="_using_tigase_applies_to_all_tigase_server_versions.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="multiplesessionmanagers.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Register Your Own XMPP Domain&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Two or More SessionManagers</td></tr></table></div></body></html>

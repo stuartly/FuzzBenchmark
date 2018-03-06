@@ -1,0 +1,96 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Virtual Hosts in Tigase Server</title><link rel="stylesheet" type="text/css" href="css/docbook-xsl.css"><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"><link rel="home" href="index.html" title="Tigase Administration Guide"><link rel="up" href="loadComponent.html" title="Chapter&nbsp;8.&nbsp;Configuring the Tigase Server to Load a Component"><link rel="prev" href="socks5.html" title="Socks 5 Component"><link rel="next" href="_using_tigase_applies_to_all_tigase_server_versions.html" title="Chapter&nbsp;9.&nbsp;Using Tigase - Applies to All Tigase Server Versions"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Virtual Hosts in Tigase Server</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="socks5.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;8.&nbsp;Configuring the Tigase Server to Load a Component</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="_using_tigase_applies_to_all_tigase_server_versions.html">Next</a></td></tr></table><hr></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="tigase41virtualHosts"></a>Virtual Hosts in Tigase Server</h2></div></div></div><p>Tigase server supports multiple virtual hosts in a single server installation. This is supported via <a class="link" href="https://projects.tigase.org/projects/tigase-server/repository/changes/src/main/java/tigase/vhosts/VHostManagerIfc.java" target="_top">VHostManager</a> - the new Tigase server component added recently to the implementation. Virtual hosts can be added or removed, enabled or disabled during runtime without restarting the service or disrupting normal operation.</p><p>This document describes how virtual hosts work in Tigase server and how to get the most out of this feature in your installation.</p><p>The simplest and default way to set virtual hosts is in the server configuration. You can either edit manually the init.properties file or use the graphical installer/configuration program to set the property. If you want to edit it manually search for '--virt-hosts' property for more detailed description.</p><p>Alternatively you can use the GUI installer as shown below to set a list of virtual hosts.</p><p><span class="inlinemediaobject"><img src="./images/tigase-basic-config-vhosts.png" alt="tigase-basic-config-vhosts"></span></p><p>This method however has many disadvantages. It requires a server restart after each change, and the configuration file is not the best place to store long list of virtual domains. Furthermore you can not set any additional parameters for the domain other than whether it exists or not.</p><p>There is another way to store and control virtual domains in Tigase. That information can be put in the database and managed using ad-hoc commands. List of domains can be modified outside Tigase server through any third-party system or web application and the server reloads the list of when received <span class="strong"><strong>VHOSTS_RELOAD</strong></span> ad-hoc command.</p><p>There are 2 more ad-hoc commands which allow you to add/update and remove virtual hosts via XMPP protocol:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><span class="strong"><strong>VHOSTS_UPDATE</strong></span> - for adding new virtual host or changing parameters of the existing domain</li><li class="listitem"><span class="strong"><strong>VHOSTS_REMOVE</strong></span> - for removing existing virtual domain from the list of the server domains.</li></ul></div><p>By default, both commands cause the vhosts list to update in the permanent repository. This is however <a class="link" href="https://projects.tigase.org/projects/tigase-server/repository/changes/src/main/java/tigase/vhosts/VHostRepository.java" target="_top">VHostRepository</a> implementation dependent feature and can be changed in your repository implementation.</p><p>Commands for virtual domain management can be executed using any XMPP client with proper support for service discovery and ad-hoc commands, for example <a class="link" href="http://psi-im.org/" target="_top">Psi</a>. Commands are accepted only when they are sent by the service administrator.</p><p>Please refer to documents listed below for more detailed information on the following topics:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><a class="link" href="tigase41virtualHosts.html#ad-hocCommands" title="Specification for ad-hoc Commands Used to Manage Virtual Domains">Specification for ad-hoc Commands Used to Manage Virtual Domains</a>.</li><li class="listitem"><a class="link" href="tigase41virtualHosts.html#virtualComponents" title="Virtual Components for the Cluster Mode">Virtual Components for the Tigase Cluster</a></li></ul></div><p>You may also want to reference these for additonal information
+- <a class="link" href="addManageDomain.html" title="Add and Manage Domains">API Description for Virtual Domains Management in Tigase Server</a>.
+- <a class="link" href="http://docs.tigase.org/tigase-server/snapshot/Properties_Guide/html_chunk/virtHosts.html" target="_top">virtHosts Property guide</a></p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="ad-hocCommands"></a>Specification for ad-hoc Commands Used to Manage Virtual Domains</h3></div></div></div><p>There are 3 ad-hoc commands for virtual domains management in the Tigase server:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><span class="strong"><strong>VHOSTS_RELOAD</strong></span> used to reload virtual domains list from the repository (database).</li><li class="listitem"><span class="strong"><strong>VHOSTS_UPDATE</strong></span> used to add a new virtual domain or update information for existing one.</li><li class="listitem"><span class="strong"><strong>VHOSTS_REMOVE</strong></span> used to remove an existing virtual host from the running server.</li></ol></div><p>Syntax of the commands follows the specification described in <a class="link" href="http://xmpp.org/extensions/xep-0050.html" target="_top">XEP-0050</a>. Extra information required to complete the command is carried as data forms described in <a class="link" href="http://xmpp.org/extensions/xep-0004.html" target="_top">XEP-0004</a>.</p><p>All commands are accepted by the server only when send by the installation administrator. If the command is sent from any other account &amp;lt;not-authorized /&amp;gt; error is returned. To grant administrator rights to an account you have to set <span class="strong"><strong>--admins</strong></span> property in the init.Properties configuration file.</p><p>Commands are sent to the 'vhost-man' server component and the 'to' attribute of the stanza must contain a full JID of the VHostManager on the server. The full <span class="strong"><strong>JID</strong></span> consists of the component name: 'vhost-man' and the local domain, that is domain which is already on the list of virtual domains and is active. Assuming 'existing.domain.com' one of domains already activated for the server installation the <span class="strong"><strong>JID</strong></span> is: '<a class="link" href="mailto:vhost-man@existing.domain.com" target="_top">vhost-man@existing.domain.com</a>'.</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_reloading_the_domains_list_from_the_database"></a>Reloading the Domains List from the Database</h4></div></div></div><p>In order to reload virtual domains from the permanent repository other than configuration file, you have to send <span class="strong"><strong>VHOSTS_RELOAD</strong></span> ad-hoc command to the VHostManager on the server.</p><p>The reload command request is of the form:</p><pre class="programlisting">&lt;iq type="set"
+    to="vhost-man@existing.domain.com"
+    id="aac8a"&gt;
+  &lt;command xmlns="http://jabber.org/protocol/commands"
+           node="VHOSTS_RELOAD" /&gt;
+&lt;/iq&gt;</pre><p>The server sends a response upon successful completion of the command with current number of virtual domains server by the installation:</p><pre class="programlisting">&lt;iq from="vhost-man@existing.domain.com"
+    type="result"
+    to="cmd-sender-admin@existing.domain.com"
+    id="aac8a"&gt;
+  &lt;command xmlns="http://jabber.org/protocol/commands"
+           status="completed"
+           node="VHOSTS_RELOAD"&gt;
+    &lt;x xmlns="jabber:x:data" type="result"&gt;
+      &lt;field type="fixed" var="Note"&gt;
+        &lt;value&gt;Current number of VHosts: 123&lt;/value&gt;
+      &lt;/field&gt;
+    &lt;/x&gt;
+  &lt;/command&gt;
+&lt;/iq&gt;</pre><p>If the command is sent from an account other than admin, the server returns an error:</p><pre class="programlisting">&lt;iq from="vhost-man@existing.domain.com"
+    type="error"
+    to="cmd-sender-admin@existing.domain.com"
+    id="aac8a"&gt;
+  &lt;command xmlns="http://jabber.org/protocol/commands"
+           node="VHOSTS_RELOAD" /&gt;
+  &lt;error type="auth" code="401"&gt;
+    &lt;not-authorized xmlns="urn:ietf:params:xml:ns:xmpp-stanzas" /&gt;
+    &lt;text xmlns="urn:ietf:params:xml:ns:xmpp-stanzas"
+          xml:lang="en"&gt;
+      You are not authorized for this action.
+    &lt;/text&gt;
+  &lt;/error&gt;
+&lt;/iq&gt;</pre><p>The response doesn&#8217;t have any special meaning other then end-user information. The client may ignore the response as it is sent after the command has been executed.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_adding_a_new_domain_or_updating_existing_one"></a>Adding a New Domain or Updating Existing One</h4></div></div></div><p>In order to add a new domain or update existing one you have to send an ad-hoc command <span class="strong"><strong>VHOSTS_UPDATE</strong></span> with at least one domain name in the command data form. You can also specify whether the domain is enabled or disabled but this is optional. Future releases may allow for setting additional parameters for the domain: maximum number of user accounts for this domain, anonymous login enabled/disabled for the domain, registration via XMPP enabled/disabled for this domain and some more parameters not specified yet.</p><p>The domain add/update command request is of the form:</p><pre class="programlisting">&lt;iq type="set"
+    to="vhost-man@existing.domain.com"
+    id="aacba"&gt;
+  &lt;command xmlns="http://jabber.org/protocol/commands"
+           node="VHOSTS_UPDATE"&gt;
+    &lt;x xmlns="jabber:x:data" type="submit"&gt;
+      &lt;field type="text-single"
+             var="VHost"&gt;
+        &lt;value&gt;new-virt.domain.com&lt;/value&gt;
+      &lt;/field&gt;
+      &lt;field type="list-single"
+             var="Enabled"&gt;
+        &lt;value&gt;true&lt;/value&gt;
+      &lt;/field&gt;
+    &lt;/x&gt;
+  &lt;/command&gt;
+&lt;/iq&gt;</pre><p>Please note: Character case in the command field variable names does matter.</p><p>Upon successful completion of the command the server sends a response back to the client with information of the existing number of virtual hosts on the server:</p><pre class="programlisting">&lt;iq from="vhost-man@existing.domain.com"
+    type="result"
+    to="cmd-sender-admin@existing.domain.com"
+    id="aacba"&gt;
+  &lt;command xmlns="http://jabber.org/protocol/commands"
+           status="completed"
+           node="VHOSTS_UPDATE"&gt;
+    &lt;x xmlns="jabber:x:data" type="result"&gt;
+      &lt;field type="fixed" var="Note"&gt;
+        &lt;value&gt;Current number of VHosts: 124&lt;/value&gt;
+      &lt;/field&gt;
+    &lt;/x&gt;
+  &lt;/command&gt;
+&lt;/iq&gt;</pre></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_removing_a_virtual_domain_from_the_server"></a>Removing a Virtual Domain From the Server</h4></div></div></div><p>In order to remove a virtual domain you have to send <span class="strong"><strong>VHOSTS_REMOVE</strong></span> command to the server with the domain name.</p><p>The domain remove command is sent by the client:</p><pre class="programlisting">&lt;iq type="set"
+    to="vhost-man@existing.domain.com"
+    id="aacba"&gt;
+  &lt;command xmlns="http://jabber.org/protocol/commands"
+           node="VHOSTS_REMOVE"&gt;
+    &lt;x xmlns="jabber:x:data" type="submit"&gt;
+      &lt;field type="text-single"
+             var="VHost"&gt;
+        &lt;value&gt;virt-nn.domain.com&lt;/value&gt;
+      &lt;/field&gt;
+    &lt;/x&gt;
+  &lt;/command&gt;
+&lt;/iq&gt;</pre><p>Upon successful completion of the command the server sends a response back to the client with information of the existing number of virtual hosts on the server:</p><pre class="programlisting">&lt;iq from="vhost-man@existing.domain.com"
+    type="result"
+    to="cmd-sender-admin@existing.domain.com"
+    id="aacba"&gt;
+  &lt;command xmlns="http://jabber.org/protocol/commands"
+           status="completed"
+           node="VHOSTS_REMOVE"&gt;
+    &lt;x xmlns="jabber:x:data" type="result"&gt;
+      &lt;field type="fixed" var="Note"&gt;
+        &lt;value&gt;Current number of VHosts: 124&lt;/value&gt;
+      &lt;/field&gt;
+    &lt;/x&gt;
+  &lt;/command&gt;
+&lt;/iq&gt;</pre></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="virtualComponents"></a>Virtual Components for the Cluster Mode</h3></div></div></div><p>Let&#8217;s assume you have a cluster installation and you want to include a component in your installation which doesn&#8217;t support the cluster mode yet. If you put it on all nodes as a separate instances they will work out of sync and overall functionality might be useless. If you put on one node only it will work correctly but it will be visible to users connected to this one node only.</p><p>Ideally you would like to have a mechanism to install it on one node and put some redirections on other nodes to forward all packets for this component to a node where this component is working. Redirection on it&#8217;s own is not enough because the component must be visible in service discovery list and must be visible somehow to users connected to all nodes.</p><p>This is where the virtual components are handy. They are visible to users as a local normal component, they seem to be a real local component but in fact they just forward all requests/packets to a cluster node where the real component is working.</p><p>Virtual component is a very lightweight ServerComponent implementation in Tigase server. It can pretend to be any kind of component and can redirect all packets to a given address. They can mimic native Tigase components as well as third-party components connected over external component protocol (XEP-0114).</p><p>Configuration is very simple and straightforward, in fact it is very similar to configuration of any Tigase component. You set a real component name as a name of the component and a virtual component class name to load. Let&#8217;s say we want to deploy MUC component this way. The MUC component is visible as muc.domain.our in the installation. Thus the name of the component is: muc</p><pre class="programlisting">--comp-name-1=muc
+--comp-class-1=tigase.cluster.VirtualComponent</pre><p>This is pretty much all you need to load a virtual component. A few other options are needed to point to correct destination addresses for packets forwarding and to set correct service discovery parameters:</p><pre class="programlisting">muc/redirect-to=muc@cluster-node-with-real-muc.domain.our
+muc/disco-name=Multi User Chat
+muc/disco-node=
+muc/disco-type=text
+muc/disco-category=conference
+muc/disco-features=http://jabber.org/protocol/muc</pre><p>That&#8217;s it.</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="socks5.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="loadComponent.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="_using_tigase_applies_to_all_tigase_server_versions.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Socks 5 Component&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;9.&nbsp;Using Tigase - Applies to All Tigase Server Versions</td></tr></table></div></body></html>

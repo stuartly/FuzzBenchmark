@@ -1,0 +1,56 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>EventBus API in Tigase</title><link rel="stylesheet" type="text/css" href="css/docbook-xsl.css"><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"><link rel="home" href="index.html" title="Tigase Development Guide"><link rel="up" href="componentdevelpoment.html" title="Chapter&nbsp;4.&nbsp;Component Development"><link rel="prev" href="packetfiltering.html" title="Packet Filtering in Components"><link rel="next" href="clusterMapInterface.html" title="Cluster Map Interface"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">EventBus API in Tigase</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="packetfiltering.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;4.&nbsp;Component Development</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="clusterMapInterface.html">Next</a></td></tr></table><hr></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="eventBus"></a>EventBus API in Tigase</h2></div></div></div><p>EventBus is a custom publish-subscribe mechanism which allows for the use of Event Listener within Tigase Server.  EventBus consists of two separated parts: Distributed EventBus and Local EventBus.
+Local EventBus is only concerned with local event listener, and will operate events locally.  Distributed EventBus is designed to distribute events among cluster nodes.
+For a more detailed overview of EventBus and it&#8217;s features, please visit <a class="link" href="http://docs.tigase.org/tigase-server/snapshot/Administration_Guide/html/#eventBus" target="_top">The Administration Guide</a>.</p><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_eventbus_api"></a>EventBus API</h3></div></div></div><p>To create instance of EventBus use the following code:</p><pre class="programlisting">EventBus eventBus = EventBusFactory.getInstance();</pre><p><span class="strong"><strong>NOTE:</strong></span> Remember, that EventBus is asynchronous. All handlers are called in a different thread than the thread that initially fired the event.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_distributed_eventbus"></a>Distributed EventBus</h3></div></div></div><p>Distributed EventBus is designed to distribute events among cluster nodes.
+Events must extends <code class="literal">tigase.xml.Element</code>:</p><pre class="programlisting">&lt;EventName xmlns="tigase:demo"&gt;
+  &lt;sample_value&gt;1&lt;/sample_value&gt;
+&lt;/EventName&gt;</pre><p>Events are identified by two elements: name of event and namespace.</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_registering_events_handlers"></a>Registering events handlers</h4></div></div></div><p>To catch and handle an event published in any node of cluster, EventsHandler must be registered first.</p><pre class="programlisting">EventHandler handler = new EventHandler() {
+    @Override
+    public void onEvent(String name, String xmlns, Element event) {
+        // TODO
+    }
+};
+
+eventBus.addHandler("EventName", "tigase:demo", handler);</pre><p>It is possible to register handler for all events with a specific xmlns such as tigase:demo below:</p><pre class="programlisting">eventBus.addHandler(null, "tigase:demo", handler);</pre><p>Events created on others cluster node, will have attribute <code class="literal">remote</code> set to <code class="literal">true</code> and attribute <code class="literal">source</code> set to event creator node name:</p><pre class="programlisting">&lt;EventName xmlns="tigase:demo" remote="true" source="node1.example"&gt;
+  &lt;sample_value&gt;1&lt;/sample_value&gt;
+&lt;/EventName&gt;</pre></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_publishing_events"></a>Publishing events</h4></div></div></div><p>The only limitation for events are the requirements of name and xmlns. Internal structure may be defined by programmer.</p><pre class="programlisting">Element event = new Element("EventName", new String[]{"xmlns"}, new String[]{"tigase:demo"});
+event.addChild(new Element("sample_value", "1"));
+
+eventBus.fire(event);</pre><p>This event will be received by all handlers that are registered for exactly this event, or all events usint the <span class="strong"><strong>tigase:demo</strong></span> namespace on all cluster nodes. It is possible to limit event delivery only to the current Tigase instance (current cluster node), by setting the attribute <code class="literal">local</code>:</p><pre class="programlisting">Element event = new Element("EventName", new String[]{"xmlns", "local"}, new String[]{"tigase:demo", "true"});
+event.addChild(new Element("sample_value", "1"));
+
+eventBus.fire(event);</pre></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_local_eventbus"></a>Local EventBus</h3></div></div></div><p>Local EventBus is the mechanism to distribute events to all listeners on the same instance of Tigase Server.  Local EventBus uses Java Objects as events and allows for the transmission instance of object (for example <code class="literal">Map</code> or <code class="literal">Set</code>).</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_defining_events_and_handlers_classes"></a>Defining events and handlers classes</h4></div></div></div><p>Local EventBus uses own structures of events and handlers.</p><p><b>SampleEvent.java.&nbsp;</b>
+</p><pre class="programlisting">public static class SampleEvent implements Event {
+
+    private final String data;
+
+    public SampleEvent(String data) {
+        this.data = data;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+}</pre><p>
+</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_registering_events_handlers_2"></a>Registering events handlers</h4></div></div></div><p>To catch an event, <code class="literal">EventHandler</code> must be registered in EventBus:</p><pre class="programlisting">EventHandler handler = new EventHandler() {
+    @Override
+    public void onEvent(Event event) {
+
+    }
+};
+
+eventBus.addHandler(SampleEvent.class, handler);</pre><p>The other way to register a handler is by using annotations. Event consumer class must contain the method with a single parameter, and its type must be equal to expected event type.</p><p><b>SampleConsumer.java.&nbsp;</b>
+</p><pre class="programlisting">public static class SampleConsumer {
+
+	@HandleEvent
+	public void onCatchSomeNiceEvent(SampleEvent event) {
+	}
+
+	@HandleEvent
+	public void onEvent01(ImportantEvent event) {
+	}
+}</pre><p>
+</p><p>The instance of class must be registered in Eventbus:</p><pre class="programlisting">eventBus.registerAll(consumer);</pre><p>Once this is in place, EventBus will be added as the event handler for two different events.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_publishing_events_2"></a>Publishing events</h4></div></div></div><p>Publishing events is simple:</p><pre class="programlisting">SampleEvent event = new SampleEvent("data");
+eventBus.fire(event);</pre></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="packetfiltering.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="componentdevelpoment.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="clusterMapInterface.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Packet Filtering in Components&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Cluster Map Interface</td></tr></table></div></body></html>

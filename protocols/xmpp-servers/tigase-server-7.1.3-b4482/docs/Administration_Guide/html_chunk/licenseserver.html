@@ -1,0 +1,151 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Licensing</title><link rel="stylesheet" type="text/css" href="css/docbook-xsl.css"><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"><link rel="home" href="index.html" title="Tigase Administration Guide"><link rel="up" href="_using_tigase_applies_to_all_tigase_server_versions.html" title="Chapter&nbsp;9.&nbsp;Using Tigase - Applies to All Tigase Server Versions"><link rel="prev" href="offlineMessages.html" title="Offline Messages"><link rel="next" href="tigaseAdvancedOptions.html" title="Tigase Advanced Options"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Licensing</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="offlineMessages.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;9.&nbsp;Using Tigase - Applies to All Tigase Server Versions</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="tigaseAdvancedOptions.html">Next</a></td></tr></table><hr></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="licenseserver"></a>Licensing</h2></div></div></div><p>With the release of v7.1.0, users and commercial clients alike may now be able to register and request a license file from our servers on their own.
+This process makes it easier for everyone to obtain valid licence file when needed.
+Users who do not wish to register will not be required to register.  However, If you are using Tigase ACS or other commercial pieces of software, you will be required to register.</p><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3><p>Tigase XMPP Server will shut down during license check if no installation-id or licence is received within a given period of time.</p></div><p><span class="strong"><strong>Again, Tigase XMPP Server will still be available free under AGPLv3, and free users will not need to register.</strong></span></p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>COMMERCIAL COMPONENTS REQUIRE THE USE OF A LICENSE.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_registering_for_a_license"></a>Registering for a License</h3></div></div></div><p>There are currently two ways for registering for a license with Tigase commercial products.  The easiest and recommended method is using the built in automatic registration function.  However, you may also register via a web portal if your installation has limitations on network connectivity.</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_automatic_registration"></a>Automatic Registration</h4></div></div></div><p>Once a commercial component is activated on Tigase XMPP Server, the program will then retrieve an <span class="emphasis"><em>Installation ID</em></span> from our servers, and make a file called <code class="literal">installation-id</code> in your <code class="literal">etc/</code> directory including the <span class="emphasis"><em>Installation ID</em></span> for your instance.  An installation ID is generated using the complete cluster map and all machines within the same cluster should have the same <span class="emphasis"><em>Installation ID</em></span>.
+This <span class="emphasis"><em>Installation ID</em></span> will then be sent along with server details to a license server, and appropriate licence files will be made in your <span class="emphasis"><em>tigasedir/etc</em></span> directory. When the licence is due to be expired, this mechanism will update your licence file automatically.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_web_portal"></a>Web Portal</h4></div></div></div><p>If you do not wish to use the automatic method, you may decide to generate a licence file using our web portal.
+Offline installation may obtain <span class="emphasis"><em>Installation IDs</em></span> from our web portal in a three-step process: registration, generating hash, and obtaining licence file.</p><div class="section"><div class="titlepage"><div><div><h5 class="title"><a name="_generating_installation_id"></a>Generating Installation ID</h5></div></div></div><p>For offline installations, you may obtain an <span class="emphasis"><em>Installation ID</em></span> from this address: <a class="link" href="https://license.tigase.net/register" target="_top">https://license.tigase.net/register</a>.</p><p>Data Fields:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><code class="literal">Customer name</code>: Company or user name used to identify machines.  Multiple clusters or servers can have the same customer name.</li><li class="listitem"><code class="literal">VHosts</code>: Comma separated list of VHosts you will be using on this node.  NOTE: these fields are case sensitive!</li><li class="listitem"><code class="literal">Legacy license hashes</code>: Copy the digest hash generated for all legacy licences - it&#8217;s available in the <code class="literal">etc/tigase-console.log</code> after startup (if such licences are present).</li><li class="listitem"><code class="literal">Captcha question</code>: Enter the basic math answer for this form to prove you are not a robot.</li></ul></div><p>The next page will provide you with an installation ID like the following:</p><p>1TCICGG7K8AS2JSSEVMDA9QOLR4NVLJSR</p><p>Edit your init.properties file and add your installation-id</p><pre class="programlisting">--installation-id=1TCICGG7K8AS2JSSEVMDA9QOLR4NVLJSR</pre><p>Note that the <code class="literal">installation-id</code> file will be made automatically once the license file is installed and verified by the server.</p></div><div class="section"><div class="titlepage"><div><div><h5 class="title"><a name="_obtaining_a_server_code"></a>Obtaining a Server Code</h5></div></div></div><p>Once you have the <span class="emphasis"><em>Installation ID</em></span>, you will need to generate a server code.  This can be done by accessing the admin UI page and navigating to the Licence section. Once there, click on Retrieve code for licence. Select the component you wish to generate a code for and click Submit.  You will see a fields with installation-id, module, VHosts filled out based on your server&#8217;s configuration.  Copy the contents of the Code field and proceed to the next section.</p></div><div class="section"><div class="titlepage"><div><div><h5 class="title"><a name="_obtaining_license_file"></a>Obtaining license file</h5></div></div></div><p>Open a new browser and navigate to this address: <a class="link" href="https://license.tigase.net/retrieve" target="_top">https://license.tigase.net/retrieve</a> once there, paste the generated code from the last step in the field and click submit.  Afterwards you will be prompted to download a license file, place this file in your <span class="emphasis"><em>etc/</em></span> folder and restart your server, your license is now activated and installed on your server.</p><p><span class="strong"><strong>If you are provided a manually produced license, you will need to place it in the same etc/ directory with the name <code class="literal">license.acs</code></strong></span></p></div></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_what_happens_if_i_do_not_use_a_license_file_or_it_is_expired"></a>What happens if I do not use a license file or it is expired?</h3></div></div></div><p>Tigase permits commercial products to be used without a license, but a validation process must complete otherwise the server will shutdown.
+Within the first hour of runtime, Tigase will check for the presence and validity of the license file.  If none is found, or it is invalid or expired the server will then contact Tigase master server in order to obtain a valid one.</p><p>Communications will be made to license.tigase.net over https (port 443) to verify the license or download a new one.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_demo_mode"></a>Demo mode</h3></div></div></div><p>If no valid license can be found, Tigase will revert to a demonstration mode.  Most functions will be available and usable, but with a caveat.  Statistics from that server will be sent to stats.tigase.net over port 8080 about your server and it&#8217;s usage.  Details are in the next section.
+If this information cannot be sent, the server will assume unathorized use and will shut down.</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_statistics_sent"></a>Statistics Sent</h4></div></div></div><p>Statistics of your server may be sent to Tigase server&#8217;s if the all of following happens:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">You are using commercial Tigase components.</li><li class="listitem">You have registered an installation-id.</li><li class="listitem">You do not have a current license to run Tigase commercial components.</li></ul></div><p>If these conditions exist, statistics will be sent to our servers and a warning will be posted in your logs.  The following is an example of what information will be sent.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>The text below has been better formatted for readability, but does not reflect the actual text being sent to Tigase.</p></div><pre class="programlisting">&lt;statistics version="1"&gt;
+	&lt;domain&gt;xmppserver&lt;/domain&gt;
+	&lt;timestamp&gt;2016-06-23T17:16:24.777-0700&lt;/timestamp&gt;
+	&lt;vhosts&gt;
+    &lt;item&gt;vhost1.xmppserver.com&lt;/item&gt;
+  &lt;/vhosts&gt;
+	&lt;uptime&gt;308833&lt;/uptime&gt;
+	&lt;heap&gt;
+    &lt;used&gt;30924376&lt;/used&gt;
+    &lt;max&gt;1426063360&lt;/max&gt;
+  &lt;/heap&gt;
+	&lt;cluster&gt;
+    &lt;nodes_count&gt;1&lt;/nodes_count&gt;
+  &lt;/cluster&gt;
+	&lt;users&gt;
+    &lt;online&gt;0&lt;/online&gt;
+    &lt;active&gt;0&lt;/active&gt;
+    &lt;max_today&gt;1&lt;/max_today&gt;
+    &lt;max_yesterday&gt;0&lt;/max_yesterday&gt;
+  &lt;/users&gt;
+	&lt;additional_data&gt;
+		&lt;components&gt;
+			&lt;cmpInfo&gt;
+				&lt;name&gt;amp&lt;/name&gt;
+				&lt;title&gt;Tigase XMPP Server&lt;/title&gt;
+				&lt;version&gt;7.1.0-SNAPSHOT-b4226/5e7210f6 (2016-06-01/23:15:52)&lt;/version&gt;
+				&lt;class&gt;tigase.cluster.AmpComponentClustered&lt;/class&gt;
+			&lt;/cmpInfo&gt;
+
+			&lt;cmpInfo&gt;
+				&lt;name&gt;bosh&lt;/name&gt;
+				&lt;title&gt;Tigase XMPP Server&lt;/title&gt;
+				&lt;version&gt;7.1.0-SNAPSHOT-b4226/5e7210f6 (2016-06-01/23:15:52)&lt;/version&gt;
+				&lt;class&gt;tigase.cluster.BoshConnectionClustered&lt;/class&gt;
+			&lt;/cmpInfo&gt;
+
+			&lt;cmpInfo&gt;
+				&lt;name&gt;c2s&lt;/name&gt;
+				&lt;title&gt;Tigase XMPP Server&lt;/title&gt;
+				&lt;version&gt;7.1.0-SNAPSHOT-b4226/5e7210f6 (2016-06-01/23:15:52)&lt;/version&gt;
+				&lt;class&gt;tigase.cluster.ClientConnectionClustered&lt;/class&gt;
+			&lt;/cmpInfo&gt;
+
+			&lt;cmpInfo&gt;
+				&lt;name&gt;cl-comp&lt;/name&gt;
+				&lt;title&gt;Tigase XMPP Server&lt;/title&gt;
+				&lt;version&gt;7.1.0-SNAPSHOT-b4226/5e7210f6 (2016-06-01/23:15:52)&lt;/version&gt;
+				&lt;class&gt;tigase.cluster.ClusterConnectionManager&lt;/class&gt;
+			&lt;/cmpInfo&gt;
+
+			&lt;cmpInfo&gt;
+				&lt;name&gt;eventbus&lt;/name&gt;
+				&lt;title&gt;Tigase XMPP Server&lt;/title&gt;
+				&lt;version&gt;7.1.0-SNAPSHOT-b4226/5e7210f6 (2016-06-01/23:15:52)&lt;/version&gt;
+				&lt;class&gt;tigase.disteventbus.component.EventBusComponent&lt;/class&gt;
+			&lt;/cmpInfo&gt;
+
+			&lt;cmpInfo&gt;
+				&lt;name&gt;http&lt;/name&gt;
+				&lt;title&gt;Tigase HTTP API component: Tigase HTTP API component&lt;/title&gt;
+				&lt;version&gt;1.2.0-SNAPSHOT-b135/27310f9b-7.1.0-SNAPSHOT-b4226/5e7210f6 (2016-06-01/23:15:52)&lt;/version&gt;
+				&lt;class&gt;tigase.http.HttpMessageReceiver&lt;/class&gt;
+			&lt;/cmpInfo&gt;
+
+			&lt;cmpInfo&gt;
+				&lt;name&gt;monitor&lt;/name&gt;
+				&lt;title&gt;Tigase XMPP Server&lt;/title&gt;
+				&lt;version&gt;7.1.0-SNAPSHOT-b4226/5e7210f6 (2016-06-01/23:15:52)&lt;/version&gt;
+				&lt;class&gt;tigase.monitor.MonitorComponent&lt;/class&gt;
+			&lt;/cmpInfo&gt;
+
+			&lt;cmpInfo&gt;
+				&lt;name&gt;muc&lt;/name&gt;
+				&lt;title&gt;Tigase ACS - MUC Component&lt;/title&gt;
+				&lt;version&gt;1.2.0-SNAPSHOT-b62/74afbb91-2.4.0-SNAPSHOT-b425/d2e26014&lt;/version&gt;
+				&lt;class&gt;tigase.muc.cluster.MUCComponentClustered&lt;/class&gt;
+				&lt;cmpData&gt;
+					&lt;MUCClusteringStrategy&gt;class tigase.muc.cluster.ShardingStrategy&lt;/MUCClusteringStrategy&gt;
+				&lt;/cmpData&gt;
+			&lt;/cmpInfo&gt;
+
+			&lt;cmpInfo&gt;
+				&lt;name&gt;pubsub&lt;/name&gt;
+				&lt;title&gt;Tigase ACS - PubSub Component&lt;/title&gt;
+				&lt;version&gt;1.2.0-SNAPSHOT-b65/1c802a4c-3.2.0-SNAPSHOT-b524/892f867f&lt;/version&gt;
+				&lt;class&gt;tigase.pubsub.cluster.PubSubComponentClustered&lt;/class&gt;
+				&lt;cmpData&gt;
+					&lt;PubSubClusteringStrategy&gt;class tigase.pubsub.cluster.PartitionedStrategy&lt;/PubSubClusteringStrategy&gt;
+				&lt;/cmpData&gt;
+			&lt;/cmpInfo&gt;
+
+			&lt;cmpInfo&gt;
+				&lt;name&gt;s2s&lt;/name&gt;
+				&lt;title&gt;Tigase XMPP Server&lt;/title&gt;
+				&lt;version&gt;7.1.0-SNAPSHOT-b4226/5e7210f6 (2016-06-01/23:15:52)&lt;/version&gt;
+				&lt;class&gt;tigase.server.xmppserver.S2SConnectionManager&lt;/class&gt;
+			&lt;/cmpInfo&gt;
+
+			&lt;cmpInfo&gt;
+				&lt;name&gt;sess-man&lt;/name&gt;
+				&lt;title&gt;Tigase XMPP Server&lt;/title&gt;
+				&lt;version&gt;7.1.0-SNAPSHOT-b4226/5e7210f6 (2016-06-01/23:15:52)&lt;/version&gt;
+				&lt;class&gt;tigase.cluster.SessionManagerClustered&lt;/class&gt;
+				&lt;cmpData&gt;
+					&lt;ClusteringStrategy&gt;class tigase.server.cluster.strategy.OnlineUsersCachingStrategy&lt;/ClusteringStrategy&gt;
+				&lt;/cmpData&gt;
+			&lt;/cmpInfo&gt;
+
+			&lt;cmpInfo&gt;
+				&lt;name&gt;ws2s&lt;/name&gt;
+				&lt;title&gt;Tigase XMPP Server&lt;/title&gt;
+				&lt;version&gt;7.1.0-SNAPSHOT-b4226/5e7210f6 (2016-06-01/23:15:52)&lt;/version&gt;
+				&lt;class&gt;tigase.cluster.WebSocketClientConnectionClustered&lt;/class&gt;
+			&lt;/cmpInfo&gt;
+
+			&lt;cmpInfo&gt;
+				&lt;name&gt;vhost-man&lt;/name&gt;
+				&lt;title&gt;Tigase XMPP Server&lt;/title&gt;
+				&lt;version&gt;7.1.0-SNAPSHOT-b4226/5e7210f6 (2016-06-01/23:15:52)&lt;/version&gt;
+				&lt;class&gt;tigase.vhosts.VHostManager&lt;/class&gt;
+			&lt;/cmpInfo&gt;
+
+			&lt;cmpInfo&gt;
+				&lt;name&gt;stats&lt;/name&gt;
+				&lt;title&gt;Tigase XMPP Server&lt;/title&gt;
+				&lt;version&gt;7.1.0-SNAPSHOT-b4226/5e7210f6 (2016-06-01/23:15:52)&lt;/version&gt;
+				&lt;class&gt;tigase.stats.StatisticsCollector&lt;/class&gt;
+			&lt;/cmpInfo&gt;
+
+			&lt;cmpInfo&gt;
+				&lt;name&gt;cluster-contr&lt;/name&gt;
+				&lt;title&gt;Tigase XMPP Server&lt;/title&gt;
+				&lt;version&gt;7.1.0-SNAPSHOT-b4226/5e7210f6 (2016-06-01/23:15:52)&lt;/version&gt;
+				&lt;class&gt;tigase.cluster.ClusterController&lt;/class&gt;
+			&lt;/cmpInfo&gt;
+		&lt;/components&gt;
+
+		&lt;unlicencedComponenents&gt;
+			&lt;ComponentAdditionalInfo name=&amp;quot;acs&amp;quot;/&gt;
+		&lt;/unlicencedComponenents&gt;
+	&lt;/additional_data&gt;
+&lt;/statistics&gt;</pre></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_unauthorized_use"></a>Unauthorized use</h3></div></div></div><p>If Tigase XMPP server does not have a valid license file, cannot contact the licensing server to obtain installation id and attached licences, or is unable to sent statistics the server will initiate retries.
+If these retries are not successful after a random amount of time and 10 tries, the server will then shutdown.</p><p>If you are experiencing this in error, please contact Tigase.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_manual_mode"></a>Manual mode</h3></div></div></div><p>If you cannot open communication to stats.tigase.net or license.tigase.net over the required ports, you may request to use manual mode.  Manual mode requires Tigase to create a license file to be used on your machine locally.  This must be placed in the same folder as the above information, and the license check system will not seek communication unless the license is invalid or expired.</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="offlineMessages.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="_using_tigase_applies_to_all_tigase_server_versions.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="tigaseAdvancedOptions.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Offline Messages&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Tigase Advanced Options</td></tr></table></div></body></html>

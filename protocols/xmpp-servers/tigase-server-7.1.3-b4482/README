@@ -1,0 +1,78 @@
+
+
+
+	
+		
+		Tigase XMPP (Jabber) server ver 7.1.3
+	
+	
+		About
+
+		Copyright  2004-2016 Tigase.org. http://www.tigase.org/
+
+		The Tigase Jabber/XMPP Server is Open Source and Free (AGPLv3) Java based server.
+
+		The server offers complete implementation of the XMPP protocol with a long list
+		of extensions. Effcient, reliable and very extensible can be easily integrated
+		it with your systems.
+
+		The unique features of the Tigase server are
+
+		
+			High performance and scalability. Was tested with up to 500 000 concurrent
+			 users connected to a single machine and in cluster with over 1mln online users.
+			High reliability. Tries to run as long as possible and tried to automaticaly
+			 recover from detected problems.
+			Built-in many self monitoring functions. You can check your systems statistics
+			 via XMPP, JMX, HTTP, SNMP or you can automatically receive notifications about
+			 possible problems.
+			Scripting support - scripts can be loaded/reloaded at run time.
+			 Many scripting languages are supported
+			Virtual hosts support. You can have virtually unlimited virtual hosts which
+			 can be added/removed at runtime. You can temporarily block vhost or limit
+			 number of users per vhost.
+			There is much more... check the official change log and the project website.
+		
+
+		Contributions to Tigase have been made by the following people:
+		
+			Tigase Team
+			Eric Dziwea
+			Artur Hefczyc (kobit)
+			Wojciech Kapcia (wojtek)
+			Bartosz Małkowski (bmalkow)
+			Daniel Wisnewski
+			Andrzej Wojcik
+			 
+			Other Contributors
+			Mateusz Fiołka
+			Tomasz Sterna (smoku)
+			Daniele Ricci
+			... and many others.
+		
+
+		Installtion, configuration and compilation
+
+		The most recent documentation on all these topics is always available in the
+		project documentation website: www.tigase.org. Please
+		refer to the website for all the details and always up to date guides.
+
+		You would probably want to start with Quick Start:
+		Tigase Quick Start documentation.
+
+		It is recommended that if you run into any issues, visit Tigase Projects website to visit forums
+		and view trouble tickets that may already have an answer to your question.  Different components may be in different sections of the projects website.
+		Please ask general questions in the forum section of each project.
+	  For example, the Tigase XMPP Server forums are located here.
+
+		The website also contains lots of other useful information like load tests
+		results, user discussions and online support and help always available to
+		you.
+
+		This is 7.1.3 release of the server. Please include the exact version
+		number in all correspondence regarding the server.
+
+
+				
+ 
+

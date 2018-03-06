@@ -1,0 +1,77 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Writing Tests for Plugins</title><link rel="stylesheet" type="text/css" href="css/docbook-xsl.css"><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"><link rel="home" href="index.html" title="Tigase Development Guide"><link rel="up" href="tests.html" title="Chapter&nbsp;7.&nbsp;Tests"><link rel="prev" href="testSuideScripts.html" title="Test Suite Scripting Language"><link rel="next" href="_test_case_parameters_description.html" title="Test Case Parameters Description"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Writing Tests for Plugins</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="testSuideScripts.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;7.&nbsp;Tests</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="_test_case_parameters_description.html">Next</a></td></tr></table><hr></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="writingTests"></a>Writing Tests for Plugins</h2></div></div></div><p>You can write tests in a simple text file which is loaded during test suite runtime.</p><p>You simply specify what should be send to the server and what response should be expected from the server. No need to write Java code and recompile the whole test suite for new tests. It means new test cases can be now written easily and quickly which hopefully means more detailed tests for the server.</p><p>How it works:</p><p>Let&#8217;s take <a class="link" href="http://www.xmpp.org/extensions/xep-0049.html" target="_top">XEP-0049</a> Private XML Storage. Looking into the spec we can see the first example:</p><p>Example 1. Client Stores Private Data</p><p><span class="strong"><strong>CLIENT:</strong></span></p><pre class="programlisting">&lt;iq type="set" id="1001"&gt;
+  &lt;query xmlns="jabber:iq:private"&gt;
+    &lt;exodus xmlns="exodus:prefs"&gt;
+      &lt;defaultnick&gt;Hamlet&lt;/defaultnick&gt;
+    &lt;/exodus&gt;
+  &lt;/query&gt;
+&lt;/iq&gt;</pre><p><span class="strong"><strong>SERVER:</strong></span></p><pre class="programlisting">&lt;iq type="result" id="1001"/&gt;</pre><p>This is enough for the first simple test. I have to create text file <code class="literal">JabberIqPrivate.test</code> looking like this:</p><pre class="programlisting">send: {
+
+&lt;iq type="set" id="1001"&gt;
+  &lt;query xmlns="jabber:iq:private"&gt;
+    &lt;exodus xmlns="exodus:prefs"&gt;
+      &lt;defaultnick&gt;Hamlet&lt;/defaultnick&gt;
+    &lt;/exodus&gt;
+  &lt;/query&gt;
+&lt;/iq&gt;
+}
+
+expect: {
+&lt;iq type="result" id="1001"/&gt;
+}</pre><p>And now I can execute the test:</p><pre class="programlisting">testsuite $ ./scripts/all-tests-runner.sh --single JabberIqPrivate.test
+
+Tigase server home directory: ../server
+Version: 2.8.5-b422
+Database:         xmldb
+Server IP:        127.0.0.1
+Extra parameters: JabberIqPrivate.test
+Starting Tigase:
+Tigase running pid=6751
+
+Running: 2.8.5-b422-xmldb test, IP 127.0.0.1...
+Script name: scripts/single-xmpp-test.xmpt
+Common test:  Common test  ...        failure!
+FAILURE,  (Received result doesnt match expected result.,
+Expected one of: [&lt;iq id="1001" type="result"/&gt;],
+received:
+[&lt;iq id="1001" type="error"&gt;
+  &lt;query xmlns="jabber:iq:private"&gt;
+    &lt;exodus xmlns="exodus:prefs"&gt;
+      &lt;defaultnick&gt;Hamlet&lt;/defaultnick&gt;
+    &lt;/exodus&gt;
+  &lt;/query&gt;
+  &lt;error type="cancel"&gt;
+    &lt;feature-not-implemented xmlns="urn:ietf:params:xml:ns:xmpp-stanzas"/&gt;
+    &lt;text xml:lang="en" xmlns="urn:ietf:params:xml:ns:xmpp-stanzas"&gt;
+      Feature not supported yet.&lt;/text&gt;
+  &lt;/error&gt;
+&lt;/iq&gt;]),
+
+Total: 100ms
+Test time: 00:00:02
+Shutting down Tigase: 6751</pre><p>If I just started working on this XEP and there is no code on the server side, the result is perfectly expected although maybe this is not what we want. After a while of working on the server code I can execute the test once again:</p><pre class="programlisting">testsuite $ ./scripts/all-tests-runner.sh --single JabberIqPrivate.test
+
+Tigase server home directory: ../server
+
+Version: 2.8.5-b422
+
+Database:         xmldb
+
+Server IP:        127.0.0.1
+
+Extra parameters: JabberIqPrivate.test
+
+Starting Tigase:
+
+Tigase running pid=6984
+
+Running: 2.8.5-b422-xmldb test, IP 127.0.0.1...
+
+Script name: scripts/single-xmpp-test.xmpt
+
+Common test:  Common test  ... success,  Total: 40ms
+
+Test time: 00:00:01
+
+Shutting down Tigase: 6984</pre><p>This is it. The result we want in a simple and efficient way. We can repeat it as many times we want which is especially important in longer term trials. Every time we change the server code we can re-run tests to make sure we get correct responses from the server.</p><p>You can have a look in the current build, with more complete test cases, file for <a class="link" href="https://projects.tigase.org/projects/tigase-testsuite/repository/revisions/master/entry/tests/data/JabberIqPrivate.cot" target="_top">JabberIqPrivate</a>.</p><p>Now my server tests are no longer outdated. Of course not all cases are so simple. Some XEPs require calculations to be done before stanza is sent or to compare received results. A good example for this case is user authentication like SASL and even NON-SASL. But still, there are many cases which can be covered by simple tests: roster management, privacy lists management, vCard, private data storage and so on.</p></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="testSuideScripts.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="tests.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="_test_case_parameters_description.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Test Suite Scripting Language&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Test Case Parameters Description</td></tr></table></div></body></html>

@@ -1,0 +1,235 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Installing Using Console Installer</title><link rel="stylesheet" type="text/css" href="css/docbook-xsl.css"><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"><link rel="home" href="index.html" title="Tigase Administration Guide"><link rel="up" href="QuickStart.html" title="Chapter&nbsp;3.&nbsp;Quick Start Guide"><link rel="prev" href="webinstall.html" title="Installation Using Web Installer"><link rel="next" href="manualinstall.html" title="Manual Installation in Console Mode"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">Installing Using Console Installer</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="webinstall.html">Prev</a>&nbsp;</td><th width="60%" align="center">Chapter&nbsp;3.&nbsp;Quick Start Guide</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="manualinstall.html">Next</a></td></tr></table><hr></div><div class="section"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="consoleinstall"></a>Installing Using Console Installer</h2></div></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_installation_using_the_text_mode_installer"></a>Installation Using the text-mode Installer</h3></div></div></div><p>When you install Tigase server on a desktop machine or a server having a graphical user interface - you can use the <a class="link" href="guiinstall.html" title="Installation Using GUI Installer">GUI Installer</a>. However servers are often administered using <span class="strong"><strong>SSH</strong></span> text-mode connection because of low bandwidth requirements or user preferences. Due to popular demand, the Tigase development team has decided to implement a console installer for the server.</p><p><span class="strong"><strong>Note! The console installer is only available for Tigase server version 4.1.5 and later</strong></span>.</p><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_requirements_and_important_notice"></a>Requirements and Important Notice</h4></div></div></div><p>Before trying the installer please keep in mind:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">This is first - alpha rate version of the text-mode installation - meant to install the server and do some basic configuration. We will be very happy to see bug reports and overall feedback about this feature. Please send your remarks to <a class="link" href="mailto:artur.hefczyc@tigase.net" target="_top">Artur Hefczyc</a> or Mateusz Fiolka.</li><li class="listitem">You will still need to perform some additional steps before running the installer. The main requirement is to download and install <span class="strong"><strong>Java JDK v1.6 or newer</strong></span>. This guide is aimed at advanced users - thus downloading and configuring JDK is left to the reader. You can find more info at the <a class="link" href="http://java.sun.com/javase/downloads/index.jsp" target="_top">Java downloads site</a>.</li></ul></div></div></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_download_the_installer_2"></a>Download the Installer</h3></div></div></div><p>You can always find the newest Tigase packages in the <a class="link" href="https://projects.tigase.org/projects/tigase-server/files/" target="_top">download section</a>. When you enter the page, you will be presented a list of files to choose from.   All Tigase binary packages have conventional names, which help to differentiate them easily. They are of form <span class="strong"><strong>tigase-server-x.y.z-bv.ext</strong></span> where 'x', 'y', 'z' and 'v' are version numbers and they change from a release to release. Ext is the file extension which in the case of our console installation program is <span class="strong"><strong>.jar</strong></span>. We recommend you download the latest version (highest version number) of the server as it contains latest functions and improvements.</p></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_run_the_jar_file_2"></a>Run the jar File</h3></div></div></div><p>In terminal (SSH or Windows cmd prompt if you use on) type:</p><pre class="programlisting">java -jar nameOfTheDownloadedJarFile.jar -console</pre></div><div class="section"><div class="titlepage"><div><div><h3 class="title"><a name="_installation_steps"></a>Installation Steps</h3></div></div></div><p>Now you are ready to to install the server.</p><p>Some tips for working with the console installer:</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem">Please remember to write down your JDK location because you will need to type it during the installation process.</li><li class="listitem">Installer consists of number of screens which relate to  different configuration aspects. Most of the panels end with a question whether you want to redisplay the panel or quit installer. When you make a mistake you will be probably asked later if you want re-enter the data again.</li><li class="listitem">To quit the installer use standard termination key specific to your platform. For example on a <span class="strong"><strong>Linux</strong></span> system it is the Ctrl+C key combination. Keep in mind that if you quit the installer after it copied some files - it may leave them in the place and you might have to remove them manually.</li><li class="listitem">In current version the installer is of beta quality and using advanced configuration is not recommended. It might work, however it is not much tested and will be improved later.</li></ul></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_initial_screen"></a>Initial Screen</h4></div></div></div><p>On this screen you will find server version info which will be useful if you would to suggest something to Tigase developers.</p><pre class="programlisting">Welcome to the installation of Tigase XMPP (Jabber) Server X.Y.Z!
+
+The homepage is at: http://www.tigase.org/
+press 1 to continue, 2 to quit, 3 to redisplay</pre></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_jdk_selection_2"></a>JDK Selection</h4></div></div></div><p>Your system may contain more then one JDK installation, thus you will have to make an explicit decision which one to use. Currently console mode installer doesn&#8217;t contain any auto-detection code nor validation. You will have to enter the path correctly or you may have problems with running the server. For example on <span class="strong"><strong>Ubuntu Linux</strong></span> you can find the JDK in the /lib/jvm/java-6-sun directory. For the current Tigase server JDK of version at least <span class="strong"><strong>1.6</strong></span> is required.</p><pre class="programlisting">The installed application needs a JDK. A java run-time
+environment (JRE) will be not sufficient.
+
+Enter path: /lib/jvm/java-6-sun</pre></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_actions_selection"></a>Actions Selection</h4></div></div></div><p>Choose whether you want to configure the server in addition to install it.</p><pre class="programlisting">*** Select what you want to do next:
+
+On this panel you can specify whether you want to install
+only or configure already installed server or to do both. If
+you are just installing a server on your machine it is a
+good idea to do both steps.
+
+
+
+The wizards you want to execute
+Installation of the Tigase Server
+[on, off]
+on
+Configuration of the Tigase Server
+[on, off]
+on</pre></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_installer_info"></a>Installer Info</h4></div></div></div><p>Introduction to the installer.</p><pre class="programlisting">Please note!
+
+While the Tigase server is quite stable and well tested
+application the installer itself is a new addition. Take
+precautions especially if you upgrade the server from
+earlier version. Backup old server files and the database.
+
+If you notice any problems please report them to address:
+Artur Hefczyc
+
+press 1 to continue, 2 to quit, 3 to redisplay</pre></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_server_info"></a>Server Info</h4></div></div></div><p>If you don&#8217;t know what exactly Tigase server is, you can find some basic introduction on this screen.</p><pre class="programlisting">Tigase XMPP (Jabber) server ver 4.1.5-bDEV
+
+
+About
+
+Copyright (C) 2004 Tigase.org. &lt;http://www.tigase.org/&gt;
+
+Tigase Jabber/XMPP Server is
+Open Source and Free  (AGPLv3)
+Java based server. The goals behind the design and
+implementation of the server are:
+
+
+Make the server robust and reliable.
+Make the server secure communication platform.
+Make flexible server which can be applied to different use
+cases.
+Make extensible server which takes full advantage of XMPP
+protocol extensibility.
+
+--- Press ENTER to continue ---
+
+Make the server easy to setup and maintain.
+
+
+Installation, configuration and compilation
+
+The most recent documentation on all these topics is always
+available in the project website: www.tigase.org. Please
+refer to the website for all the details and always up to
+date guides.
+
+You would probably want to start with Quick Start:
+http://www.tigase.org/content/quick-start documentation.
+
+The website also contains lots of other useful information
+like load tests results, user discussions and on-line support
+and help always available to you.
+
+This is 4.1.5-bDEV release of the server. Please include the
+exact version number in all correspondence regarding the
+server.
+
+
+press 1 to continue, 2 to quit, 3 to redisplay</pre></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_server_license"></a>Server License</h4></div></div></div><p>This is a license that you have to agree to use Tigase server. Please read it carefully. Take note, that in this manual only part is shown in order to decrease guide length.</p><pre class="programlisting">Please read the following license agreement carefully:
+
+
+
+GNU General Public License - GNU Project - Free Software
+Foundation (FSF)
+
+
+GNU GENERAL PUBLIC LICENSE
+Version 3, 29 June 2007
+
+Copyright (C) 2007 Free Software Foundation, Inc.
+ Everyone is permitted to copy and distribute verbatim copies
+ of this license document, but changing it is not allowed.
+
+Preamble
+
+...
+... Fragment cut out
+...
+
+
+You should also get your employer (if you work as a
+programmer) or school, if any, to sign a "copyright
+disclaimer" for the program, if necessary.  For more
+information on this, and how to apply and follow the
+AGPL, see --- Press ENTER to continue ---
+
+&lt;http://www.gnu.org/licenses/agpl-3.0.en.html&gt;.
+
+The GNU General Public License does not permit incorporating
+your program into proprietary programs.  If your program is
+a subroutine library, you may consider it more useful to
+permit linking proprietary applications with the library.
+If this is what you want to do, use the GNU Lesser General
+Public License instead of this License.  But first, please
+read
+
+&lt;http://www.gnu.org/philosophy/why-not-lgpl.html&gt;.
+
+1. I accept the terms of this license agreement.
+2. I do not accept the terms of this license agreement.
+Choose number (1-2):
+1
+press 1 to continue, 2 to quit, 3 to redisplay</pre></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_server_location_selection"></a>Server Location Selection</h4></div></div></div><p>Enter where you want the server to be installed. If you have administrator rights you can place it in a standard location where all your applications reside. If you don&#8217;t have write permissions for this place, you can always install the server in your home directory.</p><pre class="programlisting">Select target path
+[/home/user/tigase] /home/user/tigase-server
+
+press 1 to continue, 2 to quit, 3 to redisplay 1</pre></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_selection_of_packs_to_be_installed"></a>Selection of Packs to be Installed</h4></div></div></div><p>Some packs are optional and you can disable/enable them. In the following screen they have an [x] option before them. To switch their state enter item number and ENTER. When done press d and ENTER.</p><pre class="programlisting">Select the packs you want to install:
+
+1 =&gt; Base, The base files
+2 =&gt; Unix Files, Files needed to run the server on Unix like systems
+3 =&gt; [x] Docs, The documentation
+4 =&gt; [x] Extras, Extras libraries, MUC, PubSub...
+5 =&gt; [x] Derby Database, Derby database and JDBC driver
+6 =&gt; [x] MySQL Database, MySQL JDBC driver (MySQL has to be
+installed separately)
+7 =&gt; [x] PostgreSQL Database, PostgreSQL JDBC driver
+(PostgreSQL has to be installed separately)
+8 =&gt; [x] SQL Server Database, SQL Server JDBC driver (SQL
+Server has to be installed separately)
+9 =&gt; [ ] Sources, The server source files, tools and
+libraries sources are not included
+r =&gt; Redisplay menu
+d =&gt; Done
+
+Choose action: d
+press 1 to continue, 2 to quit, 3 to redisplay</pre></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_installation"></a>Installation</h4></div></div></div><p>During extracting and copying server files to their target you will be presented with the process progress.</p><pre class="programlisting">[ Starting to unpack ]
+[ Processing package: Base (1/9) ]
+[ Processing package: Unix Files (2/9) ]
+[ Processing package: Windows Files (3/9) ]
+[ Processing package: Docs (4/9) ]
+[ Processing package: Extras (5/9) ]
+[ Processing package: Derby Database (6/9) ]
+[ Processing package: MySQL Database (7/9) ]
+[ Processing package: PostgreSQL Database (8/9) ]
+[ Processing package: SQL Server Database (9/9) ]
+[ Unpacking finished ]</pre></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_basic_configuration"></a>Basic Configuration</h4></div></div></div><p>This panel contains most important configuration options for the Tigase server. You can choose which components should be configured to be used when running server, add XMPP admin users and enter their password (many admins, comma separated, initially having the same password). Choose different password from the default one. Then select preferred database. If you don&#8217;t have a standalone DB which you would like to use, you can choose the included Derby DB.</p><p><span class="strong"><strong>Important notice: Tigase installer doesn&#8217;t contain the actual databases, only drivers allowing db access. One exception is Derby database, which is included in JDK. It is automatically configured by installer, in case of other databases you will need to configure them by yourself.</strong></span></p><pre class="programlisting">*** Basic Tigase server configuration
+On this panel you can specify basic configuration settings
+for the Tigase server.
+
+Based on your selection here more configuration options
+might be presented later on. After the configuration is
+complete init.properties file will be created.
+
+You can optionally restart the server at the end of the
+process if you like.
+
+
+
+0  [x] Default installation
+1  [ ] Default plus extra components
+2  [ ] Session Manager only
+3  [ ] Network connectivity only
+input selection:
+0
+Your XMPP (Jabber) domains [my-laptop]
+
+Server administrators [admin@my-laptop]
+
+Admin password [tigase]
+
+0  [x] Derby (built-in database)
+1  [ ] MySQL
+2  [ ] PostgreSQL
+3  [ ] SQLServer
+4  [ ] Other...
+input selection:
+1</pre></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_advanced_configuration"></a>Advanced Configuration</h4></div></div></div><p><span class="strong"><strong>Please note: in this version advanced configuration is not supported. Although it may work it has not been tested and thus is not recommended. Please enter off to not use it.</strong></span></p><pre class="programlisting">Advanced configuration options
+[on, off]
+off
+press 1 to continue, 2 to quit, 3 to redisplay</pre></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_database_configuration"></a>Database Configuration</h4></div></div></div><p>Depending on which database you selected, you will be presented with related options to configure its connectivity options. As you will see, the parameters have default values.</p><pre class="programlisting">*** Database configuration:
+
+You have selected MySQL database. This database needs
+additional configuration parameters. Please enter all
+required information.
+
+
+
+MySQL super user account will be used only to create and
+configure database for the Tigase server. It will not be
+used by the Tigase server later on.
+
+Super user account name: [root]
+
+WARNING: password will be visible while entering
+Super user password: mysecretpassword
+WARNING: password will be visible while entering
+Retype password: mysecretpassword
+
+
+
+MySQL database details. It will be created automatically if
+it does not exist.
+
+Database account: [tigase]
+
+Account password: [tigase12]
+
+Database name: [tigasedb]
+
+Database host or IP: [localhost]
+
+Additional database parameters: []
+
+press 1 to continue, 2 to quit, 3 to redisplay</pre></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_database_checking_and_preparation"></a>Database Checking and Preparation</h4></div></div></div><p>After entering all database information an automatic test of connection and database setup is performed. If everything is ok the installer will try to convert database schema to required version and finally adds XMPP administrators to it.</p><pre class="programlisting">Performing DB tasks
+
+Checking connection to the database
+Connection OK
+Checking if the database exists
+Exists OK
+Checking the database schema
+New schema loaded OK
+Checking whether the database needs conversion
+Conversion not needed
+Adding XMPP admin accounts
+Added admins OK</pre></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_installation_complete"></a>Installation Complete</h4></div></div></div><p>Now you can run the server and use it!</p><pre class="programlisting">Install was successful
+application installed on /home/user/tigase-server
+[ Console installation done ]</pre></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_running_the_sever"></a>Running the Sever</h4></div></div></div><p>You can start the server using the tigase file found in the scripts sub-directory of Tigase server base directory. There, select the type of linux you have, debian, gentoo, mendriva or redhat.  In the root server directory type the following command:</p><pre class="programlisting">./scripts/{OS}/init.d/tigase start etc/tigase.conf</pre><p>Where {OS} is your *nix operating system.</p><p>Of course if you have a custom config file then change last command appropriately.  On a Windows platform you can use a bat file to run the server. There is a run.bat file in the Tigase root directory. Just double click it in Explorer or run it from command line to start the server. A window with server log output will pop-up.</p></div><div class="section"><div class="titlepage"><div><div><h4 class="title"><a name="_how_to_check_if_the_server_is_running_2"></a>How to Check if the Server is Running</h4></div></div></div><p>Checking to see if the server is running is quite easy. Just connect to it by using one of mnay available XMPP clients.</p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="webinstall.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="QuickStart.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="manualinstall.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Installation Using Web Installer&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Manual Installation in Console Mode</td></tr></table></div></body></html>
