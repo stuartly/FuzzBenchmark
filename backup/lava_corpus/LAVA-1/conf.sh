@@ -1,7 +1,17 @@
 #!/bin/bash
 
-dir="file-5.22.${1}"
-cd "$dir"
-autoreconf -f -i
-./configure --enable-static --disable-shared --prefix=`pwd`/lava-install CFLAGS="-fvisibility=default -ggdb"
-make && make install
+for dir in file-5.22*
+do 
+  (
+  echo $dir 
+  cd $dir
+  make clean
+  make uninstall
+  autoreconf -f -i
+  CC=afl-clang-fast ./configure --enable-static --disable-shared --prefix=$PWD/lava-install CFLAGS="-fvisibility=default -ggdb"
+  make && make install
+  )
+done
+  
+
+
