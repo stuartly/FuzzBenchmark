@@ -1,0 +1,97 @@
+[
+{
+  "directory" : "/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/src",
+  "command" : "gcc -std=gnu99 -DHAVE_CONFIG_H -I. -I.. -DMAGIC=\\\"/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/lava-install/share/misc/magic\\\" -fvisibility=hidden -Wall -Wstrict-prototypes -Wmissing-prototypes -Wpointer-arith -Wmissing-declarations -Wredundant-decls -Wnested-externs -Wsign-compare -Wreturn-type -Wswitch -Wshadow -Wcast-qual -Wwrite-strings -Wextra -Wunused-parameter -Wformat=2 -fvisibility=default -MT magic.lo -MD -MP -MF .deps/magic.Tpo -c magic.c -fPIC -DPIC -o .libs/magic.o -I/home/moyix/git/llvm/Debug+Asserts/lib/clang/3.6.1/include",
+  "file" : "magic.c"
+},
+{
+  "directory" : "/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/src",
+  "command" : "gcc -std=gnu99 -DHAVE_CONFIG_H -I. -I.. -DMAGIC=\\\"/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/lava-install/share/misc/magic\\\" -fvisibility=hidden -Wall -Wstrict-prototypes -Wmissing-prototypes -Wpointer-arith -Wmissing-declarations -Wredundant-decls -Wnested-externs -Wsign-compare -Wreturn-type -Wswitch -Wshadow -Wcast-qual -Wwrite-strings -Wextra -Wunused-parameter -Wformat=2 -fvisibility=default -MT apprentice.lo -MD -MP -MF .deps/apprentice.Tpo -c apprentice.c -fPIC -DPIC -o .libs/apprentice.o -I/home/moyix/git/llvm/Debug+Asserts/lib/clang/3.6.1/include",
+  "file" : "apprentice.c"
+},
+{
+  "directory" : "/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/src",
+  "command" : "gcc -std=gnu99 -DHAVE_CONFIG_H -I. -I.. -DMAGIC=\\\"/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/lava-install/share/misc/magic\\\" -fvisibility=hidden -Wall -Wstrict-prototypes -Wmissing-prototypes -Wpointer-arith -Wmissing-declarations -Wredundant-decls -Wnested-externs -Wsign-compare -Wreturn-type -Wswitch -Wshadow -Wcast-qual -Wwrite-strings -Wextra -Wunused-parameter -Wformat=2 -fvisibility=default -MT softmagic.lo -MD -MP -MF .deps/softmagic.Tpo -c softmagic.c -fPIC -DPIC -o .libs/softmagic.o -I/home/moyix/git/llvm/Debug+Asserts/lib/clang/3.6.1/include",
+  "file" : "softmagic.c"
+},
+{
+  "directory" : "/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/src",
+  "command" : "gcc -std=gnu99 -DHAVE_CONFIG_H -I. -I.. -DMAGIC=\\\"/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/lava-install/share/misc/magic\\\" -fvisibility=hidden -Wall -Wstrict-prototypes -Wmissing-prototypes -Wpointer-arith -Wmissing-declarations -Wredundant-decls -Wnested-externs -Wsign-compare -Wreturn-type -Wswitch -Wshadow -Wcast-qual -Wwrite-strings -Wextra -Wunused-parameter -Wformat=2 -fvisibility=default -MT ascmagic.lo -MD -MP -MF .deps/ascmagic.Tpo -c ascmagic.c -fPIC -DPIC -o .libs/ascmagic.o -I/home/moyix/git/llvm/Debug+Asserts/lib/clang/3.6.1/include",
+  "file" : "ascmagic.c"
+},
+{
+  "directory" : "/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/src",
+  "command" : "gcc -std=gnu99 -DHAVE_CONFIG_H -I. -I.. -DMAGIC=\\\"/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/lava-install/share/misc/magic\\\" -fvisibility=hidden -Wall -Wstrict-prototypes -Wmissing-prototypes -Wpointer-arith -Wmissing-declarations -Wredundant-decls -Wnested-externs -Wsign-compare -Wreturn-type -Wswitch -Wshadow -Wcast-qual -Wwrite-strings -Wextra -Wunused-parameter -Wformat=2 -fvisibility=default -MT encoding.lo -MD -MP -MF .deps/encoding.Tpo -c encoding.c -fPIC -DPIC -o .libs/encoding.o -I/home/moyix/git/llvm/Debug+Asserts/lib/clang/3.6.1/include",
+  "file" : "encoding.c"
+},
+{
+  "directory" : "/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/src",
+  "command" : "gcc -std=gnu99 -DHAVE_CONFIG_H -I. -I.. -DMAGIC=\\\"/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/lava-install/share/misc/magic\\\" -fvisibility=hidden -Wall -Wstrict-prototypes -Wmissing-prototypes -Wpointer-arith -Wmissing-declarations -Wredundant-decls -Wnested-externs -Wsign-compare -Wreturn-type -Wswitch -Wshadow -Wcast-qual -Wwrite-strings -Wextra -Wunused-parameter -Wformat=2 -fvisibility=default -MT is_tar.lo -MD -MP -MF .deps/is_tar.Tpo -c is_tar.c -fPIC -DPIC -o .libs/is_tar.o -I/home/moyix/git/llvm/Debug+Asserts/lib/clang/3.6.1/include",
+  "file" : "is_tar.c"
+},
+{
+  "directory" : "/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/src",
+  "command" : "gcc -std=gnu99 -DHAVE_CONFIG_H -I. -I.. -DMAGIC=\\\"/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/lava-install/share/misc/magic\\\" -fvisibility=hidden -Wall -Wstrict-prototypes -Wmissing-prototypes -Wpointer-arith -Wmissing-declarations -Wredundant-decls -Wnested-externs -Wsign-compare -Wreturn-type -Wswitch -Wshadow -Wcast-qual -Wwrite-strings -Wextra -Wunused-parameter -Wformat=2 -fvisibility=default -MT readelf.lo -MD -MP -MF .deps/readelf.Tpo -c readelf.c -fPIC -DPIC -o .libs/readelf.o -I/home/moyix/git/llvm/Debug+Asserts/lib/clang/3.6.1/include",
+  "file" : "readelf.c"
+},
+{
+  "directory" : "/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/src",
+  "command" : "gcc -std=gnu99 -DHAVE_CONFIG_H -I. -I.. -DMAGIC=\\\"/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/lava-install/share/misc/magic\\\" -fvisibility=hidden -Wall -Wstrict-prototypes -Wmissing-prototypes -Wpointer-arith -Wmissing-declarations -Wredundant-decls -Wnested-externs -Wsign-compare -Wreturn-type -Wswitch -Wshadow -Wcast-qual -Wwrite-strings -Wextra -Wunused-parameter -Wformat=2 -fvisibility=default -MT compress.lo -MD -MP -MF .deps/compress.Tpo -c compress.c -fPIC -DPIC -o .libs/compress.o -I/home/moyix/git/llvm/Debug+Asserts/lib/clang/3.6.1/include",
+  "file" : "compress.c"
+},
+{
+  "directory" : "/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/src",
+  "command" : "gcc -std=gnu99 -DHAVE_CONFIG_H -I. -I.. -DMAGIC=\\\"/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/lava-install/share/misc/magic\\\" -fvisibility=hidden -Wall -Wstrict-prototypes -Wmissing-prototypes -Wpointer-arith -Wmissing-declarations -Wredundant-decls -Wnested-externs -Wsign-compare -Wreturn-type -Wswitch -Wshadow -Wcast-qual -Wwrite-strings -Wextra -Wunused-parameter -Wformat=2 -fvisibility=default -MT print.lo -MD -MP -MF .deps/print.Tpo -c print.c -fPIC -DPIC -o .libs/print.o -I/home/moyix/git/llvm/Debug+Asserts/lib/clang/3.6.1/include",
+  "file" : "print.c"
+},
+{
+  "directory" : "/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/src",
+  "command" : "gcc -std=gnu99 -DHAVE_CONFIG_H -I. -I.. -DMAGIC=\\\"/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/lava-install/share/misc/magic\\\" -fvisibility=hidden -Wall -Wstrict-prototypes -Wmissing-prototypes -Wpointer-arith -Wmissing-declarations -Wredundant-decls -Wnested-externs -Wsign-compare -Wreturn-type -Wswitch -Wshadow -Wcast-qual -Wwrite-strings -Wextra -Wunused-parameter -Wformat=2 -fvisibility=default -MT fsmagic.lo -MD -MP -MF .deps/fsmagic.Tpo -c fsmagic.c -fPIC -DPIC -o .libs/fsmagic.o -I/home/moyix/git/llvm/Debug+Asserts/lib/clang/3.6.1/include",
+  "file" : "fsmagic.c"
+},
+{
+  "directory" : "/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/src",
+  "command" : "gcc -std=gnu99 -DHAVE_CONFIG_H -I. -I.. -DMAGIC=\\\"/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/lava-install/share/misc/magic\\\" -fvisibility=hidden -Wall -Wstrict-prototypes -Wmissing-prototypes -Wpointer-arith -Wmissing-declarations -Wredundant-decls -Wnested-externs -Wsign-compare -Wreturn-type -Wswitch -Wshadow -Wcast-qual -Wwrite-strings -Wextra -Wunused-parameter -Wformat=2 -fvisibility=default -MT apptype.lo -MD -MP -MF .deps/apptype.Tpo -c apptype.c -fPIC -DPIC -o .libs/apptype.o -I/home/moyix/git/llvm/Debug+Asserts/lib/clang/3.6.1/include",
+  "file" : "apptype.c"
+},
+{
+  "directory" : "/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/src",
+  "command" : "gcc -std=gnu99 -DHAVE_CONFIG_H -I. -I.. -DMAGIC=\\\"/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/lava-install/share/misc/magic\\\" -fvisibility=hidden -Wall -Wstrict-prototypes -Wmissing-prototypes -Wpointer-arith -Wmissing-declarations -Wredundant-decls -Wnested-externs -Wsign-compare -Wreturn-type -Wswitch -Wshadow -Wcast-qual -Wwrite-strings -Wextra -Wunused-parameter -Wformat=2 -fvisibility=default -MT readcdf.lo -MD -MP -MF .deps/readcdf.Tpo -c readcdf.c -fPIC -DPIC -o .libs/readcdf.o -I/home/moyix/git/llvm/Debug+Asserts/lib/clang/3.6.1/include",
+  "file" : "readcdf.c"
+},
+{
+  "directory" : "/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/src",
+  "command" : "gcc -std=gnu99 -DHAVE_CONFIG_H -I. -I.. -DMAGIC=\\\"/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/lava-install/share/misc/magic\\\" -fvisibility=hidden -Wall -Wstrict-prototypes -Wmissing-prototypes -Wpointer-arith -Wmissing-declarations -Wredundant-decls -Wnested-externs -Wsign-compare -Wreturn-type -Wswitch -Wshadow -Wcast-qual -Wwrite-strings -Wextra -Wunused-parameter -Wformat=2 -fvisibility=default -MT funcs.lo -MD -MP -MF .deps/funcs.Tpo -c funcs.c -fPIC -DPIC -o .libs/funcs.o -I/home/moyix/git/llvm/Debug+Asserts/lib/clang/3.6.1/include",
+  "file" : "funcs.c"
+},
+{
+  "directory" : "/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/src",
+  "command" : "gcc -std=gnu99 -DHAVE_CONFIG_H -I. -I.. -DMAGIC=\\\"/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/lava-install/share/misc/magic\\\" -fvisibility=hidden -Wall -Wstrict-prototypes -Wmissing-prototypes -Wpointer-arith -Wmissing-declarations -Wredundant-decls -Wnested-externs -Wsign-compare -Wreturn-type -Wswitch -Wshadow -Wcast-qual -Wwrite-strings -Wextra -Wunused-parameter -Wformat=2 -fvisibility=default -MT cdf.lo -MD -MP -MF .deps/cdf.Tpo -c cdf.c -fPIC -DPIC -o .libs/cdf.o -I/home/moyix/git/llvm/Debug+Asserts/lib/clang/3.6.1/include",
+  "file" : "cdf.c"
+},
+{
+  "directory" : "/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/src",
+  "command" : "gcc -std=gnu99 -DHAVE_CONFIG_H -I. -I.. -DMAGIC=\\\"/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/lava-install/share/misc/magic\\\" -fvisibility=hidden -Wall -Wstrict-prototypes -Wmissing-prototypes -Wpointer-arith -Wmissing-declarations -Wredundant-decls -Wnested-externs -Wsign-compare -Wreturn-type -Wswitch -Wshadow -Wcast-qual -Wwrite-strings -Wextra -Wunused-parameter -Wformat=2 -fvisibility=default -MT strlcpy.lo -MD -MP -MF .deps/strlcpy.Tpo -c strlcpy.c -fPIC -DPIC -o .libs/strlcpy.o -I/home/moyix/git/llvm/Debug+Asserts/lib/clang/3.6.1/include",
+  "file" : "strlcpy.c"
+},
+{
+  "directory" : "/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/src",
+  "command" : "gcc -std=gnu99 -DHAVE_CONFIG_H -I. -I.. -DMAGIC=\\\"/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/lava-install/share/misc/magic\\\" -fvisibility=hidden -Wall -Wstrict-prototypes -Wmissing-prototypes -Wpointer-arith -Wmissing-declarations -Wredundant-decls -Wnested-externs -Wsign-compare -Wreturn-type -Wswitch -Wshadow -Wcast-qual -Wwrite-strings -Wextra -Wunused-parameter -Wformat=2 -fvisibility=default -MT cdf_time.lo -MD -MP -MF .deps/cdf_time.Tpo -c cdf_time.c -fPIC -DPIC -o .libs/cdf_time.o -I/home/moyix/git/llvm/Debug+Asserts/lib/clang/3.6.1/include",
+  "file" : "cdf_time.c"
+},
+{
+  "directory" : "/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/src",
+  "command" : "gcc -std=gnu99 -DHAVE_CONFIG_H -I. -I.. -DMAGIC=\\\"/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/lava-install/share/misc/magic\\\" -fvisibility=hidden -Wall -Wstrict-prototypes -Wmissing-prototypes -Wpointer-arith -Wmissing-declarations -Wredundant-decls -Wnested-externs -Wsign-compare -Wreturn-type -Wswitch -Wshadow -Wcast-qual -Wwrite-strings -Wextra -Wunused-parameter -Wformat=2 -fvisibility=default -MT file.o -MD -MP -MF .deps/file.Tpo -c -o file.o file.c -I/home/moyix/git/llvm/Debug+Asserts/lib/clang/3.6.1/include",
+  "file" : "file.c"
+},
+{
+  "directory" : "/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/src",
+  "command" : "gcc -std=gnu99 -DHAVE_CONFIG_H -I. -I.. -DMAGIC=\\\"/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/lava-install/share/misc/magic\\\" -fvisibility=hidden -Wall -Wstrict-prototypes -Wmissing-prototypes -Wpointer-arith -Wmissing-declarations -Wredundant-decls -Wnested-externs -Wsign-compare -Wreturn-type -Wswitch -Wshadow -Wcast-qual -Wwrite-strings -Wextra -Wunused-parameter -Wformat=2 -fvisibility=default -MT strlcat.lo -MD -MP -MF .deps/strlcat.Tpo -c strlcat.c -fPIC -DPIC -o .libs/strlcat.o -I/home/moyix/git/llvm/Debug+Asserts/lib/clang/3.6.1/include",
+  "file" : "strlcat.c"
+},
+{
+  "directory" : "/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/src",
+  "command" : "gcc -std=gnu99 -DHAVE_CONFIG_H -I. -I.. -DMAGIC=\\\"/nas/ulrich/file_bug_db/file/bugs/0/file-5.22/lava-install/share/misc/magic\\\" -fvisibility=hidden -Wall -Wstrict-prototypes -Wmissing-prototypes -Wpointer-arith -Wmissing-declarations -Wredundant-decls -Wnested-externs -Wsign-compare -Wreturn-type -Wswitch -Wshadow -Wcast-qual -Wwrite-strings -Wextra -Wunused-parameter -Wformat=2 -fvisibility=default -MT fmtcheck.lo -MD -MP -MF .deps/fmtcheck.Tpo -c fmtcheck.c -fPIC -DPIC -o .libs/fmtcheck.o -I/home/moyix/git/llvm/Debug+Asserts/lib/clang/3.6.1/include",
+  "file" : "fmtcheck.c"
+}
+]
