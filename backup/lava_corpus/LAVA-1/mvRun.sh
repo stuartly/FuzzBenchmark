@@ -5,7 +5,7 @@ do
   (
   echo $dir 
   cd $dir
-  cp ../runAFL .
+  cp ../runAFL.sh .
   )
 done
   
