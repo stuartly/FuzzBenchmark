@@ -5,7 +5,8 @@ do
  (
   cd $dir
   mkdir Fuzz
-  afl-fuzz -i ../seed_dir -o Fuzz/output ./lava-install/bin/file @@
+  cp -r ../seed_dir Fuzz/
+  afl-fuzz -i Fuzz/seed_dir -o Fuzz/output ./lava-install/bin/file @@
   )
 done
 
