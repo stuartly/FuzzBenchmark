@@ -1,0 +1,2 @@
+/usr/bin/ar qc libxml.a  CMakeFiles/libxml_static.dir/xmltree.c.o CMakeFiles/libxml_static.dir/xmlparser.c.o
+/usr/bin/ranlib libxml.a

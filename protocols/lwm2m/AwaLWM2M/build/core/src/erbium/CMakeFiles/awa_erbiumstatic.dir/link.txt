@@ -1,0 +1,2 @@
+/usr/bin/ar qc liberbiumstatic.a  CMakeFiles/awa_erbiumstatic.dir/er-coap.c.o CMakeFiles/awa_erbiumstatic.dir/er-coap-engine.c.o CMakeFiles/awa_erbiumstatic.dir/er-coap-transactions.c.o CMakeFiles/awa_erbiumstatic.dir/er-coap-separate.c.o CMakeFiles/awa_erbiumstatic.dir/er-coap-block1.c.o
+/usr/bin/ranlib liberbiumstatic.a

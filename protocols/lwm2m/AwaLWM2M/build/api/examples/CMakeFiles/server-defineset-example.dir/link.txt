@@ -1,0 +1,1 @@
+/usr/bin/cc -g -ggdb  -rdynamic CMakeFiles/server-defineset-example.dir/server-defineset-example.c.o  -o server-defineset-example ../src/libawa.a ../../lib/xml/libxml.a ../../lib/b64/libb64.a ../../lib/hmac/libhmac.a 

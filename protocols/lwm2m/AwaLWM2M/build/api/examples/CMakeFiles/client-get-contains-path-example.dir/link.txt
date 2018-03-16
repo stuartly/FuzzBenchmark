@@ -1,0 +1,1 @@
+/usr/bin/cc -g -ggdb  -rdynamic CMakeFiles/client-get-contains-path-example.dir/client-get-contains-path-example.c.o  -o client-get-contains-path-example ../src/libawa.a ../../lib/xml/libxml.a ../../lib/b64/libb64.a ../../lib/hmac/libhmac.a 

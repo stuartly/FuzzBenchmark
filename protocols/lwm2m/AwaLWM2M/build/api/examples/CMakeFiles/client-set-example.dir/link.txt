@@ -1,0 +1,1 @@
+/usr/bin/cc -g -ggdb  -rdynamic CMakeFiles/client-set-example.dir/client-set-example.c.o  -o client-set-example ../src/libawa.a ../../lib/xml/libxml.a ../../lib/b64/libb64.a ../../lib/hmac/libhmac.a 

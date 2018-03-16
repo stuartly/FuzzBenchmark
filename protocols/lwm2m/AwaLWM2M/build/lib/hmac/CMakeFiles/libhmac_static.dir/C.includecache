@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/lzs243/Documents/ProtocolFuzz/Benchmark/AwaLWM2M/lib/hmac/hmac.c
+stdio.h
+-
+stdint.h
+-
+string.h
+-
+

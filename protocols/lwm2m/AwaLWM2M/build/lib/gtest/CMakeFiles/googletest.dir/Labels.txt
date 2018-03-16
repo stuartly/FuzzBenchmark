@@ -1,0 +1,13 @@
+# Target labels
+ googletest
+# Source files and their labels
+/home/lzs243/Documents/ProtocolFuzz/Benchmark/AwaLWM2M/build/lib/gtest/CMakeFiles/googletest
+/home/lzs243/Documents/ProtocolFuzz/Benchmark/AwaLWM2M/build/lib/gtest/CMakeFiles/googletest.rule
+/home/lzs243/Documents/ProtocolFuzz/Benchmark/AwaLWM2M/build/lib/gtest/CMakeFiles/googletest-complete.rule
+/home/lzs243/Documents/ProtocolFuzz/Benchmark/AwaLWM2M/build/lib/gtest/googletest-prefix/src/googletest-stamp/googletest-install.rule
+/home/lzs243/Documents/ProtocolFuzz/Benchmark/AwaLWM2M/build/lib/gtest/googletest-prefix/src/googletest-stamp/googletest-mkdir.rule
+/home/lzs243/Documents/ProtocolFuzz/Benchmark/AwaLWM2M/build/lib/gtest/googletest-prefix/src/googletest-stamp/googletest-download.rule
+/home/lzs243/Documents/ProtocolFuzz/Benchmark/AwaLWM2M/build/lib/gtest/googletest-prefix/src/googletest-stamp/googletest-update.rule
+/home/lzs243/Documents/ProtocolFuzz/Benchmark/AwaLWM2M/build/lib/gtest/googletest-prefix/src/googletest-stamp/googletest-patch.rule
+/home/lzs243/Documents/ProtocolFuzz/Benchmark/AwaLWM2M/build/lib/gtest/googletest-prefix/src/googletest-stamp/googletest-configure.rule
+/home/lzs243/Documents/ProtocolFuzz/Benchmark/AwaLWM2M/build/lib/gtest/googletest-prefix/src/googletest-stamp/googletest-build.rule

@@ -1,0 +1,1 @@
+/usr/bin/cc -g -ggdb  -rdynamic CMakeFiles/client-subscribe-to-change-example.dir/client-subscribe-to-change-example.c.o  -o client-subscribe-to-change-example ../src/libawa.a ../../lib/xml/libxml.a ../../lib/b64/libb64.a ../../lib/hmac/libhmac.a 

@@ -1,0 +1,2 @@
+/usr/bin/ar qc libhmac.a  CMakeFiles/libhmac_static.dir/hmac.c.o
+/usr/bin/ranlib libhmac.a

@@ -1,0 +1,2 @@
+/usr/bin/ar qc libb64.a  CMakeFiles/libb64_static.dir/b64.c.o
+/usr/bin/ranlib libb64.a

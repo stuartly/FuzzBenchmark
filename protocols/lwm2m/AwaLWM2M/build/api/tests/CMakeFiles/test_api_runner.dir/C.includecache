@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/lzs243/Documents/ProtocolFuzz/Benchmark/AwaLWM2M/api/tests/support/main/main_cmdline.c
+config.h
+/home/lzs243/Documents/ProtocolFuzz/Benchmark/AwaLWM2M/api/tests/support/main/config.h
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+main_cmdline.h
+/home/lzs243/Documents/ProtocolFuzz/Benchmark/AwaLWM2M/api/tests/support/main/main_cmdline.h
+
+/home/lzs243/Documents/ProtocolFuzz/Benchmark/AwaLWM2M/api/tests/support/main/main_cmdline.h
+config.h
+/home/lzs243/Documents/ProtocolFuzz/Benchmark/AwaLWM2M/api/tests/support/main/config.h
+stdio.h
+-
+

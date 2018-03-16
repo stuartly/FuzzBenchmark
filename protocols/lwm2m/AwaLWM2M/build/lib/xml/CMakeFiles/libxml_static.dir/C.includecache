@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/lzs243/Documents/ProtocolFuzz/Benchmark/AwaLWM2M/lib/xml/xmlparser.c
+stdlib.h
+-
+string.h
+-
+stdint.h
+-
+xmlparser.h
+/home/lzs243/Documents/ProtocolFuzz/Benchmark/AwaLWM2M/lib/xml/xmlparser.h
+
+/home/lzs243/Documents/ProtocolFuzz/Benchmark/AwaLWM2M/lib/xml/xmlparser.h
+stdint.h
+-
+stdbool.h
+-
+flow/core/base_types.h
+/home/lzs243/Documents/ProtocolFuzz/Benchmark/AwaLWM2M/lib/xml/flow/core/base_types.h
+
+/home/lzs243/Documents/ProtocolFuzz/Benchmark/AwaLWM2M/lib/xml/xmltree.c
+stdint.h
+-
+string.h
+-
+xmlparser.h
+/home/lzs243/Documents/ProtocolFuzz/Benchmark/AwaLWM2M/lib/xml/xmlparser.h
+xmltree.h
+/home/lzs243/Documents/ProtocolFuzz/Benchmark/AwaLWM2M/lib/xml/xmltree.h
+stdlib.h
+-
+
+/home/lzs243/Documents/ProtocolFuzz/Benchmark/AwaLWM2M/lib/xml/xmltree.h
+stdint.h
+-
+stdbool.h
+-
+
