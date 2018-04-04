@@ -1,0 +1,375 @@
+Note: "+" indicates a new/improved feature, "*" indicates a bugfix or other
+      non-feature correction.
+v1.3.4
+======
++ internal ls supports -F, allowing ncftp 2.4.x-style directory completion
++ permit using PAM and s/key at the same time (stevens@alicomitalia.it)
+* compilation fixes on some systems
+* Fix real user login problem with --enable-passwd on *BSD
+* quota fixes
+
+v1.3.3
+======
+* Fix compilation with --disable-passwd on some systems
+* Fix a typo in configure.in causing -lnsl to be missing on some systems
+* Make PAM work on FreeBSD 4.0
+* rebuild configure with autoconf 2.14 for compatibility
+* Add a note about --enable-oldvirt in INSTALL
+* Fix a (probably non-critical) possible buffer overrun
+* Make passwd/shadow work for virtual hosts
++ Extend GSSAPI/KRB5 support (patches from Frank Cusack <fcusack@iconnet.net>)
+
+v1.3.2
+======
+* Fix security bug caused by a typo in realpath.c - users could get read
+  access to all files in 1.3.1.
+* Fix compilation on systems without strcasecmp/strncasecmp
+* Fix compilation on systems that need -lnsl to use -lsocket
+* Fix compilation of recompress on systems that don't have all functions
+  it requires (basename, strerror, ...)
++ rebuild configure with autoconf 2.13 for compatibility
+
+v1.3.1
+======
++ Merge in changes from wu-ftpd VR10 (ftp://ftp.vr.net/pub/wu-ftpd):
+  + -P, -q, -Q switches
+  + ident (RFC931) support
+  * cleanups
++ Merge in changes from wu-ftpd VR11 (ftp://ftp.vr.net/pub/wu-ftpd):
+  + -r switch
+  + add option to disable PASV mode and/or PORT mode
+  + better support for (external) ls
+  * bug/compatibility fixes
+* Fix up quota support; related cleanup
+* code cleanups
+
+v1.2.3
+======
++ Add PAM support (adapted from RedHat's patches to wu-ftpd)
+  (from 1.3.0, which has been tested well enough)
+  PAM support will possibly work only on Linux, so it is disabled by
+  default.
+* Fix compilation with --disable-virtual
+* Fix a bug (not clearing memory after a malloc) that might cause crashes
+  on some systems
+
+v1.3.0
+======
++ Add PAM support (adapted from RedHat's patches to wu-ftpd)
+
+v1.2.2
+======
+* Fix a typo in Makefile (installing sample ftpconversions)
+* compatibility fixes; (hopefully) fix compilation on HP/UX and SunOS 4.
+* make distclean now removes src/ftpck/Makefile
+
+v1.2.1
+======
+* Compatibility fixes for systems that don't have <fcntl.h> and/or
+  don't define MAXSYMLINKS, get rid of a compiler warning on Linux
+* Check the result of glob() calls in the internal ls. This fixes the
+  output of the internal ls when trying to list a directory that doesn't
+  exist, or you don't have permissions to access.
+
+v1.2.0
+======
++ Add virtual passwd/shadow file support for systems that don't have
+  fgetpwent()
++ Rewrite realpath(), eliminating a major security problem (buffer overrun)
+  present in all prior versions as well as all versions of wu-ftpd
+* Fix compatibility with glibc 2.1.x based systems
+
+v1.1.15
+=======
++ Add support for FEAT and OPTS (RFC2389)
+* Make STAT work correctly with internal ls
+* Make "ls nonexistantfile" return nothing
+* Make ls display executable flag for owner correctly
+* Make ls handle setuid/setgid/sticky bits
++ Merge VR9 changes (ftp://ftp.vr.net/pub/wu-ftpd):
+  * Make xferlog indicate failure/success
+  * allow access control commands to use address/netmask or CIDR
+  * support regular expressions in noretrieve
+  * add allow-retrieve to allow retrieval of files which would be denied
+    by earlier noretrieve clauses
+  * Support globbing/wildcards throughout ftpaccess for file and directory
+    comparisons
+  * Add regular expressions matching to deny-mail
+  * Ignore case in some more ftpaccess directives
+  * Add OPIE support
+  * code cleanup
+
+v1.1.14
+=======
+* Fix uploads for guest users
+* SunOS compatibility fixes
+* Remove a C++ style ("//") comment that might break some C compilers
+* Fix compilation bug with --disable-virtual
+* detect ut.* structure members correctly on systems that need time.h
+  to be included before utmp.h (FreeBSD 3.0)
+* Make HOST implementation more consistant with the draft
++ Make support for old (wu-ftpd)-style virtual hosts optional, disable
+  by default
++ Merge VR8 changes (ftp://ftp.vr.net/pub/wu-ftpd):
+  * Add SITE CHECKMETHOD and SITE CHECKSUM support
+  * ftpconversions sample: add .crc and .md5 support
+  * IGNORE_NOOP option
+  * site-exec-max-lines ftpaccess clause
+  * Bugfixes
+  * Add hostname and email option to (old) virtual
+  * Add 'greeting' clause
+
+v1.1.13
+=======
++ Merge VR7 changes (ftp://ftp.vr.net/pub/wu-ftpd):
+  * Extended logging for rejected and failed login attempts
+  * Added PARANOID check to deny login if a real user's home directory is bad
+  * Don't respond to *ANY* commands except USER, PASS and QUIT until the
+    remote user logs in successfully.
+  * Extended upload and noretrieve to have an optional parameter which
+    specifies whether the named file/directory is interpreted as an
+    absolute name or relative to the current chroot'd environment.
+  * The HELP_CRACKERS patch was too agressive and, if message files were
+    defined for 'deny' and 'limit' could tickle bugs in ftp clients.
+  * Extend log security
+  * Some compatibility fixes
+* Fix noretrieve bug (noretrieve filename didn't ignore the
+  directory, as it ought to)
+
+v1.1.12
+=======
++ Add (EXPERMIENTAL) support for using alternate passwd/shadow files
++ Add (EXPERIMENTAL) support for the HOST command - this enables running
+  different virtual servers on the same IP and port.
+* Fix detection of symlink capability
+* Make internal ls use less memory at a time ("ls -laR /" is no longer a
+  problem)
+* Fix all important bugs in internal ls
+* Speed up internal ls
+* Stop ftpck from complaining about "invalid directive"s that are not
+  invalid, but new...
+* Updates to manpages
+* Repeat DNS lookups only if gethostbyaddr returned a recoverable error.
+* Code cleanup
+* Compatibility fixes (utmp entries)
+* Warn if "virtual" command is used in ftpaccess if we're compiled without
+  support for virtual hosts
+* Permit -X option
+
+v1.1.11
+=======
+* Remove some senseless syslog() calls that remained from debugging the
+  upload problem fixed in 1.1.10
+
+v1.1.10
+=======
+* Fix the upload bug
++ Remove the K&R C constructs - all they still do is use up space and make
+  the code unreadable. If you can't compile ANSI C, get GCC.
+  This change saves 1405 lines and 30 kB of code, and makes the code far
+  more readable.
+
+v1.1.9
+======
+* Fix SunOS compatibility
+* Fix several bugs in the internal ls command
+* Fix compilation bug for ratios caused by the VR6 patches
+* Fix typo in configure.in
+* Install ftpck, ftpshut, ftprestart and ckconfig to sbindir rather than
+  bindir
+* Make ftpck check ftphosts only if support for host access is compiled in
+  (--disable-hostxs)
+* Make a missing ftpservers a WARNING rather than an ERROR in ftpck - after
+  all, we can compile with virtual host support without using it...
+* Make missing system accounts in ftpusers a WARNING rather than an ERROR
+  in ftpck - it might be a security leak, but it might also make some sense.
+* Include config.h in dependencies for every file, so every file is
+  recompiled after a configure with different parameters
+* Fix a possible buffer overrun in the internal ls for usernames longer than
+  8 characters
+* make install now installs the ftprestart.8 manpage
++ Add --enable-numeric-uids option (see INSTALL)
++ Add support for Kerberos5 and AFS authentication.
++ Add "log security" option to ftpaccess so we can log attempts to violate
+  security restrictions (noretrieve, .notar, ...)
+
+v1.1.8
+======
++ Integrate the wu-ftpd VR6 patches (ftp://ftp.vr.net/pub/wu-ftpd/):
+  - Prevent NOOP resetting idle timer
+  - Add -X command-line option and syslog option to log statement in
+    ftpaccess
+  - add new parameter to upload so admins can determine the permissions for
+    any new directories
+  - Move Linux to use POSIX regex included with the system
+  - Added 'hostname' configuration statement
+  - Shutdown warnings were not given to normal (non-anonymous) users on
+    login
+  - On the upload clause, 'no' should imply 'nodirs'
+  - The noretrieve clause is extended to mark entire directories un-gettable
+  - The upload clause is extended to allow '*' for <owner> and <group>
+  - New ftpaccess clause 'nice' to adjust process priorities based upon the
+    class
+  - document guestserver, lslong, lsshort
+  - Added -w and -W to enable (default, -w) or disable (-W) recording user
+    login and logout for ftp sessions in wtmp
+  - Added new command-line option -s/-S to run in standalone daemon mode
+  - Added syslog messages for more stuff
+  - Added MAPPING_CHDIR config option to support CWD working like cd command
+    in most Unix shells; the PWD shown is the logical path rather than the
+    physical path.
+  - HELP PORT indicated only 5 bytes were needed.  Six are.
+  - PASV mode was being reset by rejected PORT commands, and PASV mode wasn't
+    reseting the state completely after setting up a data connection
+  - Added 'defumask' to specify umask values by class in ftpaccess.
+  - Provide address remapping for PASV mode to allow daemon to run behind
+    IP-address translating firewalls
+  - Add magic cookies so systems using quotas can show them to users via ftp
+    message files
+  - Add 'tcpwindow' to configure TCP window size for performance tweaking
+  - Restrict throughput for network load management
+  - Add message to show total traffic counts
+  - Clean up some unneeded blank lines sent in responses
+  - Change the defaults to deny upload, and other site-modification things,
+    for anonymous users
+  - Add 'anonymous-root' to select chroot directory based on class of
+    anonymous user
+  - Disallow UIDs and GIDs by numeric range
+  - Add ability to force all UID/GID in a range to be treated as guests.
+  - The daemon responded differently in some cases when it's denying access
+  - Fix handling for the message clause so login and cwd= work as expected
++ Modify the VR-6 patches so anonymous-chroot works for virtual hosts
+* Fix several bugs in the VR-6 patches that prevented from compiling
+  correctly under some circumstances/on some OSes
++ Add -p command line option to allow ftpd to run on different ports.
+  With this, it can be run by an ordinary user on an unprivileged port
+  in a future version (once we can disable seteuid() calls).
+* Add configure switches for new features
++ documentation updates
+
+v1.1.7
+======
+* Make internal ls compatible with FreeBSD 3.0
+* Add support for systems without GLOB_PERIOD in internal ls
+
+v1.1.6
+======
+* Detect size of off_t correctly if it is not defined in stdlib.h
+* Fix typo in support/ftw.c (HAVE_DIRENT instead of HAVE_DIRENT_H)
+* Fix up Makefiles to accept --mandir, --bindir, --sbindir etc.
+* Get rid of some more #ifdef SOME_OS constructs
+
+v1.1.5
+======
+* Fix compilation bug after ftpcmd.c was removed
+* Clean up code (get rid of more #ifdef SOME_OS constructs)
+  This also fixes some bugs (prior versions assumed some things about
+  Linux and probably other OSes that are no longer true in recent versions).
+
+v1.1.4
+======
++ Add support for upload/download ratios and show-everytime (Wakui Kazuhiko)
++ Add new directives to man pages
+* Fix compilation on systems with utmpx.h (such as Solaris)
+
+v1.1.3
+======
++ New way of supporting virtual hosts (Kent Landfield's newvirt patch)
+  (includes new configuration checker, ftpck)
++ Internal ls can now be disabled (configure --disable-internal-ls)
++ Add changes from 1.0.8 and 1.0.9 to 1.1.x tree
++ If there's no ftpaccess file already present, install the sample one
+* Some configure.in cleanups
+* Makefile fixes
+
+v1.1.2
+======
++ Improve ftpconversions file: on-the-fly bzip2 and zip compression.
++ Add program to permit recompression in various formats, add examples for
+  gzip<->bzip2, gzip<->compress and bzip2<->compress to ftpconversions
++ manpage updates to reflect changes
++ example configuration files (doc/examples) improved
+* Autodetect <utmpx.h> and utmp->ut_host rather than relying on wu-ftpd's
+  #if defined(THATOS) || defined(ANOTHEROS)
+
+v1.1.1
+======
++ Rewrite internal ls completely, allow ls -l, ls -a and ls -R.
+* Fix compilation of ftpd.c for some C compilers
+* remove some declarations of variables that are no longer used
+* rebuild if anything was changed between "make" and "make install"
+
+v1.1.0
+======
++ internal ls command (EXPERIMENTAL)
+
+v1.0.9
+======
++ Improve ftpconversions file: on-the-fly bzip2 and zip compression.
++ Add program to permit recompression in various formats, add examples for
+  gzip<->bzip2, gzip<->compress and bzip2<->compress to ftpconversions
++ manpage updates to reflect changes
++ example configuration files (doc/examples) improved
+* Autodetect <utmpx.h> and utmp->ut_host rather than relying on wu-ftpd's
+  #if defined(THATOS) || defined(ANOTHEROS)
+
+v1.0.8
+======
+* Add fixes from wu-ftpd 2.4.2-beta-18
+* Check for <sys/time.h> (needed in SunOS 4.x)
+* make install-sh script executable
+
+v1.0.7
+======
+* Fix up CWD command with no arguments for guest users
+* Fix up memmove() detection
++ Documentation updates
+
+v1.0.6
+======
+* Use fork() on systems that don't have vfork()
+* Make ftpd.c compatible with Sun C 4.2
+* Find NBBY if it's defined in sys/types.h (AIX 4.x)
+* Find L_INCR if it's defined in sys/file.h (AIX 4.2)
+* Use memmove() rather than bcopy() by default
+* terminate last line in socket.h
+
+v1.0.5
+======
+* Merge in fixes from wu-ftpd-academ-2.4.2-beta 17
+* Minor whitespace cleanup and other small fixes
+* No longer tries to send mail if no upload-mail recipients are specified
+* Avoid collisions with built-in realpath functions
+* Use gar if it is available and ar is not (yes, there are such systems)
+* Fix potential crash in upload-mail code
+* SITE CHMOD can now by default affect all bits, including set-id and sticky
+* SEEK_CUR now used on systems without L_INCR
+* src/Makefile now includes support library in link command line
+* Remove "hidden" features of PARANOID option (disabling delete and
+     overwrite regardless of ftpaccess setting)
+* Detect fcntl.h on all systems that have it
+* Turn on -a by default
+* Improve the sample ftpaccess file
+* Use included ftp.h instead of <arpa/ftp.h>
+* Fix detection of hardlink capabilities for AFS
+* Be more tolerant towards makes that don't support -C or %.c format
+
+v1.0.1/1.0.2
+============
+* Bugfixes
+
+v1.0.0
+======
+(Changes from wu-ftpd-academ 2.4.2b16)
++ Uses Autoconf
++ Mail-to-admin on anonymous uploads added
++ Virtual FTP support improved
++ "include" ftpaccess directive added
++ UIDs/GIDs in "upload" directive can be specified by number
++ PORT argument checking can be disabled (configure --disable-portcheck)
++ Specific E-mail addresses for anonymous password can be refused
+* Single-argument bug (e.g. "wu.ftpd -a") fixed
+* Process title now displays "ftpd:" instead of "sendmail:" and suppresses
+     any trailing newline
+* Some code cleanup (unnecessary #include's removed)
+* Documentation updated

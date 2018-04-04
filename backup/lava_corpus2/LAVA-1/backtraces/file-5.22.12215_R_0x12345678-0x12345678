@@ -1,0 +1,88 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+__memcpy_avx_unaligned () at ../sysdeps/x86_64/multiarch/memcpy-avx-unaligned.S:245
+245	../sysdeps/x86_64/multiarch/memcpy-avx-unaligned.S: No such file or directory.
+
+Thread 1 (process 12696):
+#0  __memcpy_avx_unaligned () at ../sysdeps/x86_64/multiarch/memcpy-avx-unaligned.S:245
+No locals.
+#1  0x0000000000417f72 in do_os_note (ms=0x62af20, nbuf=0x62b210 "\004", type=1, swap=0, namesz=4, descsz=16, noff=12, doff=16, flags=0x7fffffffcfec) at readelf.c:523
+        desc = {4294954356, 32767, 4158533968, 32767}
+#2  0x0000000000418e33 in donote (ms=0x62af20, vbuf=0x62b210, offset=32, size=32, clazz=2, swap=0, align=4, flags=0x7fffffffcfec, notecount=0x7fffffffcfe4) at readelf.c:881
+        nh32 = {n_namesz = 4294954760, n_descsz = 32767, n_type = 4156267520}
+        nh64 = {n_namesz = 4, n_descsz = 16, n_type = 1}
+        noff = 12
+        doff = 16
+        namesz = 4
+        descsz = 16
+        nbuf = 0x62b210 "\004"
+#3  0x0000000000419778 in doshn (ms=0x62af20, clazz=2, swap=0, fd=3, off=116744, num=25, size=64, fsize=118280, mach=62, strtab=26, flags=0x7fffffffcfec, notecount=0x7fffffffcfe4) at readelf.c:1069
+        sh32 = {sh_name = 4294954880, sh_type = 32767, sh_flags = 6459696, sh_addr = 0, sh_offset = 4203488, sh_size = 0, sh_link = 4294956192, sh_info = 32767, sh_addralign = 0, sh_entsize = 0}
+        sh64 = {sh_name = 19, sh_type = 7, sh_flags = 2, sh_addr = 4194900, sh_offset = 596, sh_size = 32, sh_link = 0, sh_info = 0, sh_addralign = 4, sh_entsize = 0}
+        stripped = 1
+        nbadcap = 0
+        nbuf = 0x62b210
+        noff = 0
+        coff = 4203488
+        name_off = 116308
+        cap_hw1 = 0
+        cap_sf1 = 0
+        name = ".interp\000.note.ABI-tag\000.note.gnu.build-id\000.gnu.has"
+        namesize = 49
+#4  0x000000000041ae09 in file_tryelf (ms=0x62af20, fd=3, buf=0x7ffff7f86010 "\177ELF\002\001\001", nbytes=118280) at elfclass.h:68
+        u = {l = 1, c = "\001\000\000"}
+        clazz = 2
+        swap = 0
+        st = {st_dev = 66306, st_ino = 28845543, st_nlink = 1, st_mode = 33204, st_uid = 1000, st_gid = 1000, __pad0 = 0, st_rdev = 0, st_size = 118280, st_blksize = 4096, st_blocks = 232, st_atim = {tv_sec = 1465424947, tv_nsec = 350021194}, st_mtim = {tv_sec = 1465424831, tv_nsec = 982664100}, st_ctim = {tv_sec = 1465424831, tv_nsec = 982664100}, __glibc_reserved = {0, 0, 0}}
+        fsize = 118280
+        flags = 0
+        elf32hdr = {e_ident = "\177ELF\002\001\001\000\000\000\000\000\000\000\000", e_type = 2, e_machine = 62, e_version = 1, e_entry = 4212933, e_phoff = 0, e_shoff = 64, e_flags = 0, e_ehsize = 51016, e_phentsize = 1, e_phnum = 0, e_shentsize = 0, e_shnum = 13330, e_shstrndx = 30806}
+        elf64hdr = {e_ident = "\177ELF\002\001\001\000\000\000\000\000\000\000\000", e_type = 2, e_machine = 62, e_version = 1, e_entry = 4212933, e_phoff = 64, e_shoff = 116552, e_flags = 2018915346, e_ehsize = 64, e_phentsize = 56, e_phnum = 9, e_shentsize = 64, e_shnum = 27, e_shstrndx = 26}
+        type = 2
+        phnum = 9
+        shnum = 27
+        notecount = 255
+#5  0x000000000040e2b9 in file_buffer (ms=0x62af20, fd=3, inname=0x7fffffffd8a4 "file-5.22.12215_R_0x12345678-0x12345678/CRASH_INPUT", buf=0x7ffff7f86010, nb=118280) at funcs.c:246
+        m = 1
+        rv = 0
+        looks_text = 0
+        mime = 0
+        ubuf = 0x7ffff7f86010 "\177ELF\002\001\001"
+        u8buf = 0x7ffff7e9e010
+        ulen = 4
+        code = 0x423025 "unknown"
+        code_mime = 0x42302d "binary"
+        type = 0x423a21 "application/octet-stream"
+        def = 0x423a3a "data"
+        ftype = 0x42302d "binary"
+#6  0x00000000004041d2 in file_or_fd (ms=0x62af20, inname=0x7fffffffd8a4 "file-5.22.12215_R_0x12345678-0x12345678/CRASH_INPUT", fd=3) at magic.c:475
+        rv = -1
+        buf = 0x7ffff7f86010 "\177ELF\002\001\001"
+        sb = {st_dev = 66306, st_ino = 28845543, st_nlink = 1, st_mode = 33204, st_uid = 1000, st_gid = 1000, __pad0 = 0, st_rdev = 0, st_size = 118280, st_blksize = 4096, st_blocks = 232, st_atim = {tv_sec = 1465424831, tv_nsec = 978663984}, st_mtim = {tv_sec = 1465424831, tv_nsec = 982664100}, st_ctim = {tv_sec = 1465424831, tv_nsec = 982664100}, __glibc_reserved = {0, 0, 0}}
+        nbytes = 118280
+        ispipe = 0
+        pos = -1
+#7  0x0000000000403da8 in magic_file (ms=0x62af20, inname=0x7fffffffd8a4 "file-5.22.12215_R_0x12345678-0x12345678/CRASH_INPUT") at magic.c:353
+No locals.
+#8  0x00000000004030aa in process (ms=0x62af20, inname=0x7fffffffd8a4 "file-5.22.12215_R_0x12345678-0x12345678/CRASH_INPUT", wid=51) at file.c:497
+        type = 0x1 <error: Cannot access memory at address 0x1>
+        std_in = 0
+#9  0x0000000000402add in main (argc=2, argv=0x7fffffffd4a8) at file.c:370
+        j = 2
+        wid = 51
+        nw = 51
+        c = -1
+        i = 4320797
+        action = 0
+        didsomefiles = 0
+        errflg = 0
+        flags = 0
+        e = 0
+        magic = 0x62af20
+        longindex = 32767
+        magicfile = 0x0
+A debugging session is active.
+
+	Inferior 1 [process 12696] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

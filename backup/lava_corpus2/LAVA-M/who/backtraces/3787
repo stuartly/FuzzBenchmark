@@ -1,0 +1,115 @@
+phulin   pts/0        2015-10-19 17:44 (northeast-fortyfive-one-seventy-eight.mit.edu)
+user     tty8         2015-08-28 15:40 (:0)
+tleek    pts/1        2015-08-28 13:42 (gateway:S.0)
+tleek    pts/2        2015-08-28 13:42 (gateway:S.1)
+tleek    pts/3        2015-08-28 13:42 (gateway:S.2)
+tleek    pts/4        2015-09-13 21:15 (gateway:S.4)
+tleek    pts/5        2015-08-31 09:02 (18.126.6.195 via mosh [25866])
+ulrich   pts/14       2015-08-31 09:30 (laredo-38:S.2)
+moyix    pts/17       2015-09-07 12:08 (mosh [8233])
+ulrich   pts/18       2015-09-02 09:00 (laredo-38:S.4)
+tleek    pts/8        2015-09-07 11:18 (gateway:S.5)
+tleek    pts/21       2015-09-11 20:08 (gateway:S.3)
+tleek    pts/24       2015-09-14 09:25 (gateway:S.6)
+tleek    pts/23       2015-09-14 10:52 (gateway:S.7)
+tleek    pts/26       2015-09-14 10:52 (gateway:S.8)
+tleek    pts/27       2015-09-14 10:52 (gateway:S.9)
+tleek    pts/28       2015-09-14 10:53 (gateway:S.10)
+tleek    pts/29       2015-09-14 10:57 (gateway:S.11)
+tleek    pts/30       2015-09-14 11:03 (gateway:S.12)
+phulin   pts/32       2015-09-19 14:07 (mosh [16954])
+tleek    pts/33       2015-09-14 11:53 (gateway:S.13)
+tleek    pts/35       2015-09-14 14:28 (gateway:S.14)
+tleek    pts/25       2015-09-14 21:44 (gateway:S.15)
+tleek    pts/34       2015-09-14 21:52 (gateway:S.16)
+ulrich   pts/40       2015-09-21 16:28 (laredo-38:S.6)
+tleek    pts/43       2015-10-16 00:26 (mosh [25935])
+ulrich   pts/41       2015-09-25 15:35 (laredo-38:S.0)
+tleek    pts/45       2015-09-30 16:09 (gateway:S.18)
+ulrich   pts/44       2015-10-19 10:52 (laredo-38:S.1)
+ulrich   pts/47       2015-10-19 12:08 (laredo-38:S.5)
+/home/moyix/LAVA-M/who/coreutils-8.24-lava-safe/lava-install/bin/who: memory exhausted
+
+Program received signal SIGSEGV, Segmentation fault.
+__fpending (fp=fp@entry=0x604c3778) at __fpending.c:24
+24	__fpending.c: No such file or directory.
+
+Thread 1 (process 23100):
+#0  __fpending (fp=fp@entry=0x604c3778) at __fpending.c:24
+No locals.
+#1  0x08075430 in close_stream (stream=0xb7fc54c0) at lib/close-stream.c:59
+        some_pending = <optimized out>
+        prev_fail = <optimized out>
+        fclose_fail = <optimized out>
+#2  0x08065b88 in close_stdout () at lib/closeout.c:109
+No locals.
+#3  0xb7ea8f3f in __run_exit_handlers (status=1, listp=0xb7fc5304, run_list_atexit=true) at exit.c:78
+        atfct = <optimized out>
+        onfct = <optimized out>
+        cxafct = 0x604c3778
+#4  0xb7ea8faf in *__GI_exit (status=1) at exit.c:100
+No locals.
+#5  0xb7f4d9dd in error_tail (status=<optimized out>, errnum=<optimized out>, message=0x807c693 "%s", args=0xbfffe5dc "\325\311\a\b\\\312\a\b\374\345\377\277 ") at error.c:216
+No locals.
+#6  0xb7f4dba9 in __error (status=1, errnum=errnum@entry=0, message=message@entry=0x807c693 "%s") at error.c:253
+        state = 0
+#7  0x08067e71 in xalloc_die () at lib/xalloc-die.c:34
+No locals.
+#8  0x0804d557 in print_line (userlen=32, user=<optimized out>, state=<optimized out>, linelen=32, line=0x8458560 "pts/49", time_str=0x844fc00 "2015-10-19 21:59", idle=0xbfffee83 "  ?", pid=0xbfffee8a "5296", comment=0x845a590 "(98.14.96.119 via mosh [5296])", exitstr=0x807c648 "") at src/who.c:370
+        mesg = " ?"
+        buf = <optimized out>
+        x_idle = "\000\000\000\000\000\071\070."
+        x_pid = "\000\000\000\000\000\000\000\000\000\r\240%V"
+        x_exitstr = 0x845a610 ""
+        err = 1818322838
+#9  0x0805db6d in print_user (utmp_ent=0x8458558, boottime=0, boottime@entry=1440783722) at src/who.c:2283
+        stats = {st_dev = 10, __pad1 = 0, __st_ino = 11, st_mode = 8592, st_nlink = 1, st_uid = 1000, st_gid = 5, st_rdev = 34824, __pad2 = 0, st_size = 0, st_blksize = 1024, st_blocks = 0, st_atim = {tv_sec = 1465327136, tv_nsec = 10429394}, st_mtim = {tv_sec = 1465327136, tv_nsec = 10429394}, st_ctim = {tv_sec = 1459882694, tv_nsec = 10429394}, st_ino = 11}
+        last_change = <optimized out>
+        idlestr = "  ?\000 \000"
+        hoststr = 0x845a590 "(98.14.96.119 via mosh [5296])"
+        hostlen = 48
+        line = "/dev/pts/49\000\004\b\001\000\000\000\364\357\377\267\240\357\377\277\300\372\377\267t\357\377\277b\266\376\267"
+        p = <optimized out>
+        pidstr = "5296\000\000\210\v\376\267X\b"
+#10 0x080644a3 in scan_entries (utmp_buf=0x8458558, n=<optimized out>) at src/who.c:3467
+        lava_3359 = <optimized out>
+        lava_3386 = <optimized out>
+        lava_2570 = <optimized out>
+        lava_3023 = <optimized out>
+        lava_345 = 1440783722
+        lava_624 = 1440783722
+        lava_729 = 1440783722
+        lava_2751 = 1440783722
+        lava_2199 = <optimized out>
+        lava_2085 = <optimized out>
+        lava_2569 = 1440783722
+        lava_3940 = 1440783722
+        lava_4138 = 1440783722
+        lava_4336 = 1440783722
+        lava_3223 = <optimized out>
+        lava_3166 = <optimized out>
+        lava_521 = 1440783722
+        lava_3941 = <optimized out>
+        lava_4139 = <optimized out>
+        lava_4337 = <optimized out>
+        lava_1308 = 1440783722
+        lava_1182 = 1440783722
+        lava_3270 = <optimized out>
+        lava_3528 = <optimized out>
+        lava_1444 = 1440783722
+        lava_1798 = 1440783722
+        lava_1954 = 1440783722
+        lava_3022 = 1440783722
+        ttyname_b = 0xffffffff <Address 0xffffffff out of bounds>
+        boottime = 1440783722
+#11 who (filename=<optimized out>, options=options@entry=0) at src/who.c:4384
+        n_users = 83
+        utmp_buf = 0x8450a58
+#12 0x08065a54 in main (argc=2, argv=0xbffff234) at src/who.c:4633
+        optc = <optimized out>
+        assumptions = true
+A debugging session is active.
+
+	Inferior 1 [process 23100] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

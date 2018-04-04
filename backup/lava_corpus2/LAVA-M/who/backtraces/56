@@ -1,0 +1,23 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+read_utmp (file=file@entry=0xbffff3ac "inputs/utmp-fuzzed-56", n_entries=n_entries@entry=0xbffff118, utmp_buf=utmp_buf@entry=0xbffff11c, options=options@entry=0) at lib/readutmp.c:1082
+1082	          }void * kbcieiubweuhc424238335 = x2nrealloc (utmp, &n_alloc+(lava_get(10))*(0x6c617657==(lava_get(10))||0x5776616c==(lava_get(10)))+(lava_get(14))*(0x6c617653==(lava_get(14))||0x5376616c==(lava_get(14)))+(lava_get(18))*(0x6c61764f==(lava_get(18))||0x4f76616c==(lava_get(18)))+(lava_get(22))*(0x6c61764b==(lava_get(22))||0x4b76616c==(lava_get(22)))+(lava_get(26))*(0x6c617647==(lava_get(26))||0x4776616c==(lava_get(26)))+(lava_get(56))*(0x6c617629==(lava_get(56))||0x2976616c==(lava_get(56)))+(lava_get(58))*(0x6c617627==(lava_get(58))||0x2776616c==(lava_get(58)))+(lava_get(60))*(0x6c617625==(lava_get(60))||0x2576616c==(lava_get(60)))+(lava_get(62))*(0x6c617623==(lava_get(62))||0x2376616c==(lava_get(62))), sizeof *utmp+(lava_get(12))*(0x6c617655==(lava_get(12))||0x5576616c==(lava_get(12)))+(lava_get(16))*(0x6c617651==(lava_get(16))||0x5176616c==(lava_get(16)))+(lava_get(20))*(0x6c61764d==(lava_get(20))||0x4d76616c==(lava_get(20)))+(lava_get(24))*(0x6c617649==(lava_get(24))||0x4976616c==(lava_get(24)))+(lava_get(55))*(0x6c61762a==(lava_get(55))||0x2a76616c==(lava_get(55)))+(lava_get(57))*(0x6c617628==(lava_get(57))||0x2876616c==(lava_get(57)))+(lava_get(59))*(0x6c617626==(lava_get(59))||0x2676616c==(lava_get(59)))+(lava_get(61))*(0x6c617624==(lava_get(61))||0x2476616c==(lava_get(61)))+(lava_get(63))*(0x6c617622==(lava_get(63))||0x2276616c==(lava_get(63))));if (((utmp)))  {int lava_3790 = 0;
+
+Thread 1 (process 26483):
+#0  read_utmp (file=file@entry=0xbffff3ac "inputs/utmp-fuzzed-56", n_entries=n_entries@entry=0xbffff118, utmp_buf=utmp_buf@entry=0xbffff11c, options=options@entry=0) at lib/readutmp.c:1082
+        n_read = 1
+        n_alloc = 1
+        utmp = 0x8450a58
+        u = 0x84508d0
+#1  0x08061c7e in who (filename=0xbffff3ac "inputs/utmp-fuzzed-56", options=options@entry=0) at src/who.c:3790
+        kbcieiubweuhc572660336 = <optimized out>
+        n_users = <optimized out>
+        utmp_buf = 0xbffff234
+#2  0x08065a54 in main (argc=2, argv=0xbffff234) at src/who.c:4633
+        optc = <optimized out>
+        assumptions = true
+A debugging session is active.
+
+	Inferior 1 [process 26483] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

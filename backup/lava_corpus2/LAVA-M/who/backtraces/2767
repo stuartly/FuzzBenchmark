@@ -1,0 +1,61 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+*__GI_time (t=0xb98da074) at ../sysdeps/unix/sysv/linux/time.c:34
+34	../sysdeps/unix/sysv/linux/time.c: No such file or directory.
+
+Thread 1 (process 20205):
+#0  *__GI_time (t=0xb98da074) at ../sysdeps/unix/sysv/linux/time.c:34
+No locals.
+#1  0x0805eb70 in idle_string (boottime=1440783722, when=1465324472) at src/who.c:213
+        now = -2147483648
+#2  print_user (utmp_ent=0x84511d8, boottime=boottime@entry=1440783722) at src/who.c:1245
+        stats = {st_dev = 10, __pad1 = 0, __st_ino = 3, st_mode = 8592, st_nlink = 1, st_uid = 1000, st_gid = 5, st_rdev = 34816, __pad2 = 0, st_size = 0, st_blksize = 1024, st_blocks = 0, st_atim = {tv_sec = 1465324472, tv_nsec = 35125283}, st_mtim = {tv_sec = 1465324472, tv_nsec = 35125283}, st_ctim = {tv_sec = 1459901524, tv_nsec = 35125283}, st_ino = 3}
+        last_change = 1465324472
+        idlestr = "\000\000\000\000\000\001"
+        hoststr = 0x0
+        hostlen = 0
+        line = "/dev/pts/0\000\205\004\b\001\000\000\000\364\357\377\267\240\357\377\277\300\372\377\267t\357\377\277b\266\376\267"
+        p = <optimized out>
+        pidstr = "30490\000\210\v\376\267X\b"
+#3  0x080644a3 in scan_entries (utmp_buf=0x84511d8, n=<optimized out>) at src/who.c:3467
+        lava_3359 = <optimized out>
+        lava_3386 = <optimized out>
+        lava_2570 = <optimized out>
+        lava_3023 = <optimized out>
+        lava_345 = 1440783722
+        lava_624 = 1440783722
+        lava_729 = 1440783722
+        lava_2751 = 1440783722
+        lava_2199 = <optimized out>
+        lava_2085 = <optimized out>
+        lava_2569 = 1440783722
+        lava_3940 = 1440783722
+        lava_4138 = 1440783722
+        lava_4336 = 1440783722
+        lava_3223 = <optimized out>
+        lava_3166 = <optimized out>
+        lava_521 = 1440783722
+        lava_3941 = <optimized out>
+        lava_4139 = <optimized out>
+        lava_4337 = <optimized out>
+        lava_1308 = 1440783722
+        lava_1182 = 1440783722
+        lava_3270 = <optimized out>
+        lava_3528 = <optimized out>
+        lava_1444 = 1440783722
+        lava_1798 = 1440783722
+        lava_1954 = 1440783722
+        lava_3022 = 1440783722
+        ttyname_b = 0xffffffff <Address 0xffffffff out of bounds>
+        boottime = 1440783722
+#4  who (filename=<optimized out>, options=options@entry=0) at src/who.c:4384
+        n_users = 83
+        utmp_buf = 0x8450a58
+#5  0x08065a54 in main (argc=2, argv=0xbffff234) at src/who.c:4633
+        optc = <optimized out>
+        assumptions = true
+A debugging session is active.
+
+	Inferior 1 [process 20205] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

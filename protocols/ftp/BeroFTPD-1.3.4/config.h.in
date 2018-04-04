@@ -1,0 +1,203 @@
+/*
+ * allow "upload" keyword in ftpaccess
+ */
+#undef UPLOAD
+
+/*
+ * allow "overwrite" keyword in ftpaccess.
+ */
+#undef OVERWRITE
+
+/*
+ * allow "allow/deny" for individual users.
+ */
+#undef HOST_ACCESS
+
+/*
+ * log failed login attempts
+ */
+#undef LOG_FAILED
+
+/*
+ * log login attempts that fail because of class connection
+ * limits.  Busy servers may want to prevent this logging
+ * since it can fill up the log file and put a high load on
+ * syslog.
+ */
+#undef LOG_TOOMANY
+
+/*
+ * allow use of private file.  (for site group and site gpass)
+ */
+#undef NO_PRIVATE
+
+/*
+ * Try once more on failed DNS lookups (to allow far away connections 
+ * which might resolve slowly)
+ */
+#undef	DNS_TRYAGAIN
+
+/*
+ * ANON_ONLY 
+ * Permit only anonymous logins... disables all other type
+ * See FIXES-2.4-HOBBIT for more information on this option.
+ */
+#undef ANON_ONLY
+
+/*
+ * PARANOID
+ * Disable "questionable" functions
+ * See FIXES-2.4-HOBBIT for more information on this option.
+ */
+#undef PARANOID
+
+/*
+ * CHMOD_LIMIT
+ * Limit CHMOD values to 0000-0777 (i.e. no set-id or sticky bits)
+ */
+#undef CHMOD_LIMIT
+
+/*
+ * SKEY
+ * Add SKEY support -- REQUIRES SKEY libraries
+ * See FIXES-2.4-HOBBIT for more information on this option.
+ */
+#undef SKEY
+
+/*
+ * VIRTUAL
+ * Support for virtual FTP servers
+ */
+#undef VIRTUAL
+
+/* 
+ * MAIL_ADMIN
+ * Send notification e-mail to ftp administrator(s) for files
+ * uploaded by anonymous
+ */
+#undef MAIL_ADMIN
+
+/*
+ * PORT_CHECK
+ * Enable validity checking of the arguments to a PORT command
+ * (address == client's address, port > 1023).
+ */
+#undef PORT_CHECK
+
+/*
+ * INTERNAL_LS
+ * Use the internal LS command rather than calling an external one
+ */
+#undef INTERNAL_LS
+
+/*
+ * LS_NUMERIC_UIDS
+ * Make the internal ls report numeric UIDs/GIDs rather than usernames
+ * This is faster...
+ */
+#undef LS_NUMERIC_UIDS
+
+/*
+ * BSD_AUTH
+ * Enable BSD-OS type authentication
+ */
+#undef BSD_AUTH
+
+/*
+ * RATIO
+ * Support for Upload/Download ratios (may download x bytes for uploading 1 byte)
+ */
+#undef RATIO
+
+/*
+ * DAEMON
+ * standalone (non-inetd) mode
+ */
+#undef DAEMON
+
+/*
+ * MAX_BACKLOG
+ * Maximum length of queue of pending connections in standalone mode
+ * (defaults to 100)
+ */
+#undef MAX_BACKLOG
+
+/*
+ * MAPPING_CHDIR
+ * Keep track of the path the user has chdir'd into and respond with
+ * that to pwd commands.  This is to avoid having the absolue disk
+ * path returned.  This helps avoid returning dirs like '.1/fred'
+ * when lots of disks make up the ftp area.
+ */
+#undef MAPPING_CHDIR
+
+/*
+ * THROUGHPUT
+ * Keep track of total throughput for the user and limit if required.
+ */
+#undef THROUGHPUT
+
+/*
+ * TRANSFER_COUNT
+ * Keep track of total bytes for statistics.
+ */
+#undef TRANSFER_COUNT
+
+/*
+ * TRANSFER_LIMIT
+ * Limit file and bytes transferred in a session.
+ * (needs TRANSFER_COUNT to work)
+ */
+#ifdef TRANSFER_COUNT
+#undef TRANSFER_LIMIT
+#endif
+
+/*
+ * NO_SUCKING_NEWLINES
+ * Don't suppress some extra blank lines on messages and banners.
+ */
+#undef NO_SUCKING_NEWLINES
+
+/*
+ * HELP_CRACKERS
+ * Define this to help crackers break into your system by letting them
+ * figure out which user names exist to guess passwords on.
+ */
+#undef HELP_CRACKERS
+
+/*
+ * OTHER_PASSWD
+ * Define this to enable support for non-/etc/passwd and non-/etc/shadow
+ * files; with this, you can have different passwd files for different
+ * virtual hosts. You can use this to create ftp users without adding
+ * them to the system passwd/shadow, as well.
+ */
+#undef OTHER_PASSWD
+
+/*
+ * OLDVIRT
+ * Enable old (wu-ftpd) style virtual hosts, using the "virtual" command
+ * in /etc/ftpaccess.
+ */
+#undef OLDVIRT
+
+/*
+ * USE_RFC931
+ * Look up RFC931 ident of users
+ */
+#undef USE_RFC931
+
+/*
+ * Some people don't like PASV and want to disable it.  Whatever.
+ * PORT can be abused to attack other hosts.  Let's give the option to
+ * disable one or the other.  We'll ignore DISABLE_PASV if you defined
+ * DISABLE_PORT (hey, you gotta have at least one!).
+ */
+#undef DISABLE_PORT
+#undef DISABLE_PASV
+
+/*
+ * QUOTA
+ * quota support
+ */
+#undef QUOTA

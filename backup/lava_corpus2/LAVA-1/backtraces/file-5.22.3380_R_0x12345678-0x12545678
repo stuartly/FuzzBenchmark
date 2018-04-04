@@ -1,0 +1,87 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+_IO_vasprintf (result_ptr=0x800744e193e8, format=<optimized out>, args=0x7fffffffcbb0) at vasprintf.c:76
+76	vasprintf.c: No such file or directory.
+
+Thread 1 (process 12928):
+#0  _IO_vasprintf (result_ptr=0x800744e193e8, format=<optimized out>, args=0x7fffffffcbb0) at vasprintf.c:76
+        string = <optimized out>
+        sf = {_sbf = {_f = {_flags = -72515584, _IO_read_ptr = 0x62c1d0 "", _IO_read_end = 0x62c1d0 "", _IO_read_base = 0x62c1d0 "", _IO_write_base = 0x62c1d0 "", _IO_write_ptr = 0x62c1d0 "", _IO_write_end = 0x62c234 "", _IO_buf_base = 0x62c1d0 "", _IO_buf_end = 0x62c234 "", _IO_save_base = 0x0, _IO_backup_base = 0x0, _IO_save_end = 0x0, _markers = 0x0, _chain = 0x0, _fileno = 0, _flags2 = 0, _old_offset = 140737488341888, _cur_column = 0, _vtable_offset = 64 '@', _shortbuf = "", _lock = 0x0, _offset = 0, _codecvt = 0x7ffff7de89ad <_dl_fixup+237>, _wide_data = 0xffffffffffffffff, _freeres_list = 0x0, _freeres_buf = 0x422f26, _freeres_size = 140737345746616, _mode = -1, _unused2 = "\000\000\000\000\260\313\377\377\377\177\000\000\000\000\000\000\000\000\000"}, vtable = 0x7ffff7bb8900 <_IO_str_jumps>}, _s = {_allocate_buffer = 0x7ffff78793f0 <__GI___libc_malloc>, _free_buffer = 0x7ffff78797a0 <__GI___libc_free>}}
+        ret = 0
+        needed = 1
+        allocated = <optimized out>
+#1  0x000000000040db73 in file_vprintf (ms=0x62bf20, fmt=0x7ffff709eaf0 "", ap=0x7fffffffcbb0) at funcs.c:66
+        len = 0
+        buf = 0x62c0a0 ""
+        newstr = 0x1 <error: Cannot access memory at address 0x1>
+#2  0x000000000040dce6 in file_printf (ms=0x62bf20, fmt=0x7ffff709eaf0 "") at funcs.c:92
+        rv = 0
+        ap = {{gp_offset = 16, fp_offset = 48, overflow_arg_area = 0x7fffffffcc90, reg_save_area = 0x7fffffffcbd0}}
+#3  0x0000000000411b6e in mprint (ms=0x62bf20, m=0x7ffff709ea90) at softmagic.c:477
+        v = 305765608
+        vf = 2.93873588e-39
+        vd = 2.85372317037904e-320
+        t = 0
+        buf = "\360\001\000\000\000\000\000\000\360\001\000\000\000\000\000\000\b\000\000\000\000\000\000\000\004\000\000\000\004\000\000\000T\002\000\000\000\000\000\000T\002@\000\000\000\000\000T\002@\000\000\000\000\000D\000\000\000\000\000\000\000D\000\000\000\000\000\000\000\004\000\000\000\000\000\000\000P\345td\004\000\000\000܌\001\000\000\000\000\000܌A\000\000\000\000\000܌A\000\000\000\000\000D\a\000\000\000\000\000\000D\a\000\000\000\000\000"
+        tbuf = "\002\000\000\000\006\000\000\000\b\276\001\000\000\000\000\000\b\276a\000\000\000\000\000\b\276"
+        sbuf = "\004\000\000\000\000\000\000\000Q\345td\006", '\000' <repeats 43 times>, "\020\000\000\000\000\000\000\000fII\"\000\000\000\000\000ѭD'\313\016\031\020\321\377\377\377\177\000\000\021\003A\000\000\000\000\000\b\316\001\000\000\000\000\000\367=A\000\000\000\000\000\360\316\377\377\003\000\000\000 \277b\000\000\000\000\000\020`\370\367\377\177\000\000\000\000\000\000\b\000\000\000\220\277b\000\000\000\000\000 \277b\000\000\000\000\000\220\352\t\367\377\177\000\000\220\277b\000\000\000\000\000\240\316\377\377\377\177\000\000\312\064A\000\000\000\000\000\001", '\000' <repeats 15 times>...
+        p = 0x62bf90
+#4  0x00000000004110de in match (ms=0x62bf20, magic=0x7ffff6e2c0f8, nmagic=10757, s=0x7ffff7f86010 "\022\071\234\350\002\001\001", nbytes=118280, offset=0, mode=32, text=0, flip=0, indir_level=0, name_count=0x7fffffffd0e2, printed_something=0x7fffffffd0e4, need_separator=0x7fffffffd0e8, returnval=0x7fffffffd01c) at softmagic.c:234
+        flush = 0
+        m = 0x7ffff709ea90
+        magindex = 10349
+        cont_level = 1
+        returnvalv = 0
+        e = 0
+        firstline = 1
+        print = 1
+#5  0x0000000000410c4d in file_softmagic (ms=0x62bf20, buf=0x7ffff7f86010 "\022\071\234\350\002\001\001", nbytes=118280, indir_level=0, name_count=0x7fffffffd0e2, mode=32, text=0) at softmagic.c:87
+        ml = 0x62c240
+        rv = 0
+        printed_something = 0
+        need_separator = 0
+        nc = 0
+#6  0x000000000040e2a9 in file_buffer (ms=0x62bf20, fd=3, inname=0x7fffffffd8a6 "file-5.22.3380_R_0x12345678-0x12545678/CRASH_INPUT", buf=0x7ffff7f86010, nb=118280) at funcs.c:232
+        m = 0
+        rv = 0
+        looks_text = 0
+        mime = 0
+        ubuf = 0x7ffff7f86010 "\022\071\234\350\002\001\001"
+        u8buf = 0x7ffff7e9e010
+        ulen = 0
+        code = 0x423045 "unknown"
+        code_mime = 0x42304d "binary"
+        type = 0x423a41 "application/octet-stream"
+        def = 0x423a5a "data"
+        ftype = 0x42304d "binary"
+#7  0x00000000004041d2 in file_or_fd (ms=0x62bf20, inname=0x7fffffffd8a6 "file-5.22.3380_R_0x12345678-0x12545678/CRASH_INPUT", fd=3) at magic.c:475
+        rv = -1
+        buf = 0x7ffff7f86010 "\022\071\234\350\002\001\001"
+        sb = {st_dev = 66306, st_ino = 28846566, st_nlink = 1, st_mode = 33204, st_uid = 1000, st_gid = 1000, __pad0 = 0, st_rdev = 0, st_size = 118280, st_blksize = 4096, st_blocks = 232, st_atim = {tv_sec = 1465424836, tv_nsec = 214786641}, st_mtim = {tv_sec = 1465424836, tv_nsec = 214786641}, st_ctim = {tv_sec = 1465424836, tv_nsec = 214786641}, __glibc_reserved = {0, 0, 0}}
+        nbytes = 118280
+        ispipe = 0
+        pos = -1
+#8  0x0000000000403da8 in magic_file (ms=0x62bf20, inname=0x7fffffffd8a6 "file-5.22.3380_R_0x12345678-0x12545678/CRASH_INPUT") at magic.c:353
+No locals.
+#9  0x00000000004030aa in process (ms=0x62bf20, inname=0x7fffffffd8a6 "file-5.22.3380_R_0x12345678-0x12545678/CRASH_INPUT", wid=50) at file.c:497
+        type = 0x1 <error: Cannot access memory at address 0x1>
+        std_in = 0
+#10 0x0000000000402add in main (argc=2, argv=0x7fffffffd4a8) at file.c:370
+        j = 2
+        wid = 50
+        nw = 50
+        c = -1
+        i = 4320829
+        action = 0
+        didsomefiles = 0
+        errflg = 0
+        flags = 0
+        e = 0
+        magic = 0x62bf20
+        longindex = 32767
+        magicfile = 0x0
+A debugging session is active.
+
+	Inferior 1 [process 12928] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

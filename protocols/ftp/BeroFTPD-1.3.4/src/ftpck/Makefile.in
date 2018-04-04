@@ -1,0 +1,17 @@
+all: ftpck 
+
+.c.o: ../../config.h
+	@CC@ @CFLAGS@ -I.. -I../.. -I../../support -c -o $@ $<
+
+ftpck: ../../config.h ftpck.o ../rdservers.o ../paths.o ftpck.h domains.h
+	@CC@ @CFLAGS@ -o $@ ftpck.o ../rdservers.o ../paths.o @LIBS@ -L../../support -lsupport
+
+install: ftpck
+	@INSTALL@ -c -o bin -g bin -m 644 ftpck.1 @mandir@/man1/ftpck.1
+	@INSTALL@ -c -o bin -g bin -m 755 ftpck @sbindir@/ftpck
+
+clean:
+	rm -f ftpck ftpck.o
+
+distclean: clean
+	rm -f Makefile

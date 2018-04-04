@@ -1,0 +1,178 @@
+This is a slightly modified version of the NOTES file from wu-ftpd; don't
+worry about documents mentioned in here talking about wu-ftpd rather than
+BeroFTPD. They're similar enough.
+
+There are two FAQ (Frequently Asked Questions) posting that you
+may wish to consult. The first is maintained (at the time of this 
+writing) by Perry Rovers and is called " Anonymous FTP: Frequently Asked
+Questions (FAQ) List". It is a general introdution to FTP from a novice
+perspective. The second is maintained by Christopher Klaus and is called
+"Security: Anonymous FTP FAQ" and contains a good overview of setting up
+an secure anonymous ftp server (including specific information about
+setting up wu-ftpd, which is very similar to BeroFTPD). All FAQ are posted
+periodically to the Usenet newsgroup "news.answers" and are available via
+anonyous ftp from rtfm.mit.edu in the /pub/usenet/news.answers directory.
+Look for the first faq in the ftp-list directory under the name "faq".
+Look for the second faq in the computer-security directory under the name
+"anonymous-ftp-faq". For those of you with browers the URLs are:
+
+ ftp://rtfm.mit.edu/pub/usenet/news.answers/ftp-list/faq
+ ftp://rtfm.mit.edu/pub/usenet/news.answers/computer-security/anonymous-ftp-faq
+ http://www.faqs.org/faqs/ftp-list/faq/
+ http://www.faqs.org/faqs/computer-security/anonymous-ftp-faq/
+
+----------------------------------------------------------------------------
+Differences between the O'Reilly Book "Managing Internet Information
+Services" by Liu, Peek, Jones, Buus and Nye (ISBN 1-56592-062-7) Chapter 5
+and Chapter 6 and this distribution are in this section.
+
+[see the chapter on wu-ftpd]
+The mentioned book in its present version is mostly outdated in regards of
+building and installing BeroFTPD.
+However, the basic format of the ftpaccess file hasn't changed (but there are
+some new commands, make sure you read the ftpaccess man page), so most of the
+information about setting it up is still correct.
+----------------------------------------------------------------------------
+If you are going to use the ftpaccess file, you need to have at least 
+*one* class defined in the ftpaccess file. In the next major release, 
+this will change.
+-----------------------------------------------------------------------------
+The following is right only if you are not using the internal ls command
+(--disable-internal-ls):
+The ftpd(8) man page that came with your Operating System should do a
+good job of explaining how to set up the anonymous ftp hierarchy.
+At the very least, you will need ~ftp/bin (mode: 111 ---x--x--x)
+with a copy of "ls" (mode: 111 ---x--x--x) and ~ftp/etc 
+(mode: 111 ---x--x--x) with an /etc/passwd.
+Alternatively, you may want to read the secure-ftpd-faq.
+-----------------------------------------------------------------------------
+Don't put encrypted passwords in ~ftp/etc/passwd.  In fact, all you
+really need is entries for root and ftp.  "ls" is the only software
+that uses this information. The server software does not use it.
+-----------------------------------------------------------------------------
+Anonymous FTP may have some troubles on machines which use dynamic
+shared libraries if you are not using the internal ls command.
+You will have trouble with using the binaries in ~ftp/bin if those binaries
+were compiled using those shared libraries,  as the chroot() that ftpd does
+for anonymous users to ~ftp means that those links to the static libraries
+are lost.  You cannot make a soft link to the libraries as the chroot will
+make those links meaningless. 
+There are four ways to fix this:
+
+    1) Track down, using ldd, all the shared libs used by each binary you
+       want to put in ~ftp/bin.  Then copy these into their
+       corresponding places in ~ftp: i.e., /usr/lib/ld.so must be
+       copied into ~ftp/usr/lib/ld.so.  However, ldd does not always
+       show all the files that a compiled program may try to reference;
+       if you use trace you can see every system call a binary makes,
+       and that should show you every dependency.  If you compiled with
+       gcc, there are likely to be lots of references made.
+
+    2) Recompile any binary you wish to put in ~ftp/bin (ls, gzip, gtar,
+       etc) using the -Bstatic (or -static in gcc) option in the CFLAGS
+       *and* LDFLAGS options in their respective makefiles.  You can
+       get GNU versions of ls and gzip and everything else from
+       ftp.gnu.org.  This is the easiest and most foolproof
+       method - the statically compiled binaries are bigger - but then, you
+       don't need to copy the (huge) libraries.
+
+    3) One place to get source from which a statically linked ls can be
+       built is: ftp://ftp.funet.fi/pub/local/src/ftpd-ls.tar.gz. 
+
+    4) Use the internal ls. It got better recently.
+-----------------------------------------------------------------------------
+Make sure that you have a /etc/shells that lists all valid shells on
+your system.  Otherwise, those who have shells not listed there will
+not be able to log in via ftp.  [Yes, this is the expected behaivor.]
+It does not hurt to add /dev/null or something similar to /etc/shells if you
+want users without shell access to be able to log in using ftp.
+
+Under Solaris 2.1, there is no /etc/shells by default.
+-----------------------------------------------------------------------------
+Under Solaris 2.1 (and maybe a few other OSes), you need to have the
+following in ~ftp/dev:
+      crw-rw-rw-  1 root      11,  42 Mar 24 17:00 tcp
+      cr--r--r--  1 root      13,  12 Mar 24 16:23 zero
+-----------------------------------------------------------------------------
+Under OSF/1, you need ~ftp/etc/sia/siainitgood. [Do you need this under
+DEC UNIX? Someone let me know. == sob]
+-----------------------------------------------------------------------------
+Under DEC Ultrix, you need ~ftp/etc/svc.conf
+-----------------------------------------------------------------------------
+NeXT systems:  You need a copy of /usr/shlib/libsys_s.B.shlib in 
+    ~ftp/usr/shlib/libsys_s.B.shlib.  Make sure that ~ftp/usr, ~ftp/usr/shlib
+    are mode 0555 (dr-xr-xr-x) and ~ftp/usr/shlib/libsys_s.B.shlib is mode 
+    0555 (-r-xr-xr-x).
+-----------------------------------------------------------------------------
+Certains files need to be inside the anonymous ftp hierarchy.
+They are all referenced after the chroot(~ftp):
+	all messages (deny, welcome, etc.)
+        shutdown (the shutdown message, not the /sbin/shutdown binary!)
+        _PATH_EXECPATH
+-----------------------------------------------------------------------------
+In order for shutdown to work properly for real, guest, and anonymous
+users -- you must create a link.  
+
+    For example... if the shutdown messsage file is defined to be /etc/shutmsg:
+        root# ln -s ~ftp/etc/shutmsg /etc/shutmsg
+
+That way, when ftpshut creates the shutdown message, it will be
+within the real user space and the anonymous user space. By the way, it is 
+important to note that the server will not permit any logins as long as that
+shutdown message file exists.
+-----------------------------------------------------------------------------
+On many operating systems, you will need to duplicate the necessary
+database files that support the ctime() family of routines. On SunOS,
+this means duplicating the /usr/share/lib/zoneinfo directory relative
+to ~ftp. On BSD/OS and Linux with glibc 2.x, this means copying the
+/etc/localtime file to ~ftp/localtime.
+-----------------------------------------------------------------------------
+If your version of yacc does not know how to convert ftpcmd.y to ftpcmd.c,
+then get a copy of GNU BISON from ftp.gnu.org and use it instead. You need
+to re-run configure after installing bison.
+-----------------------------------------------------------------------------
+On IRIX systems, this is one approach that has been suggested for setting
+up the chrooted file system:
+
+cp /bin/ls ~ftp/bin
+cp /lib/libc.so.1 ~ftp/lib
+cp /lib/rld ~ftp/lib
+/sbin/mknod ~ftp/dev/zero c 37 0 
+chmod 444 ~ftp/dev/zero
+chown root.sys ~ftp
+chmod 555 ~ftp
+chown root.sys ~ftp/bin ~ftp/dev ~ftp/etc ~ftp/incoming ~ftp/lib
+chown ftp.ftp ~ftp/pub
+chmod 111 ~ftp/bin ~ftp/etc
+chmod 555 ~ftp/lib ~ftp/dev ~ftp/pub
+chmod 1733 ~ftp/incoming
+chmod 444 ~ftp/etc/passwd ~ftp/etc/group
+[Courtesy of Bas Meijer <brmeijer@worldonline.nl>]
+-----------------------------------------------------------------------------
+If you want to protect the access to FTP and use VIRTUAL FTP, you must use
+the built-in ftpaccess facility and not TCP-Wrapper since the latter
+binds all the local address with no distinction, thus rendering the VIRTUAL
+FTP impossible. [Philippe Langlois <Philippe.Langlois@INTRINsec.com>]
+This is, of course, not true for HOST-based virtual hosts.
+-----------------------------------------------------------------------------
+On Solaris 2.5 and 2.5.1, there is a bug in the interaction between NFS
+mounted filesystems and the flock system call which will cause the system
+to crash (BugID 1248041). Be sure to get the patch that fixes this or 
+avoid using NFS mounted file systems with this daemon.
+-----------------------------------------------------------------------------
+If you're not using the internal ls:
+On Solaris 2.5.1, the 2.5.1 libraries that are supposed to go into
+~ftp/usr/lib directory when the ftp users want to use dynamically
+linked 'ls' don't work when used that way.  Apparantly, the problem 
+could be fixed by replacing all the libraries with their respective 
+Solaris 2.5 versions. The BugID for this is 4018605.
+-----------------------------------------------------------------------------
+For those of you who have a desire to alter the defaults, the way to do this
+is to alter the configure.in file and rebuilding configure with autoconf.
+autoconf can be found at ftp.gnu.org.
+After running autoconf, do "patch -p0 <configure-help.diff"
+-----------------------------------------------------------------------------
+The C compiler bundled with HP-UX 10.X is not adequate for building BeroFTPD.
+GCC or the unbundled C/ANSI compiler should be able to build BeroFTPD correctly.
+-----------------------------------------------------------------------------
+$Id: NOTES,v 1.1.1.1 1998/08/21 18:10:25 root Exp $

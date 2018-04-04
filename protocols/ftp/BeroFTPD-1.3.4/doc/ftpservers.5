@@ -1,0 +1,37 @@
+.\" $Id$ 
+.TH ftpservers 5 
+.SH Name
+ftpservers \- ftpd virtual host config file
+.SH Description
+.NXR "virtual hosts" "format"
+The virtual hosts 
+.BR ftpd(8)
+Should use are defined here.
+.PP
+The format of the file is:
+   1st virtual host [spaces or tabs] config directory
+   2nd virtual host [spaces or tabs] config directory
+   [...]
+.PP
+When a user connects to the IP or hostname given for the virtual host (this
+is determined by the IP address used, and optionally by the ftp HOST
+command), BeroFTPD will look for the configuration files
+.IR ftpaccess(5),
+.IR ftpconversions(5),
+.IR ftpusers(5),
+.IR ftpgroups(5)
+and
+.IR ftphosts(5)
+in [config directory] rather than the default configuration directory.
+You can put users in other directories by using different
+.IR anonymous-root
+and
+.IR guest-root
+commands in the alternate
+.IR ftpaccess(5)
+files.
+.SH Files
+.BR /etc/ftpservers
+.SH See Also
+.BR ftpd(8)
+.BR ftpaccess(5)

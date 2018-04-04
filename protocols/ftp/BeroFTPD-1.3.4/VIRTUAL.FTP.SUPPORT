@@ -1,0 +1,569 @@
+This document is an adapted version of the VIRTUAL.FTP.SUPPORT file from the
+newvirt patches for wu-ftpd (http://www.landfield.com/wu-ftpd).
+References to "I" and "Me" are usually talking about Kent Landfield
+<kent@landfield.com>.
+
+                         New Method for Supporting 
+                            Virtual FTP Servers
+                                in BeroFTPD
+
+                                   [----]
+
+                              Table of Contents
+
+       1. Introduction
+       2. What is virtual FTP server support ?
+       3. Setup Overview
+       4. Configuring IP Address Aliases
+          4.1. Configuring IP Aliases on Sun Solaris 2.5
+          4.2. Configuring IP Aliases on SGI
+          4.3. Configuring IP Aliases on FreeBSD
+          4.4. Configuring IP Aliases on AIX
+          4.5. Configuring IP Aliases on Linux
+          4.6. After system configuration
+          4.7. Testing interfaces
+       5. Building the software
+       6. Setting up the directory structure for virtual server support
+       7. Configuring to support Virtual FTP Server Support
+          7.1. Background
+          7.2. Create an ftpservers file:
+          7.3. Virtual ftpaccess files:
+          7.4. Master ftpaccess file Modifications:
+          7.5. Adding other virtual domain files
+       8. Setting up other support files
+       9. Supporting virtual logging
+      10. Testing your config.
+      11. Disclaimer
+      12. A Plea for Help
+
+                                   [----]
+
+1. Introduction
+---------------
+
+     So you want to setup more than one FTP server on the same
+     machine....
+
+     To make it work you will need to use the virtual server support in
+     BeroFTPD. What follows are instructions for building the software
+     and configuring it to use virtual servers. These instructions are
+     pertain to the newvirt version of complete virtual support in
+     WU-FTPD that is being done by Kent Landfield, and has been adapted to
+     BeroFTPD.
+
+                                   [----]
+
+2. What is virtual FTP server support ?
+---------------------------------------
+
+     If you wish to manage an ftp server for two separate domains on
+     the same machine then you need to be able to support virtual FTP
+     servers. Basically, this allows an administrator to configure
+     their system so a user ftping to ftp.domain1.com gets one ftp
+     banner and one ftp directory and a user ftping to ftp.domain2.com
+     gets another banner and directory even though they are on the same
+     machine and use the same ports.
+
+     Virtual ftp servers make supporting multiple domains a lot less
+     costly and are easier to maintain than multiple ftp servers on
+     multiple machines.
+
+     With the HOST command supported since BeroFTPD 1.1.12, you don't even
+     need several IP addresses to run the hosts on - the virtual server can
+     be determined by the hostname.
+     However, most clients currently do not support this (the HOST command
+     is not yet in any RFC; it's currently in draft).
+     A patch for netkit-ftp to make use of this feature is available at any
+     BeroFTPD site.
+
+                                   [----]
+
+3. Setup Overview
+-----------------
+
+     In order to set up a virtual ftp server environment you need to
+     understand what it is you're about to do. What follows is a brief
+     overview of the process ahead.
+
+        * You will be configuring your machine to respond to multiple
+          IP addresses (unless you want to make use of the new ftp HOST
+          command, which can identify the hostname used to address the
+          machine. The HOST command, however, will not work with older
+          clients). This is done via IP Address Aliases described
+          below. First, you need to acquire the IP addresses you'll
+          need. Once you have an IP address for each virtual server you
+          wish to setup, you are ready to proceed.
+
+        * Once you can see both addresses from the network, you will
+          need to build and install the BeroFTPD software to support
+          virtual servers.
+
+        * Next you need to setup up the ftp directory structure for
+          each virtual server you wish to support. You will need to
+          customize the banner and message files in each of the virtual
+          server areas.
+
+        * With the directories in place you are ready to configure the
+          configuration files and specify the virtual server specific
+          information.
+
+        * In order to be able to separate out who is logging in to what
+          virtual server, you'll need to configure the system logging.
+          This allows you to maintain separate logfiles depicting the
+          activity of each virtual server.
+
+        * And finally, you need to test your configuration. Once that
+          is accomplished you can feel pleased with yourself and begin
+          populating the individual ftp directories with data as
+          appropriate.
+
+     Additionally, you need to know how to shutdown and restart access
+     to your real, anonymous and virtual servers in the event you need
+     to.
+
+                                   [----]
+
+4. Configuring IP Address Aliases
+---------------------------------
+
+     You have to be able to setup IP address aliases in order for the
+     virtual server support in BeroFTPD to work. Linux and BSDI,
+     FreeBSD, SGI, Solaris 2.5*, AIX and others support this. What
+     follows are "general" instructions on how to configure IP address
+     aliases for the specified systems. Please check your system's
+     'ifconfig' documentation for specific instructions.
+
+     In order to make the changes to the required system files you will
+     first need to login as root.
+
+     4.1. Configuring IP Aliases on Sun Solaris 2.5:
+     -----------------------------------------------
+
+       1. Assure/place the system's normal hostname/IP address in the
+          file /etc/hostname.le0.
+
+       2. Insert the following in the system initialization file
+          /etc/init.d/rootuser just after the if/fi test for
+          interface_names.
+
+          #
+          # configure virtual host interfaces quietly.
+          #
+          /sbin/ifconfig le0:1 inet XXX.XXX.XXX.XXX netmask + broadcast
+          + -trailers up 2>&1 > /dev/null
+
+          Replace XXX.XXX.XXX.XXX with the IP address that you wish to
+          alias.
+
+     4.2. Configuring IP Aliases on SGI:
+     -----------------------------------
+
+       1. Edit /etc/hosts to include IP address and the name of the
+          virtual server
+
+       2. Edit /etc/config/ipaliases.options using comments in that
+          file as a template:
+
+          ec0 XXX.XXX.XXX.xxx netmask 0xffffff00 broadcast
+          XXX.XXX.XXX.255
+
+               or
+
+          ec0 foobar netmask 0xffffff00 broadcast XXX.XXX.XXX.255
+
+       3. /etc/chkconfig -f ipaliases on
+
+     Replace XXX.XXX.XXX.xxx with the IP address that you wish to
+     alias.
+     Replace XXX.XXX.XXX.255 with the network's broadcast address.
+
+     4.3. Configuring IP Aliases on FreeBSD:
+     ---------------------------------------
+
+       1. Edit /etc/netstart and put something like the following in.
+
+          ifconfig de0 alias XXX.XXX.XXX.XXX netmask 0xffffffff
+
+          (or use ed0 or some other netmask if appropriate)
+
+     4.4. Configuring IP Aliases on AIX:
+     -----------------------------------
+
+     In the way AIX is shipped, there is no direct support for IP
+     aliases in the ODM. This does not mean that AIX does not support
+     IP aliases, it means that IP alias info is stored in an ASCII file
+     rather than in the ODM.
+
+       1. Edit the proper /etc/rc* file.
+
+          If you are currently using an ODM TCP/IP configuration, edit
+          the file /etc/rc.net.
+
+          If you are using the traditional "BSD-style bootup method",
+          edit the file /etc/rc.bsdnet instead.
+
+       2. Add a line such as the following example.
+
+          /usr/sbin/ifconfig tr0 inet xx.xx.xx.xx netmask yy.yy.yy.yy
+          alias 1>/dev/null 2>&1
+
+          Be sure to set the interface to the correct type if you are
+          not using token ring (tr0) as the example shows.
+
+     Refer to the ifconfig man pages. For more info on TCP/IP
+     configuration and tuning, review the "no" command.
+
+     4.5. Configuring IP Aliases on Linux:
+     -------------------------------------
+     First, make sure you have compiled a kernel that allows IP aliasing.
+     You must enable both Network aliasing and IP aliasing for this to work.
+     Add the line
+          /usr/sbin/ifconfig eth0:0 xx.xx.xx.xx netmask yy.yy.yy.yy
+     to the proper /etc/rc.d file (different in each distribution; you
+     can recognize it by the fact that it contains other ifconfig commands).
+     If you need more than one virtual host, you can do
+          /usr/sbin/ifconfig eth0:1 xx.xx.xx.xx netmask yy.yy.yy.yy
+          /usr/sbin/ifconfig eth0:2 xx.xx.xx.xx netmask yy.yy.yy.yy
+          [...]
+     If you are using a kernel version prior to 2.1.63, you will have to add
+     routes so the virtual hosts are addressed:
+          route add -host xx.xx.xx.xx
+
+     4.6. After system configuration:
+     --------------------------------
+
+          In order to test your new configuration it is wise to
+          reboot your system. This assures that your system is
+          properly configured in the event of an non-planned
+          system halt/reboot. A problem here is that the system is
+          probably a production server for someone else... It is
+          recommended that you add virtual www/ftp servers to your
+          system at a scheduled maintenance time. Also, if you are
+          adding more than one virtual server, add them all and
+          simply reboot a single time. If you cannot reboot then
+          execute the appropriate ifconfig (or chkconfig) command
+          and test the reboot when you can.
+
+          Also, if not immediately rebooting, it's not a bad idea
+          to
+
+               arp -s XXX.XXX.XXX.XXX x:x:xx:xx:xx:xx pub
+
+          where XXX.XXX.XXX.XXX is the IP Address and where
+          x:x:xx:xx:xx:xx is the Ethernet/whatever hardware
+          physical address.
+
+     4.7. Testing interfaces:
+     ------------------------
+
+          You need to assure you can see the interfaces using
+          netstat and then try to ping the interface to assure it
+          is responding. If so, your system is now ready. Now it's
+          time to setup the FTPD server software and virtual
+          server directories.
+
+                                   [----]
+
+5. Building the software
+------------------------
+
+     In order to try out the new version, you must not configure BeroFTPD
+     with --disable-virtual.  The original virtual hosting code
+     has been removed and is NOT THERE! 
+   
+     1. "configure --help"
+
+     2. "configure --whatever --options --you --may --want"
+
+     3. "make".
+   
+     At this point do a "make install" in the BeroFTPD toplevel source 
+     directory and things will be installed.  
+   
+
+                                   [----]
+
+6. Setting up the directory structure for virtual server support
+----------------------------------------------------------------
+
+     You will need to make sure the proper files/directories are in-place. 
+     Here is a sample structure (which would be configured with
+     --with-confdir=/etc/ftpd).
+     (As noted before, I put everything in a single
+     directory structure for testing convenience. Actually I do that when 
+     I'm not testing as well...)
+
+    LS Listing:
+    
+    rkive-19:43-kent ls -lR /etc/ftpd
+    /etc/ftpd:
+    total 36
+    drwxrwsr-x   4 root     sys          512 Jun 26 15:48 config
+    -rw-r--r--   1 root     sys         4096 Jun 26 19:23 ftp.pids-local
+    -rw-r--r--   1 root     sys         4096 Jun 26 19:33 ftp.pids-remote
+    -rw-------   1 root     sys         2046 Jun 26 14:55 ftpaccess
+    -rw-------   1 root     sys          873 Jun 26 14:55 ftpconversions
+    -rw-------   1 root     sys           37 Jun 26 14:55 ftpgroups
+    -rw-------   1 root     sys          277 Jun 26 14:55 ftphosts
+    -rw-------   1 root     sys          429 Jun 26 16:03 ftpservers
+    -rw-------   1 root     sys          151 Jun 26 14:55 ftpusers
+    
+    /etc/ftpd/config:
+    total 12
+    drwxrwsr-x   2 root     sys          512 Jun 26 16:04 some.domain
+    drwxrwsr-x   2 root     sys          512 Jun 26 16:06 some.other.domain
+    drwxrwsr-x   2 root     sys          512 Jun 26 15:01 landfield.com
+    
+    /etc/ftpd/config/some.domain:
+    total 6
+    -rw-------   1 root     sys         1891 Jun 26 16:03 ftpaccess
+    -rw-------   1 root     sys          146 Jun 26 16:05 ftpusers
+    
+    /etc/ftpd/config/some.other.domain:
+    total 6
+    -rw-------   1 root     sys         1891 Jun 26 16:03 ftpaccess
+    -rw-------   1 root     sys          146 Jun 26 16:05 ftpusers
+    
+    /etc/ftpd/config/landfield.com:
+    total 4
+    -rw-------   1 root     sys         2046 Jun 26 15:01 ftpaccess
+    
+
+                                   [----]
+
+7. Configuring to support Virtual FTP Server Support
+----------------------------------------------------
+
+   --------------
+   7.1 Background
+   --------------
+
+    This version provides two different means for supporting virtual hosting.
+    You can use the old virtual support limited to root/banner/logfile
+    as found in BeroFTPD prior to 1.1.3 as well as wu-ftpd 2.4.2, or you can
+    use complete virtual support by having a completely different ftpaccess
+    file. 
+
+    In the older versions, virtual servers are only partially supported.  The
+    old implementation of virtual servers only supports setting
+ 
+        - the root ftp directory, 
+        - the log file and
+        - the banner.
+ 
+    All other directives in the ftpaccess file had to be shared globally 
+    across all virtual servers.  A real limitation if you wanted to have 
+    different features supported by different servers...
+ 
+    Now you can use the previous method or you can create a separate ftpaccess
+    to provide support for all ftpaccess directives.  The ftpaccess, ftpusers, 
+    ftpgroups, ftphosts and ftpconversions files can all be specified on a 
+    per-domain basis.  You now have the ability to override the Master BeroFTPD 
+    config files with a local copy specific to that domain. If you do not wish 
+    to place a copy of one or all files listed above in the virtual host 
+    directory for that specific host then the master copy is used. 
+ 
+    Supported on a virtual host basis:
+    ----------------------------------
+    ftpaccess
+    ftpusers
+    private
+    ftphosts
+     
+    Set in a virtual site's ftpaccess file or master ftpaccess file
+    ---------------------------------------------------------------
+    xferlog
+     
+    Supported on a site-wide basis:
+    -------------------------------
+    ftpservers
+    utmp
+    wtmp
+    lastlog
+    defaults for all virtual host files
+
+   ------------------------------
+   7.2 Create an ftpservers file:
+   ------------------------------
+
+   If you wish to take advanage of the extended virtual support it is 
+   necessary to create an ftpservers file.  A real simple sample is 
+   shown below.
+
+   #
+   # ftpservers file
+   #
+   # Format:
+   #   IP Address     Path to directory holding configuration 
+   #   or hostname    files for this virtual domain
+   #
+   # ftpaccess file for the landfield.com domain
+   #
+   landfield.com      /etc/ftpd/config/landfield.com
+   #
+   # ftpaccess file for the some.domain 
+   #
+   some.domain       /etc/ftpd/config/some.domain
+   #
+   # ftpaccess file for the some.other.domain 
+   #
+   208.196.145.140 /etc/ftpd/some.other.domain
+   #
+
+   Make sure to create the directories you have listed. ;-)
+
+   ----------------------------
+   7.3 Virtual ftpaccess files:
+   ----------------------------
+
+   For each virtual domain that you want to support, you have the option
+   to create a ftpaccess file specific for that domain. This will override 
+   completely what you have in the Master ftpaccess file.  This file must 
+   contain all directives. If you do not create an ftpaccess file for a 
+   specific domain, the domain will use the Master ftpaccess file settings. 
+
+   The only additions to the ftpaccess file that you need to make over a
+   non-virtual version is the "root" and "logfile" directives.  These act
+   to assure the proper ftpd root directory is used for each of the supported
+   virtual domains.  The logfile directive is used to specify where you want
+   the transfer logs recorded for that specific virtual domain.  A sample is
+   specfied below.
+
+        root     /ftp
+        logfile  /var/log/xferlog
+
+   -----------------------------------------
+   7.4. Master ftpaccess file Modifications:
+   -----------------------------------------
+
+     If you do not want to setup a completely different ftpaccess file
+     for a virtual domain, you can specify three separate things for the 
+     virtual server you want to setup in the master ftpaccess file.
+
+       1. root    - This it the path to the ftp directory that you
+                    previously setup for this virtual server.
+       2. banner  - This it the path to banner you wish displayed when a
+                    user connects to the virtual server.
+       3. logfile - This is the path to the logfile that is setup
+                    specifically for this virtual server.
+
+     The format of a virtual server entry is
+
+          virtual <address> <root | banner | logfile> <path>
+
+     <address> is the IP address of the virtual server. The second
+     argument specifies the <path> is either the path to the root of
+     the filesystem for this virtual server, the banner presented to
+     the user when connecting to this virtual server, or the logfile
+     where transfers are recorded for this virtual server. If the
+     logfile is not specified the default logfile will be used.
+
+     For example, add lines similar to the following for each virtual
+     server you are trying to set up.
+
+          # Virtual Server at 10.10.10.10
+          virtual 10.10.10.10 root    /var/ftp/virtual/ftp-serv
+          virtual 10.10.10.10 banner  /var/ftp/virtual/ftp-serv/banner.msg
+          virtual 10.10.10.10 logfile /var/log/ftp/virtual/ftp-serv/xferlog
+
+     Done this way, all other message files and permissions as well as any 
+     other settings in the Master ftpaccess file apply to all listed virtual 
+     servers.
+
+   ---------------------------------------
+   7.5. Adding other virtual domain files:
+   ---------------------------------------
+
+    With this release you have the ability to create other configuration
+    files on a per-virtual-domain basis.  Currently, the files you put into 
+    the virtual domain directory you have listed in the ftpservers file 
+    MUST be named:
+
+    ftpaccess - virtual domain's access file
+    ftpusers  - restrict the accounts that can use the web server,
+    ftpgroups - SITE GROUP and SITE GPASS support,
+    ftphosts  - allow or deny usernames access to that virtual server,
+    ftpconversions - customize conversions available in the virtual domain.
+
+    NOTE!!!: If you misspell any of them or name them something else, the 
+             server WILL NOT find them and the master copy of them will be
+             used instead.
+
+                                   [----]
+
+8. Setting up other support files
+---------------------------------
+
+     You will need to make sure that any file referenced after the
+     chroot(~ftp) are in the virtual server directories. Those files
+     are
+
+        * all messages (deny, welcome, etc.)
+        * _PATH_EXECPATH files
+
+     You will need to customize the banner, welcome and other message
+     files for each virtual server directory.
+
+                                   [----]
+
+9. Supporting virtual logging
+-----------------------------
+
+     There are two different types of logging, the standard syslog
+     logging and transfer logging. In order to separate transfer (or
+     xferlog) logging it is necessary to use the "logfile" entry as 
+     described above.
+
+     To enable logging via syslog, follow the standard syslog
+     configuration instructions found in your system's documentation.
+
+     If you have syslog logging enabled you will see entries such as
+
+     Mar 3 15:26:30 rkive ftpd[27207]: VirtualFTP Connect to: xxx.xxx.xxx.xxx
+
+     This enables you to determine which virtual server the log records
+     pertain to.
+
+                                   [----]
+
+10. Testing your config
+-----------------------
+
+     You will need to test each and every new virtual server you
+     install. Make sure that you have the appropriate permissions and
+     are getting the right results. Only you will know what is right
+     for you.
+
+     Also, if you have existing FTP server areas on your system, test
+     and make sure that something you did to the ftpaccess file did not
+     break what use to work.
+
+
+11. Disclaimer
+--------------
+
+     At present these changes have been tested by the author only on BSDI 3.0
+     and Solaris 2.5.x. The BeroFTPD version has been tested only on Linux
+     2.1/GLIBC2 and FreeBSD 3.0.
+
+     A good test strategy is to create an entire runtime directory dedicated 
+     to BeroFTPD such as /usr/local/BeroFTPD-test/ or /etc/ftpd/ and make 
+     sure all the files and executables go there.  In that manner you will be 
+     able to do a hot swap if you ever want to/need to (shouldn't be necessary
+     but please CYA... ;))
+
+
+12. A Plea for Help
+-------------------
+
+     If you test this and find that it works on your OS, please let me know 
+     and I will add your operating system's information here so others can 
+     benefit from it.
+
+     Please send comments, bugs, enhancements, etc to kent@landfield.com
+     (for the original newvirt patch against wu-ftpd) and
+     bero@aachen.linux.de (for BeroFTPD).
+
+     Thanks!
+
+                             kent@landfield.com

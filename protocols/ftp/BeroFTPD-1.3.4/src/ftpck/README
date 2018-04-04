@@ -1,0 +1,343 @@
+Interium Version:
+
+What is ftpck
+
+     ftpck is utility to verify the various files required to run
+     wu-ftpd.
+
+     Since the beginning, the only wu-ftpd configuration checker was
+     "ckconfig". All it did was simply check to see if the needed files
+     were where they had been specified in pathnames.h. Other than
+     that, you had to look at the man pages, examples and the source
+     code to try and figure out what was the proper syntax. In some
+     cases, ftpaccess file directives were added but not listed in the
+     man pages or READMEs.
+
+     ftpck is intended to check all files and fields in all the files
+     to assure proper syntax. It checks to assure that all files
+     referenced in the various wu-ftpd system files exist. It checks
+     modes on files as well as modes on ftp directories specified.
+
+                                   [----]
+
+     It has not been converted to ANSI C yet. 
+
+     This was developed on Solaris 2.5 and there may be portability
+     concerns. I hope not but if so, please send me any required
+     patches and I'll add them.
+
+     I could use some help. Portability testing is what I need most.
+
+                                   [----]
+
+What does it test ?
+
+     This list nearly complete. At present the following things are
+     checked.
+
+     The following WU-FTPD configuration files being tested.
+
+          ftpaccess, ftpconversions, ftphosts, ftppidnames,
+          ftpgroups, ftpservers, ftpusers, xferlogs
+
+     Additionally, the _PATH_EXECPATH define, is checked as is the
+     inetd.conf file.
+
+     Please send suggestions to kent@landfield.com concerning tests you
+     would like to see done.
+
+     ftpaccess
+
+            1. The existence of the specified ftpaccess file is
+               verified.
+            2. Modes on each of the specified ftpaccess files are
+               checked to assure they are 0600.
+
+          In addition, each record in the file is verified.
+
+            1. alias directive
+                  o Improper number of fields
+
+                  The Following checks can be compiled in or
+                  requested at runtime.
+
+                  o Checks if directory aliased exists for real users
+                  o Checks if directory aliased exists for anonymous users
+
+            2. autogroup directive
+                  o Improper number of fields
+                  o Groupname specified is a valid system group
+                  o Checks each "class" specified to assure it is
+                    a valid "class"
+            3. banner directive
+                  o Improper number of fields
+                  o Checks if banner message file exists
+            4. cdpath directive
+                  o Improper number of fields
+
+                  The Following checks can be compiled in or
+                  requested at runtime.
+
+                  o Checks if directory aliased exists for real users
+                  o Checks if directory aliased exists for anonymous users
+
+            5. class directive
+                  o Improper number of fields
+                  o Verify there is a valid typelist specified
+                  o Verify the Domain and/or IP address globbing
+                    passed in
+            6. compress and tar directives
+                  o Improper number of fields
+                  o Invalid "yes/no" specified
+                  o Checks each "class" specified to assure it is
+                    a valid "class"
+            7. chmod, delete, overwrite, rename and umask
+               directives
+                  o Improper number of fields
+                  o Invalid "yes/no" specified
+                  o Assures <typelist> is a comma-separated list
+                    of any of the keywords "anonymous", "guest"
+                    and "real".
+            8. deny directive
+                  o Improper number of fields
+                  o Checks for valid Address, domain or
+                    !nameserved
+                  o Checks to assure the message file exists
+            9. email directive
+                  o Improper number of fields
+           10. guestgroup directive
+                  o Improper number of fields
+                  o Groupnames specified are valid system groups
+           11. guestserver directive
+                  o Improper number of fields
+           12. limit directive
+                  o Improper number of fields
+                  o Check if valid class specified
+                  o Check <n> is a number
+                  o Valid <time> specified (valid_time TBD)
+                  o Message file exists in guest and real ftp
+                    directories
+           13. log directive
+                  o Improper number of fields
+                  o Checks both the `log transfers' and `log
+                    commands' entries.
+                  o Assures <typelist> is a comma-separated list
+                    of any of the
+                  o Checks directions
+           14. logfile directive (new virtual support directive)
+                  o Improper number of fields
+                  o Assure logfile exists at specified path
+           15. loginfails directive
+                  o Improper number of fields
+                  o content is a number
+           16. lslong and lsshort directives
+                  o Verify the specified executable exists
+           17. message directive
+                  o Improper number of fields
+                  o Check the <when> specified is valid
+                  o Verify any classes listed are valid system
+                    classes
+           18. noretrieve directive
+                  o Improper number of fields
+                  o Check the to assure the <filename> file is
+                    available
+           19. passwd-check directive
+                  o Improper number of fields
+                  o Check for <none|trivial|rfc822> validity
+                  o Check for <enforce|warn> validity
+           20. path-filter directive
+                  o Improper number of fields
+                  o Check typelist specified is valid
+                  o Verify message file path exists
+           21. private directive
+                  o Improper number of fields
+                  o Invalid "yes/no" specified
+                  o If "private yes" check to see if _PATH_PRIVATE
+                    exists
+           22. readme directive
+                  o Improper number of fields
+                  o Check the <when> is valid
+                  o Verify any classes listed are valid system
+                    classes
+           23. root directive (new virtual support directive)
+                  o Improper number of fields
+                  o Verify specified ftpd root data directory
+                    exists
+                  o Check to assure path is a directory.
+           24. shutdown directive
+                  o Improper number of fields
+           25. upload directive
+                  o Improper number of fields
+                  o Check to assure maximum of 7 arguments
+                  o Make sure <root-dir> matches the ftp user
+                    passwd file homedir
+                  o Check if ARG2 is yes/no
+                  o Validate dirs/nodirs
+                  o Assure the mode specified is sane
+                  o Assure any specified user has a passwd file
+                    entry
+                  o Assure any specified group has a group file
+                    entry
+           26. virtual directive
+                  o Improper number of fields
+                  o Make sure <addr> seems sane
+                  o Check if ARG1 is root/banner/logfile
+                  o Assure path exists (only from machine root)
+                  o Assure root path is a directory
+                  o Assure banner and logfiles are regular files
+
+          Also checks for invalid directives used in the ftpaccess
+          files.
+
+     ftpconversions
+
+       1. The existence of the ftpconversions file is verified.
+       2. Modes on the ftpconversions file are checked to assure they
+          are 0600.
+       3. Verify syntax of the ftpconversions file.
+       4. Verify specified external commands exist in the root.
+       5. Verify specified external commands exist in the anonymous
+          area.
+       6. Verify 'types' specified are valid.
+       7. Verify 'options' specified are valid.
+
+     ftphosts
+
+       1. The existence of the ftphosts file is verified.
+       2. Modes on the ftphosts file are checked to assure they are
+          0600.
+       3. Verify syntax of the ftpgroups file.
+       4. Verify allow/deny keyword usage.
+       5. Verify valid domain and IP globbing specified.
+
+     ftppidnames
+
+       1. Checks the existence of the runtime pid file directory.
+
+     ftpgroups
+
+       1. The existence of the ftpgroups file is verified.
+       2. Modes on the ftpgroups file are checked to assure they are
+          0600.
+       3. Verify syntax of the ftpgroups file.
+       4. Make sure the groups specified are valid system groups.
+
+     ftpservers
+
+       1. The existence of the ftpservers file is verified if
+          VIRTUAL support compiled in.
+       2. Modes on the ftpservers file are checked to assure they are
+          0600.
+       3. Checks to assure all ftpaccess files specified in the
+          ftpservers file exist.
+       4. All specified ftpaccess files are then themselves checked via
+          the ftpaccess tests listed above.
+
+     ftpusers
+
+       1. The existence of the ftpusers file is verified.
+       2. Modes on the ftpusers file are checked to assure they are
+          0600.
+       3. Account names not longer than 8 characters.
+       4. Assure only one item per line.
+       5. Records are newline terminated.
+       6. Check root and all system accounts are in ftpusers file.
+
+     xferlogs
+
+       1. The existence of the xferlog files are verified. All xferlogs
+          are checked if the site has indicated the use of virtual
+          server support.
+       2. Modes on the xferlog file are checked to assure they are 0640.
+
+     _PATH_EXECPATH
+
+       1. Checks to assure you have not compiled WU-FTPD with
+          _PATH_EXECPATH set to /bin, /usr/bin, /etc or /sbin. Doing so
+          would open potential or real security holes onto your system.
+
+     inetd.conf
+
+       1. Check to assure the "-a" option is specified on the 'ftp'
+          entry. Without it all ftpaccess functionality is disabled.
+
+                                   [----]
+
+Getting ftpck
+
+     You can get the current snapshot of ftpck from
+     ftp://ftp.landfield.com/wu-ftpd/ftpck/
+
+                                   [----]
+
+Installing ftpck
+
+     As the distribution is configured, it needs to be unpacked under
+     the wu-ftpd src/ directory. The tar/shar files will create a
+     subdirectory ftpck.X.x. 
+
+     You will need to edit the Makefile in the ftpck directory and make 
+     sure things are right for your installation. It is setup to use your 
+     existing pathnames.h and config.h files.
+
+     You will want to check ftpck.h to assure the defines are
+     appropriate for your local installation's policy.
+
+     Type make and build it. Test it from that directory. When you are
+     satisfied it does the right things, type make install and then go
+     verify your config.
+
+     Note: rdservers.c is not used unless you have compiled in Virtual 
+     Hosting support. If so, make sure you put -DVIRTUAL in the CFLAGS. 
+
+                                   [----]
+
+Running ftpck
+
+     usage: ftpck [ -ceFghprstuvx ] [-f accessfile]
+
+     With no options, all WU-FTPD configuration files are checked.
+     More than one set of checks can be specified at a time.
+
+     Options for checking default config files
+       -c:             Check ftpconversions file at /etc/ftpd/ftpconversions
+       -f:             Check ftpaccess file at /etc/ftpd/ftpaccess
+       -g:             Check ftpgroups file at /etc/ftpd/ftpgroups
+       -h:             Check ftphosts file at /etc/ftpd/ftphosts
+       -p:             Check pid directory at /etc/ftpd/ftp.pids-%s
+       -s:             Check ftpservers file at /etc/ftpd/ftpservers
+       -u:             Check ftpusers file at /etc/ftpd/ftpusers
+       -x:             Check xferlog file at /etc/ftpd/xferlog
+
+     Check named file options
+       -C conversions: Check the specified ftpconversions file
+       -F ftpaccess:   Check the specified ftpaccess file
+       -G ftpgroups:   Check the specified ftpgroups file
+       -H ftphosts:    Check the specified ftphosts file
+       -S ftpservers:  Check the specified ftpservers file
+       -U ftpusers:    Check the specified ftpusers file
+
+     Other options
+       -a:             Verify aliases and cdpaths usable for
+                       anonymous/virtual ftp users
+       -d:             Turn on describe mode. (Very verbose) A
+                       second -d enables accessfile line display
+       -e:             Check _PATH_EXECPATH not == /bin
+       -i:             Check inetd.conf file at /etc/inetd.conf
+       -I inetd.conf:  Check the specified inetd.conf file
+       -r:             Verify aliases and cdpaths usable for real systm users
+       -v:             Produce verbose output
+
+     Please Note: The files specified in the above usage example
+     represent the test location of the various WU-FTPD config files on
+     my system. These paths are dependent on the specifications in the
+     pathnames.h you use.
+
+                                   [----]
+
+----
+Kent Landfield                        Phone: 1-817-545-2502             
+The Landfield Group                   FAX:   1-817-545-7650             
+Email: kent@landfield.com             http://www.landfield.com/
+Please send comp.sources.misc related mail to kent@uunet.uu.net.
+Search the Usenet Hypertext FAQ Archive at http://www.faqs.org/faqs/

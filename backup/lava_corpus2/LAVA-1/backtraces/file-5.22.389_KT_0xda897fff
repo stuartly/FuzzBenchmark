@@ -1,0 +1,66 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+0x000000000041b186 in cdf_swap_header (h=0x800000ffcd00) at cdf.c:173
+173		h->h_magic = CDF_TOLE8(h->h_magic);
+
+Thread 1 (process 12958):
+#0  0x000000000041b186 in cdf_swap_header (h=0x800000ffcd00) at cdf.c:173
+        i = 512
+#1  0x000000000041bd61 in cdf_read_header (info=0x7fffffffcea0, h=0x7fffffffcf00) at cdf.c:320
+        buf = "\377\177\211\332\002\001\001\000\000\000\000\000\000\000\000\000\002\000>\000\001\000\000\000\305H@\000\000\000\000\000@\000\000\000\000\000\000\000H\307\001\000\000\000\000\000\000\000\000\000@\000\070\000\t\000@\000\033\000\032\000\006\000\000\000\005\000\000\000@\000\000\000\000\000\000\000@\000@\000\000\000\000\000@\000@\000\000\000\000\000\370\001\000\000\000\000\000\000\370\001\000\000\000\000\000\000\b\000\000\000\000\000\000\000\003\000\000\000\004\000\000\000\070\002\000\000\000\000\000\000\070\002@\000\000\000\000\000\070\002@\000\000\000\000\000\034\000\000\000\000\000\000\000\034\000\000\000\000\000\000\000\001\000\000\000\000\000\000\000\001\000\000\000\005", '\000' <repeats 13 times>, "@\000\000\000\000\000\000\000"...
+#2  0x0000000000410304 in file_trycdf (ms=0x62af20, fd=3, buf=0x7ffff7f86010 "\377\177\211\332\002\001\001", nbytes=118280) at readcdf.c:365
+        info = {i_fd = 3, i_buf = 0x7ffff7f86010 "\377\177\211\332\002\001\001", i_len = 118280}
+        h = {h_magic = 282586744717311, h_uuid = {0, 4299030530}, h_revision = 18629, h_version = 64, h_byte_order = 0, h_sec_size_p2 = 0, h_short_sec_size_p2 = 64, h_unused0 = "\000\000\000\000\000\000H\307\001", h_num_sectors_in_sat = 0, h_secid_first_directory = 0, h_unused1 = "@\000\070", h_min_size_standard_stream = 4194313, h_secid_first_sector_in_short_sat = 1703963, h_num_sectors_in_short_sat = 6, h_secid_first_sector_in_master_sat = 5, h_num_sectors_in_master_sat = 64, h_master_sat = {0, 4194368, 0, 4194368, 0, 504, 0, 504, 0, 8, 0, 3, 4, 568, 0, 4194872, 0, 4194872, 0, 28, 0, 28, 0, 1, 0, 1, 5, 0, 0, 4194304, 0, 4194304, 0, 113364, 0, 113364, 0, 2097152, 0, 1, 6, 114160, 0, 6405616, 0, 6405616, 0, 2148, 0, 5776, 0, 2097152, 0, 2, 6, 114184, 0, 6405640, 0, 6405640, 0, 496, 0, 496, 0, 8, 0, 4, 4, 596, 0, 4194900, 0, 4194900, 0, 68, 0, 68, 0, 4, 0, 1685382480, 4, 101596, 0, 4295900, 0, 4295900, 0, 1860, 0, 1860, 0, 4, 0, 1685382481, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 0}}
+        sat = {sat_tab = 0x1, sat_len = 0}
+        ssat = {sat_tab = 0x7fffffffcfd8, sat_len = 140737351924753}
+        sst = {sst_tab = 0x686, sst_len = 885, sst_dirlen = 0}
+        scn = {sst_tab = 0x7fffffffcf20, sst_len = 8453502914, sst_dirlen = 140737354129800}
+        dir = {dir_tab = 0x2, dir_len = 140737353912416}
+        i = 0
+        expn = 0x424258 ""
+        corrupt = 0x424259 "corrupt: "
+        root_storage = 0x4
+#3  0x000000000040e21c in file_buffer (ms=0x62af20, fd=3, inname=0x7fffffffd8bc "file-5.22.389_KT_0xda897fff/CRASH_INPUT", buf=0x7ffff7f86010, nb=118280) at funcs.c:222
+        m = 0
+        rv = 0
+        looks_text = 0
+        mime = 0
+        ubuf = 0x7ffff7f86010 "\377\177\211\332\002\001\001"
+        u8buf = 0x7ffff7e9e010
+        ulen = 4
+        code = 0x422fa5 "unknown"
+        code_mime = 0x422fad "binary"
+        type = 0x4239a1 "application/octet-stream"
+        def = 0x4239ba "data"
+        ftype = 0x422fad "binary"
+#4  0x00000000004041d2 in file_or_fd (ms=0x62af20, inname=0x7fffffffd8bc "file-5.22.389_KT_0xda897fff/CRASH_INPUT", fd=3) at magic.c:475
+        rv = -1
+        buf = 0x7ffff7f86010 "\377\177\211\332\002\001\001"
+        sb = {st_dev = 66306, st_ino = 28846701, st_nlink = 1, st_mode = 33204, st_uid = 1000, st_gid = 1000, __pad0 = 0, st_rdev = 0, st_size = 118280, st_blksize = 4096, st_blocks = 232, st_atim = {tv_sec = 1465424836, tv_nsec = 762802509}, st_mtim = {tv_sec = 1465424836, tv_nsec = 762802509}, st_ctim = {tv_sec = 1465424836, tv_nsec = 762802509}, __glibc_reserved = {0, 0, 0}}
+        nbytes = 118280
+        ispipe = 0
+        pos = -1
+#5  0x0000000000403da8 in magic_file (ms=0x62af20, inname=0x7fffffffd8bc "file-5.22.389_KT_0xda897fff/CRASH_INPUT") at magic.c:353
+No locals.
+#6  0x00000000004030aa in process (ms=0x62af20, inname=0x7fffffffd8bc "file-5.22.389_KT_0xda897fff/CRASH_INPUT", wid=39) at file.c:497
+        type = 0x1 <error: Cannot access memory at address 0x1>
+        std_in = 0
+#7  0x0000000000402add in main (argc=2, argv=0x7fffffffd4c8) at file.c:370
+        j = 2
+        wid = 39
+        nw = 39
+        c = -1
+        i = 4320701
+        action = 0
+        didsomefiles = 0
+        errflg = 0
+        flags = 0
+        e = 0
+        magic = 0x62af20
+        longindex = 32767
+        magicfile = 0x0
+A debugging session is active.
+
+	Inferior 1 [process 12958] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

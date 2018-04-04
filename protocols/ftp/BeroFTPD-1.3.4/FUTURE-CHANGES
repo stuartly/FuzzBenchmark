@@ -1,0 +1,13 @@
+The following will be implemented in a future version:
+
+- Replace --enable-chmod-limit with a runtime option
+- Make upload-notification a per-directory option
+- Support new ftp commands, such as FEAT and MLST
+- get rid of ALL remaining #ifdef SOME_OS constructs
+- make the set(e)uid / set(e)gid calls optional if we're running as
+  standalone daemon on an unprivileged port, and permitting anonymous
+  access only. That way, BeroFTPD can be run by ordinary users.
+- Make ratio stuff more consistant (typelist as argument rather than
+  *|anonymous|guest), permit ratios for real users.
+
+Send any other suggestions to beroftpd-devel@linux.net.eu.org

@@ -1,0 +1,43 @@
+
+Program received signal SIGSEGV, Segmentation fault.
+0x000000000040e5fe in file_getbuffer (ms=0x73b023bca0) at funcs.c:325
+325		if (ms->event_flags & EVENT_HAD_ERR)
+
+Thread 1 (process 12770):
+#0  0x000000000040e5fe in file_getbuffer (ms=0x73b023bca0) at funcs.c:325
+        pbuf = 0x423a01 "application/octet-stream"
+        op = 0x3f7879881 <error: Cannot access memory at address 0x3f7879881>
+        np = 0x7fffffffd8a4 "file-5.22.14769_R_0x12345678-0x22345678/CRASH_INPUT"
+        psize = 4337677
+        len = 4337677
+#1  0x00000000004042d7 in file_or_fd (ms=0x62af20, inname=0x7fffffffd8a4 "file-5.22.14769_R_0x12345678-0x22345678/CRASH_INPUT", fd=3) at magic.c:486
+        rv = 0
+        buf = 0x7ffff7f86010 <error: Cannot access memory at address 0x7ffff7f86010>
+        sb = {st_dev = 66306, st_ino = 28845865, st_nlink = 1, st_mode = 33204, st_uid = 1000, st_gid = 1000, __pad0 = 0, st_rdev = 0, st_size = 118280, st_blksize = 4096, st_blocks = 232, st_atim = {tv_sec = 1465424833, tv_nsec = 242700584}, st_mtim = {tv_sec = 1465424833, tv_nsec = 242700584}, st_ctim = {tv_sec = 1465424833, tv_nsec = 242700584}, __glibc_reserved = {0, 0, 0}}
+        nbytes = 118280
+        ispipe = 0
+        pos = -1
+#2  0x0000000000403db6 in magic_file (ms=0x62af20, inname=0x7fffffffd8a4 "file-5.22.14769_R_0x12345678-0x22345678/CRASH_INPUT") at magic.c:355
+No locals.
+#3  0x00000000004030aa in process (ms=0x62af20, inname=0x7fffffffd8a4 "file-5.22.14769_R_0x12345678-0x22345678/CRASH_INPUT", wid=51) at file.c:497
+        type = 0x1 <error: Cannot access memory at address 0x1>
+        std_in = 0
+#4  0x0000000000402add in main (argc=2, argv=0x7fffffffd4a8) at file.c:370
+        j = 2
+        wid = 51
+        nw = 51
+        c = -1
+        i = 4320765
+        action = 0
+        didsomefiles = 0
+        errflg = 0
+        flags = 0
+        e = 0
+        magic = 0x62af20
+        longindex = 32767
+        magicfile = 0x0
+A debugging session is active.
+
+	Inferior 1 [process 12770] will be killed.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

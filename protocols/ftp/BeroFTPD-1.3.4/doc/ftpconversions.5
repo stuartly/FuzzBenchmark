@@ -1,0 +1,69 @@
+.\" SCCSID: @(#)$Id: ftpconversions.5,v 1.1.1.1 1998/08/21 18:10:29 root Exp $ 
+.\" based on ftpconversions.5    1.2 1/28/93
+.TH ftpconversions 5 
+.SH Name
+ftpconversions \- ftpd conversions database
+.SH Description
+.NXR "conversions file" "format"
+The conversions known by 
+.BR ftpd(8)
+and their attributes are stored in an ASCII file that
+is structured as below.
+Each line in the file provides a description for a single
+.IR conversion.
+Fields are separated by colons (:).
+.PP
+    %s:%s:%s:%s:%s:%s:%s:%s
+     1  2  3  4  5  6  7  8
+
+    Field          Description
+      1             strip prefix
+      2             strip postfix
+      3             addon prefix
+      4             addon postfix
+      5             external command
+      6             types
+      7             options
+      8             description
+
+If you want this to work for chrooted users (most prominently anonymous
+ftp), you have to put all external commands you are using in their directory
+structure (typically, you will need /home/ftp/bin/gzip and
+/home/ftp/bin/gunzip.)
+
+Note: You can
+.IR not
+use a shell script as external command if you want it to work for chrooted
+users. At least, not unless you put a shell into the chrooted directory
+structure, which might be a major security problem.
+
+.SH Examples:
+.PP
+.B :   : :.gz:/bin/gzip -9 -c %s:T_REG:O_COMPRESS:GZIP
+Allows any file to be gzip-compressed. The command gzip -9 -c filename
+will be used to compress the file if a user does
+get filename.gz
+rather than just
+get filename
+
+.B :.bz2: :  :/bin/bzip2 -cd %s:T_REG|T_ASCII:O_UNCOMPRESS:BUNZIP2
+Allows any .bz2 file on the server to be retrieved in uncompressed form if a
+user does
+get filename
+rather than
+get filename.bz2
+The command bzip2 -cd filename will be used to uncompress the file.
+
+.B :.Z::.gz:/bin/recompress /bin/uncompress /bin/gzip %s:T_REG:O_COMPRESS:RECOMPRESS
+Allows a user to retreive files that are on the server in compress (.Z) format
+in gzip (.gz) format.
+The recompress program needed for this comes with BeroFTPD - it is in the
+util/ subdirectory of the source tree.
+
+.SH Known Problems
+The conversions mechanism does not currently support the strip prefix
+and addon prefix fields.
+.SH Files
+.PN FTPLIB/ftpconversions
+.SH See Also
+ftpd(1), ftpaccess(5)

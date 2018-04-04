@@ -1,0 +1,148 @@
+=================
+= RELEASE NOTES =
+=================
+
+BeroFTPD FTP SERVER, RELEASE 1.3.3 -- 07 February 1999
+
+Before reporting a bug, please make sure it is still present in the most
+current version.
+It can be found at
+ftp://beroftpd.unix.eu.org/pub/BeroFTPD/
+ftp://ftp.croftj.net/usr/bero/BeroFTPD/
+ftp://ftp.sunet.se/pub/nir/ftp/servers/BeroFTPD/
+ftp://sunsite.cnlab-switch.ch/mirror/BeroFTPD/
+
+Mostly minor fixes that (IMO) don't justify a new release can be found in
+ftp://beroftpd.unix.eu.org/pub/BeroFTPD/fixes/
+ftp://ftp.sunet.se/pub/nir/ftp/servers/BeroFTPD/fixes/
+ftp://sunsite.cnlab-switch.ch/mirror/BeroFTPD/fixes/
+
+If you want to participate in the development of BeroFTPD, I recommend you
+use CVS to access the sources:
+	CVSROOT:  :pserver:anoncvs@aachen.linux.de:/CVS
+	Password: anoncvs
+	Modules:  BeroFTPD-1.2 for the stable version
+		  BeroFTPD-1.3 for the unstable version
+If you wish to have write access to the BeroFTPD CVS tree, contact
+bero@aachen.linux.de and tell me what you want to do.
+
+
+BeroFTPD is a replacement ftp server for Un*x systems based on wu-ftpd.
+Besides supporting the ftp protocol defined in RFC 959, it adds the following
+major features (and a couple of minor ones not mentioned here):
+    o  logging of transfers
+    o  logging of commands
+    o  on the fly compression and archiving
+    o  classification of users on type and location
+    o  per class limits
+    o  per directory upload permissions
+    o  restricted guest accounts
+    o  system wide and per directory messages
+    o  directory alias
+    o  cdpath
+    o  filename filter
+    o  better virtual host support (similar to the apache httpd server)
+    o  optional E-mail notification when anonymous users upload files
+    o  possibility to run as standalone daemon (without inetd)
+    o  support for HOST command (currently in draft)
+    o  possibility to use different passwd/shadow files for virtual hosts
+
+BeroFTPD is based on wu-ftpd-2.4.2-academ-b18. In very many ways, BeroFTPD
+is still wu-ftpd.
+The primary difference between BeroFTPD and wu-ftpd is that the wu-ftpd
+developers think ALL bugs need to be fixed before new features are added -
+BeroFTPD aims at fixing bugs as quickly as possible (rather than collecting
+all sorts of bugfixes and making a release every couple of months), and
+starting to add new features right away. For a list of new features already
+implemented, look at the CHANGES file. For some future plans, look at the
+FUTURE-CHANGES file.
+
+BeroFTPD is presently maintained by Bernhard Rosenkraenzer
+(bero@linux.net.eu.org).
+Please send bug reports to beroftpd-bugs@linux.net.eu.org.
+The current version can be found at ftp://linux.net.eu.org/pub/BeroFTPD;
+updates will appear on all sunsite mirrors shortly after they're released.
+
+We have introduced a new version numbering scheme based on the one used in
+Linux kernels - versions with an even minor number (1.0.x, 1.2.x, ...) are
+considered stable. There will not be any major features added in them, only
+bugs fixed.
+Versions with odd minor numbers (1.1.x, 1.3.x, ...) are experimental
+versions, primarily there to test new features and major changes. If you
+need a reliable ftp server, don't use them unless you absolutely need one of
+their features.
+
+Every new release is tested on a K6 running BeroLinux 1.0
+(http://www.berolinux.za.net/ = Linux 2.2 with glibc 2.0.7) as
+well as a pentium running FreeBSD 4.0-CURRENT (the CVS version).
+If you want me to test on other platforms as well, send me the OS you're
+interested in and the hardware required to run it. ;)
+
+It is strongly recommended that you READ ALL THESE FILES before you start
+attempting to to install this software:
+
+	o INSTALL covers basic installation.
+	o NOTES covers some specific issues with respect to documentation,
+	  some system specific information, and some general tips for
+	  setting up wu-ftpd.
+	o VIRTUAL.FTP.SUPPORT outlines how to configure virtual FTP
+	  servers.
+
+Since BeroFTPD is based on wu-ftpd, you can try the following sources for
+setting up the server:
+    o  _Managing Internet Information Services_, An O'Reilly and Associates
+       book.  This book has many excellent chapters on setting up 
+       anonymous ftp sites using standard ftp servers as well as the
+       wu-ftpd server.
+    o  WU-FTPD FAQs
+       - Koos van den Hout's FAQ at http://www.hvu.nl/~koos/wu-ftpd-faq.html
+       - Washinton University at St. Louis' Web Page: http://www.wustl.edu/ftp
+    o  WU-FTPD Resource Pages
+       - Kent Landfield's Resource Pages: http://www.landfield.com/wu-ftpd
+
+Mailing lists for BeroFTPD:
+    o  The BeroFTPD-users mailing list
+       To subscribe, send an e-mail with "subscribe" in the _subject_
+       to BeroFTPD-users-request@linux.net.eu.org
+    o  The BeroFTPD-devel mailing list for developers only
+       To subscribe, send an e-mail with "subscribe" in the _subject_
+       to BeroFTPD-devel-request@linux.net.eu.org
+    o  The BeroFTPD-bugs mailing list
+       To subscribe, send an e-mail with "subscribe" in the _subject_
+       to BeroFTPD-bugs-request@linux.net.eu.org
+
+Related mailing lists:
+    o  The wu-ftpd mailing list.  To subscribe, send email with the 
+       message body of "subscribe wu-ftpd" to listproc@mail.wustl.edu
+
+
+The following notices apply to this package:
+    Copyright (c) 1998 BeroFTPD development group
+
+    Based on wu-ftpd:
+    Copyright (c) 1994  Washington University in Saint Louis.
+    All rights reserved.
+  
+    This product includes software developed by Washington University in 
+    Saint Louis and its contributors
+  
+    Copyright (c) 1980, 1985, 1988, 1989, 1990  The Regents of the 
+    University of California.  All rights reserved.
+  
+    This product includes software developed by the University of California,
+    Berkeley and its contributors.
+  
+    THIS SOFTWARE IS PROVIDED BY WASHINGTON UNIVERSITY AND CONTRIBUTORS
+    ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+    A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL WASHINGTON
+    UNIVERSITY OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+    INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+    BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+    LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+    CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+    LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+    ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+    POSSIBILITY OF SUCH DAMAGE.
+
+$Id: README,v 1.1.1.1 1998/08/21 18:10:25 root Exp $

@@ -1,0 +1,43 @@
+SRCS   = ftpd.c ftpcmd.c glob.c logwtmp.c popen.c vers.c access.c \
+	extensions.c realpath.c acl.c private.c authenticate.c conversions.c \
+	hostacc.c sigfix.c tool.c socket.c auth.c paths.c rdservers.c \
+	routevector.c @SECURE_C@ @GETPWNAM_C@
+OBJS   = ftpd.o ftpcmd.o glob.o logwtmp.o popen.o vers.o access.o \
+	extensions.o realpath.o acl.o private.o authenticate.o conversions.o \
+	hostacc.o sigfix.o tool.o socket.o auth.o paths.o rdservers.o \
+	routevector.o @SECURE_O@ @GETPWNAM_O@
+
+.c.o: ../config.h
+	@CC@ @CFLAGS@ -I.. -I../support -c -o $@ $<
+
+all: ../config.h ftpd ftpcount ftpshut ckconfig ftprestart
+
+ftpcmd.c: ../config.h ftpcmd.y
+	@YACC@ ftpcmd.y
+	mv -f y.tab.c ftpcmd.c
+
+ftpcount: ../config.h ftpcount.o pathnames.h vers.o
+	@CC@ @CFLAGS@ -o $@ ftpcount.o vers.o @LIBS@ -L../support -lsupport
+
+ftpshut: ../config.h ftpshut.o rdservers.o vers.o pathnames.h
+	@CC@ @CFLAGS@ -o $@ ftpshut.o rdservers.o vers.o @LIBS@ -L../support -lsupport
+
+ckconfig: ../config.h ckconfig.o rdservers.o
+	@CC@ @CFLAGS@ -o $@ ckconfig.o rdservers.o @LIBS@ -L../support -lsupport
+
+ftprestart: ../config.h ftprestart.o rdservers.o
+	@CC@ @CFLAGS@ -o $@ ftprestart.o rdservers.o @LIBS@ -L../support -lsupport
+
+ftpd: ../config.h ${OBJS}
+	@CC@ @CFLAGS@ -o $@ ${OBJS} @LIBS@ -L../support -lsupport
+
+vers.c: ../config.h ftpcmd.c
+	sh newvers.sh
+
+clean:
+	rm -f ${OBJS} ftpd ftpcmd.c ftpshut ftpshut.o ftpcount ftpcount.o
+	rm -f core index index.o ckconfig ckconfig.o vers.c
+	rm -f ftprestart ftprestart.o
+
+distclean: clean
+	rm -f config.h Makefile edit pathnames.h

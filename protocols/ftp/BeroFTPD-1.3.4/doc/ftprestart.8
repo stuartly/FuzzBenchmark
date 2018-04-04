@@ -1,0 +1,24 @@
+.\" SCCSID: @(#)ftprestart.8   1.2 1/26/93
+.TH ftprestart 8
+.SH Name
+ftprestart \- restart previously shutdown ftp servers
+.SH Syntax
+.B ftprestart
+The
+.PN ftprestart
+command
+provides an automated way to restart previously shutdown ftp servers.
+.PN ftprestart
+is used when you are ready to re-enable your FTP server. It does the opposite of 
+ftpshut and removes shutdown message files that were created by ftpshut. It will 
+remove the system-wide shutdown message file as well as the shutdown message files 
+in the anonymous ftp areas and any virtual ftp server areas. 
+
+.SH Sample Output
+.PP
+  ftprestart: /servers/some.domain/ftp/etc/shutmsg removed. 
+  ftprestart: /servers/other.domain/ftp/etc/shutmsg removed. 
+  ftprestart: /etc/shutmsg removed. 
+
+.SH See Also
+shutdown(1), ftpshut(8), ftpaccess(5)

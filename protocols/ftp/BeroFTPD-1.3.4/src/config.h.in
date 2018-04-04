@@ -1,0 +1,159 @@
+/* Include ../config.h, <unistd.h> and <stdlib.h> here rather than in
+   every c-file... */
+
+#ifndef _BEROFTPD_CONFIG_H_
+#define _BEROFTPD_CONFIG_H_
+
+#include "../config.h"
+
+#undef HAVE_UNISTD_H
+#undef HAVE_STDLIB_H
+
+/* Rather here than everywhere... */
+#ifndef _GNU_SOURCE
+#define _GNU_SOURCE /* needed for glibc >=2.1, can't hurt anywhere. */
+#endif
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+#ifdef HAVE_STDLIB_H
+#include <stdlib.h>
+#endif
+
+/* We might need the following includes to determine some of the values
+   defined here... */
+#undef HAVE_SHADOW_H
+#undef HAVE_DIRENT_H
+#undef HAVE_FCNTL_H
+#undef HAVE_FTW_H
+#undef HAVE_REGEX_H
+#undef HAVE_GRP_H
+#undef HAVE_GLOB_H
+#undef HAVE_SYS_TERMIO_H
+#undef HAVE_SYS_STATVFS_H
+#undef HAVE_SYS_STATFS_H
+#undef HAVE_SYS_VFS_H
+#undef HAVE_SYS_SYSTEMINFO_H
+#undef HAVE_SYSLOG_H
+#undef HAVE_SYS_SYSLOG_H
+#undef HAVE_SYS_PARAM_H
+#undef HAVE_LIMITS_H
+#undef HAVE_VALUES_H
+#undef HAVE_BSD_BSD_H
+#undef HAVE_POSIX1_LIM_H
+#undef HAVE_XOPEN_LIM_H
+#undef HAVE_CONFNAME_H
+#undef HAVE_UTMPX_H
+#undef HAVE_SAC_H
+#undef HAVE_VFORK
+#undef HAVE_SYS_FILE_H
+#undef HAVE_LIBGEN_H
+#undef HAVE_PATHS_H
+#undef HAVE_MNTENT_H
+#undef HAVE_SYS_QUOTA_H
+#undef HAVE_UFS_QUOTA_H
+#undef HAVE_JFS_QUOTA_H
+#undef HAVE_UFS_UFS_QUOTA_H
+#undef HAVE_LINUX_QUOTA_H
+#undef NEED_SYS_PARAM_H
+#undef NEED_VALUES_H
+#undef NEED_LIMITS_H
+#undef NEED_BSD_BSD_H
+#undef NEED_XOPEN_LIM_H
+#undef NEED_CONFNAME_H
+#undef NEED_POSIX1_LIM_H
+#undef HAVE_UT_UT_HOST
+#undef HAVE_UT_UT_PID
+#undef HAVE_UT_UT_ID
+#undef HAVE_UT_UT_NAME
+#undef HAVE_UT_UT_TYPE
+#undef HAVE_UT_UT_EXIT_E_TERMINATION
+#undef HAVE_TIME_H
+#undef TIME_WITH_SYS_TIME
+#undef HAVE_SYS_TIME_H
+#undef HAVE_REGEX
+
+#if defined(HAVE_SYS_PARAM_H) && defined(NEED_SYS_PARAM_H)
+#include <sys/param.h>
+#endif
+#if defined(HAVE_VALUES_H) && defined(NEED_VALUES_H)
+#include <values.h>
+#endif
+#if defined(HAVE_LIMITS_H) && defined(NEED_LIMITS_H)
+#include <limits.h>
+#endif
+#if defined(HAVE_BSD_BSD_H) && defined(NEED_BSD_BSD_H)
+#include <bsd/bsd.h>
+#endif
+#if defined(HAVE_XOPEN_LIM_H) && defined(NEED_XOPEN_LIM_H)
+#include <xopen_lim.h>
+#endif
+#if defined(HAVE_CONFNAME_H) && defined(NEED_CONFNAME_H)
+#include <confname.h>
+#endif
+#if defined(HAVE_POSIX1_LIM_H) && defined(NEED_POSIX1_LIM_H)
+#include <posix1_lim.h>
+#endif
+
+
+#undef HAVE_DIRFD
+#undef HAVE_FLOCK
+#undef HAVE_FTW_H
+#undef HAVE_GETCWD
+#undef HAVE_GETDTABLESIZE
+#undef HAVE_GETRLIMIT
+#undef HAVE_SYSINFO
+#undef HAVE_SYSCONF
+#undef HAVE_BCOPY
+#undef HAVE_SIGEMPTYSET
+#undef HAVE_REGEXEC
+#undef HAVE_MEMCPY
+#undef HAVE_MEMMOVE
+#undef HAVE_SETREUID
+#undef HAVE_SETEGID
+#undef HAVE_LSTAT
+#undef HAVE_FGETPWENT
+#undef HAVE_FGETSPENT
+#undef HAVE_FCHDIR
+#undef FACILITY
+#undef NBBY
+#undef NCARGS
+#undef L_INCR
+#undef WTMPX_FILE
+#undef SHADOW_PASSWORD
+#undef KRB5
+#undef AFS
+#undef size_t
+#undef PRINTF_QD
+#undef PID_T_IS_LONG
+#undef HAVE_STRINGS_H
+#undef HAVE_STRING_H
+#undef HAVE_ARPA_FTP_H
+#undef HAVE_SETCOMPAT
+#undef HAVE_SETEUID
+#undef HAVE_UTX_UT_SYSLEN
+#undef HAVE_DQBLK_DQB_ISOFTLIMIT
+#undef HAVE_DQBLK_DQB_IHARDLIMIT
+#undef HAVE_DQBLK_DQB_CURINODES
+#undef HAVE_DQBLK_DQB_BTIME
+#undef HAVE_SYS_TYPES_H
+
+/* Buffer size for ftp commands, etc. */
+#undef FTP_BUFSIZ
+#undef vfork
+
+/* Replacement functions... */
+#ifndef HAVE_MEMMOVE
+#define memmove(a,b,c) bcopy(b,a,c)
+#endif
+#ifndef HAVE_MEMCPY
+#define memcpy(a,b,c) bcopy(b,a,c)
+#endif
+#ifndef HAVE_STRTOUL
+#define strtoul(a,b,c) (unsigned long int) strtol(a,b,c)
+#endif
+#ifndef HAVE_SETEUID
+#define seteuid(x) setuid(x)
+#endif
+
+#endif
