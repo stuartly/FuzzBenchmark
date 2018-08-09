@@ -1,1 +1,0 @@
-/usr/bin/cc -g -ggdb  -rdynamic CMakeFiles/server-observe-example.dir/server-observe-example.c.o  -o server-observe-example ../src/libawa.a ../../lib/xml/libxml.a ../../lib/b64/libb64.a ../../lib/hmac/libhmac.a 

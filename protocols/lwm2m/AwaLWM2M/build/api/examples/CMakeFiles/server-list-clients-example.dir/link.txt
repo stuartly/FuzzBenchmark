@@ -1,1 +1,0 @@
-/usr/bin/cc -g -ggdb  -rdynamic CMakeFiles/server-list-clients-example.dir/server-list-clients-example.c.o  -o server-list-clients-example ../src/libawa.a ../../lib/xml/libxml.a ../../lib/b64/libb64.a ../../lib/hmac/libhmac.a 

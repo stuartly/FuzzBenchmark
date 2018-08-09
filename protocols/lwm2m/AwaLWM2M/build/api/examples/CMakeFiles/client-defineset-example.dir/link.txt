@@ -1,1 +1,0 @@
-/usr/bin/cc -g -ggdb  -rdynamic CMakeFiles/client-defineset-example.dir/client-defineset-example.c.o  -o client-defineset-example ../src/libawa.a ../../lib/xml/libxml.a ../../lib/b64/libb64.a ../../lib/hmac/libhmac.a 

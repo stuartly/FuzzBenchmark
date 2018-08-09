@@ -1,3 +1,0 @@
-CAT relies on knowing apriori where its .text and .data start and end.
-
-We can probably fix this with a linker script, but I think the order also matters.

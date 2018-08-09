@@ -1,3 +1,0 @@
-<config_test>
-    <test_key_expanded_no_var>asdfgh${invalid}zxcvbn</test_key_expanded_no_var> -->
-</config_test>

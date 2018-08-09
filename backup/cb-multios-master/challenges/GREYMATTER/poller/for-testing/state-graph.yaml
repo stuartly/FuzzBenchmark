@@ -1,7 +1,0 @@
----
-nodes:
-- name: start
-- name: respond
-
-edges:
-- start: respond

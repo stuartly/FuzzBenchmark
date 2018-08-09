@@ -1,2 +1,0 @@
-admit (name:"flush on server data"; side:server; regex:".*"; flush:client;)
-block (name:"too much data without the server responding"; side:client; regex:".{64}";)

@@ -1,1 +1,0 @@
-/usr/bin/cc -g -ggdb  -rdynamic CMakeFiles/client-definition-iterator-example.dir/client-definition-iterator-example.c.o  -o client-definition-iterator-example ../src/libawa.a ../../lib/xml/libxml.a ../../lib/b64/libb64.a ../../lib/hmac/libhmac.a 

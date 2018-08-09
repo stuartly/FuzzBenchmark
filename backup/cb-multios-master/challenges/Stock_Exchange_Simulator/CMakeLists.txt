@@ -1,6 +1,0 @@
-set( SERVICE_ID "00045" )
-set( AUTHOR_ID "NRFIN" )
-set( POLLS_RELEASE_MAX_DEPTH "500" )
-add_compile_options( -O0 -g )
-set( VULN_COUNT "1" )
-buildCB()

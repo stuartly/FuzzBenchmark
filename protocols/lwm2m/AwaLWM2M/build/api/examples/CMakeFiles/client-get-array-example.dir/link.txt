@@ -1,1 +1,0 @@
-/usr/bin/cc -g -ggdb  -rdynamic CMakeFiles/client-get-array-example.dir/client-get-array-example.c.o  -o client-get-array-example ../src/libawa.a ../../lib/xml/libxml.a ../../lib/b64/libb64.a ../../lib/hmac/libhmac.a 

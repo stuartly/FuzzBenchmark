@@ -1,9 +1,0 @@
----
-nodes:
-- name: start
-- name: _play
-- name: end
-
-edges:
-- start: _play
-- _play: end

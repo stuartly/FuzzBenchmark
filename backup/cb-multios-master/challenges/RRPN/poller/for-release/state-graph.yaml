@@ -1,9 +1,0 @@
----
-nodes:
-- name: start
-- name: doit
-- name: quit
-
-edges:
-- start: doit
-- doit: quit

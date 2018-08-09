@@ -1,5 +1,0 @@
-set( SERVICE_ID "00078" )
-set( AUTHOR_ID "NRFIN" )
-add_compile_options( -O0 -g )
-set( VULN_COUNT "2" )
-buildCB()

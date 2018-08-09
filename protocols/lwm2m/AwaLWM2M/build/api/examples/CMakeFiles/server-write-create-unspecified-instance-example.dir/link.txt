@@ -1,1 +1,0 @@
-/usr/bin/cc -g -ggdb  -rdynamic CMakeFiles/server-write-create-unspecified-instance-example.dir/server-write-create-unspecified-instance-example.c.o  -o server-write-create-unspecified-instance-example ../src/libawa.a ../../lib/xml/libxml.a ../../lib/b64/libb64.a ../../lib/hmac/libhmac.a 

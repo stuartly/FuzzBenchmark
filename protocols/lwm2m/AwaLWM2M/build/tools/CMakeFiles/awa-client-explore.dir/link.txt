@@ -1,1 +1,0 @@
-/usr/bin/cc -g -ggdb -g -Wall -Werror  -rdynamic CMakeFiles/awa-client-explore.dir/awa-client-explore.c.o CMakeFiles/awa-client-explore.dir/awa-client-explore_cmdline.c.o CMakeFiles/Tools_object.dir/tools_common.c.o CMakeFiles/Tools_object.dir/changeset_common.c.o  -o awa-client-explore ../api/src/libawa.a ../lib/xml/libxml.a ../lib/b64/libb64.a ../lib/hmac/libhmac.a 

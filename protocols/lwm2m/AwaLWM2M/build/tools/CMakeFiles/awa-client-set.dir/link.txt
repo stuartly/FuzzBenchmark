@@ -1,1 +1,0 @@
-/usr/bin/cc -g -ggdb -g -Wall -Werror  -rdynamic CMakeFiles/awa-client-set.dir/awa-client-set.c.o CMakeFiles/awa-client-set.dir/awa-client-set_cmdline.c.o CMakeFiles/Tools_object.dir/tools_common.c.o CMakeFiles/Tools_object.dir/changeset_common.c.o  -o awa-client-set ../api/src/libawa.a ../lib/xml/libxml.a ../lib/b64/libb64.a ../lib/hmac/libhmac.a 

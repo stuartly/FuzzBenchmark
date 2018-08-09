@@ -1,7 +1,0 @@
----
-nodes:
-- name: start
-- name: stop
-
-edges:
-- start: stop
