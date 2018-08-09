@@ -7,14 +7,17 @@ A collection of benchmarks containing vulnerability for fuzzing
 
 [3] Google-fuzzer-test-suit (https://github.com/google/fuzzer-test-suite)
 
+[4] fuzzing-benchmark (https://github.com/plum-umd/fuzzing-benchmarks)
+
 
 
 # Submit Format
 
 Please submit a folder named with project name and its version (e.g bision-3.0.4), and the folder should contains below things:
  + Download Link, which is a link for downloading the target project.
- + Fuzz_seed, which is folder containing the seed files used for fuzzing
+ + FuzzSeed, which is folder containing the seed files used for fuzzing
  + FuzzScript.sh, which is a script file used for fuzzing specific executable binary
  + CrashDir, which is a folder containing the test cases that could crash the application
+ + CVEs, which is a CVE description file for each vulnerability.
 
 
