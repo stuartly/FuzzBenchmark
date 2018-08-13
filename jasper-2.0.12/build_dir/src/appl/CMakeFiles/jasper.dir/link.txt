@@ -1,0 +1,1 @@
+/usr/local/bin/afl-clang   -rdynamic CMakeFiles/jasper.dir/jasper.c.o  -o jasper -Wl,-rpath,/home/cloud/work/jasper-2.0.12/build_dir/src/libjasper: ../libjasper/libjasper.so.4.0.0 -lm 

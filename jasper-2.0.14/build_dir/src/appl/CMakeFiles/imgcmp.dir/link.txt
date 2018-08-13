@@ -1,0 +1,1 @@
+/usr/local/bin/afl-clang   -rdynamic CMakeFiles/imgcmp.dir/imgcmp.c.o  -o imgcmp -Wl,-rpath,/home/cloud/work/jasper-2.0.14/build_dir/src/libjasper: ../libjasper/libjasper.so.4.0.0 -lm 

@@ -1,0 +1,50 @@
+Determining if files io.h exist failed with the following output:
+Change Dir: /home/cloud/work/jasper-2.0.12/build_dir/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_daba8/fast"
+/usr/bin/make -f CMakeFiles/cmTC_daba8.dir/build.make CMakeFiles/cmTC_daba8.dir/build
+make[1]: Entering directory '/home/cloud/work/jasper-2.0.12/build_dir/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_daba8.dir/JAS_HAVE_IO_H.c.o
+/usr/local/bin/afl-clang    -o CMakeFiles/cmTC_daba8.dir/JAS_HAVE_IO_H.c.o   -c /home/cloud/work/jasper-2.0.12/build_dir/CMakeFiles/CheckIncludeFiles/JAS_HAVE_IO_H.c
+/home/cloud/work/jasper-2.0.12/build_dir/CMakeFiles/CheckIncludeFiles/JAS_HAVE_IO_H.c:2:10: fatal error: 'io.h' file not found
+#include <io.h>
+         ^
+1 error generated.
+CMakeFiles/cmTC_daba8.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_daba8.dir/JAS_HAVE_IO_H.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_daba8.dir/JAS_HAVE_IO_H.c.o] Error 1
+make[1]: Leaving directory '/home/cloud/work/jasper-2.0.12/build_dir/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_daba8/fast' failed
+make: *** [cmTC_daba8/fast] Error 2
+
+Source:
+/* */
+#include <io.h>
+
+
+int main(void){return 0;}
+
+Determining if files windows.h exist failed with the following output:
+Change Dir: /home/cloud/work/jasper-2.0.12/build_dir/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_c7162/fast"
+/usr/bin/make -f CMakeFiles/cmTC_c7162.dir/build.make CMakeFiles/cmTC_c7162.dir/build
+make[1]: Entering directory '/home/cloud/work/jasper-2.0.12/build_dir/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_c7162.dir/JAS_HAVE_WINDOWS_H.c.o
+/usr/local/bin/afl-clang    -o CMakeFiles/cmTC_c7162.dir/JAS_HAVE_WINDOWS_H.c.o   -c /home/cloud/work/jasper-2.0.12/build_dir/CMakeFiles/CheckIncludeFiles/JAS_HAVE_WINDOWS_H.c
+/home/cloud/work/jasper-2.0.12/build_dir/CMakeFiles/CheckIncludeFiles/JAS_HAVE_WINDOWS_H.c:2:10: fatal error: 'windows.h' file not found
+#include <windows.h>
+         ^
+1 error generated.
+CMakeFiles/cmTC_c7162.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_c7162.dir/JAS_HAVE_WINDOWS_H.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_c7162.dir/JAS_HAVE_WINDOWS_H.c.o] Error 1
+make[1]: Leaving directory '/home/cloud/work/jasper-2.0.12/build_dir/CMakeFiles/CMakeTmp'
+Makefile:121: recipe for target 'cmTC_c7162/fast' failed
+make: *** [cmTC_c7162/fast] Error 2
+
+Source:
+/* */
+#include <windows.h>
+
+
+int main(void){return 0;}
+
