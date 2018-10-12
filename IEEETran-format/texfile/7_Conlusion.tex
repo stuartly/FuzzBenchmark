@@ -1,0 +1,22 @@
+\section{Conclusion}\label{conclusion}
+
+% We leverage two new insights to improve existing AFL's fuzzing energy distribution in a principled way. We direct fuzzer to stress fuzzing toward regions that are more likely for a vulnerability to reside based on static semantic metrics of target program. More specifically, four kinds of promising vulnerable regions (i.e., sensitive, cpmplex, deep and rare-to-reach regions) directed fuzzing are evaluated. And a granularity-aware scheduling of distribution proportion of different mutation operators is proposed. The ratio of mutation operators is increased gradually, if they have better ability to trigger new paths. All improvements are integrated and implemented into an new open source fuzzing tool named TAFL. Large-scale experimental evaluations have shown effectiveness of each improvement and performance of integration. Furthermore, TAFL helps us to find five unknown bugs and get one CVE in Libtasn1-4.13.
+
+
+
+
+We leverage two new insights to improve AFL's fuzzing energy distribution in a
+principled way. First, intuition suggests that four kinds code regions (i.e.,
+sensitive, complex, deep and rare-to-reach regions) are more likely to contain
+vulnerabilities. Therefore, we use static analysis to obtain semantic metrics
+of the target program, and then direct the fuzzing tool to stress on such
+regions. Second, existing energy distribution strategies randomly select mutators.
+Since fine-grained mutators and coarse-grained mutators have their own advantages and
+disadvantages, we can dynamically adjust the ratio of a kind of mutators if they perform better.
+This results in a new granularity-aware energy distribution scheduling strategy.
+These improvements have been incorporated into AFL, leading to a new fuzzing
+tool named TAFL.  To show the power of TAFL, we have conducted large-scale
+experiments on popular benchmarks and real-world programs. The
+result is promising. Not only does TAFL outperform existing AFL and AFL
+variants regarding effectiveness, but also it helps us locate five unknown
+bugs and identify a new CEV in Libtasn1-4.13.
