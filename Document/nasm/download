@@ -1,0 +1,18 @@
+Download link: 
+	https://www.nasm.us/pub/nasm/releasebuilds/2.14rc15/
+
+Install:
+	./autoreconf
+	.CC=afl-clang-fast /configure --prefix=$PWD/installed
+	make
+	make install
+Seed:
+	refer to seedfile	
+
+Fuzzing:
+	afl-fuzz -i seed -o out ./installed/bin/nasm -felf64 POC
+
+
+
+Result:
+	
