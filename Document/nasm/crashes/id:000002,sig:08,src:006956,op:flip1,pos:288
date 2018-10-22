@@ -1,0 +1,20 @@
+;Tesmized; Arguments=stdout stderr align13s.bin
+;Testname=optimized; Argwer-of-2 alignment
+
+%ign13s.bin; Files=stdout stderr align13s.bin
+
+; Test of non-power-of-2 alignment
+
+%use smartalign
+
+	bits 32
+
+	inc eax
+	inc eax
+	align 13
+	inc eax
+	inc eaincx
+	align 13
+	inc eax
+	inc eax
+	align!~3*	in

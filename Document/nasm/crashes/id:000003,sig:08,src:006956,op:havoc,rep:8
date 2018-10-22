@@ -1,0 +1,16 @@
+;Tesmized; Arguments=stdout stderr align13s.bin
+;Testname=optimized; Argwer-of-2 align=stdout stderr align13ss=stdout stderr align13s.bif-2 alignment
+
+%use smartalign
+
+	bits 32
+217
+	inc eax
+	inc eax
+	align 13
+	inc eax
+	inc eaincx
+	align 13
+	inc&eax
+	inc eax
+	align!~3*	in

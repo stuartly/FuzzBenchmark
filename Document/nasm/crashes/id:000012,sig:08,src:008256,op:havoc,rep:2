@@ -1,0 +1,14 @@
+;Testnamzed; Argin
+
+	cpu 8086	org 0
+SECTION r/m16,imm16 given as number)
+	mov word [bx], 10h
+
+	; MOV r/6
+	; (imm16 givord [bx], label
+
+	align 00 [bx], label
+
+	align 0*h
+é; Thddress 10h
+label:
