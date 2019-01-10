@@ -62,6 +62,8 @@ Please submit a folder named with project name and its version (e.g bision-3.0.4
 + [Sablotron](https://github.com/hyperthunk/Sablotron)
 + [mbedtls](https://github.com/ARMmbed/mbedtls)
 + [mpg321](http://mpg321.sourceforge.net/)
++ [pdf2svg](https://github.com/dawbarton/pdf2svg)
++ [jasper](https://github.com/mdadams/jasper)
 
 
 
