@@ -11,20 +11,12 @@ A collection of benchmarks containing vulnerability for fuzzing
 
 [5] FoRTE-FuzzBench (https://github.com/FoRTE-Research/FoRTE-FuzzBench)
 
-[6] refer to [list of projects](#list)
+[6] A list of open source library (https://en.cppreference.com/w/cpp/links/libs)
+
+[7] refer to [list of projects](#list)
 
 
-
-# Submit Format
-
-Please submit a folder named with project name and its version (e.g bision-3.0.4), and the folder should contains below things:
- + Download Link, which is a link for downloading the target project.
- + FuzzSeed, which is folder containing the seed files used for fuzzing
- + FuzzScript.sh, which is a script file used for fuzzing specific executable binary
- + CrashDir, which is a folder containing the test cases that could crash the application
- + CVEs, which is a CVE description file for each vulnerability.
- 
- 
+--- 
  # <span id="list">List of projects</span>
  
 + [ffmpeg](https://www.ffmpeg.org/)
