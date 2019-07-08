@@ -1,5 +1,5 @@
 # VulBenchmark
-A collection of benchmarks containing vulnerability for fuzzing
+A collection of benchmarks for fuzzing
 
 [1] Modification CGC sample for linux, window and mac-os(https://github.com/trailofbits/cb-multios)
 
