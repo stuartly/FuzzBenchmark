@@ -16,12 +16,11 @@ A collection of benchmarks with vulnerarbilities for fuzzing
 
 
 
-# Benchmarks that worth fuzzing
+# Benchmarks that are worth fuzzing
 + A list of open source library (https://en.cppreference.com/w/cpp/links/libs)
 + GUN software (https://ftp.gnu.org/gnu/)
 + refer to [list of projects](#list)
 
---- 
  # <span id="list">List of projects</span>
  
 + [ffmpeg](https://www.ffmpeg.org/)
