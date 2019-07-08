@@ -1,5 +1,5 @@
 # VulBenchmark
-A collection of benchmarks for fuzzing
+A collection of benchmarks with vulnerarbilities for fuzzing
 
 + Modification CGC sample for linux, window and mac-os(https://github.com/trailofbits/cb-multios)
 
@@ -11,13 +11,15 @@ A collection of benchmarks for fuzzing
 
 + FoRTE-FuzzBench (https://github.com/FoRTE-Research/FoRTE-FuzzBench)
 
-+ A list of open source library (https://en.cppreference.com/w/cpp/links/libs)
-
 + FuzzingRealProgramBenchStatistics (https://github.com/AngoraFuzzer/FuzzingRealProgramBenchStatistics)
 
+
+
+
+# Benchmarks that worth fuzzing
++ A list of open source library (https://en.cppreference.com/w/cpp/links/libs)
++ GUN software (https://ftp.gnu.org/gnu/)
 + refer to [list of projects](#list)
-
-
 
 --- 
  # <span id="list">List of projects</span>
@@ -59,7 +61,7 @@ A collection of benchmarks for fuzzing
 + [mpg321](http://mpg321.sourceforge.net/)
 + [pdf2svg](https://github.com/dawbarton/pdf2svg)
 + [jasper](https://github.com/mdadams/jasper)
-+ [GUN](https://directory.fsf.org/wiki/GNU)
+
 
 
 
